@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { tools, categories } from './data/toolsData';
+import { tools, categories, findToolByIdOrAlias } from './data/toolsData';
 import Sidebar from './components/Sidebar';
 import AppHeader from './components/AppHeader';
 import ToolTabs from './components/ToolTabs';
@@ -17,9 +17,9 @@ export default function App() {
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('stackkit_favorites');
-      return saved ? JSON.parse(saved) : ['gerador-de-cpf', 'formatar-json', 'gerador-pix', 'jwt-encode-decode'];
+      return saved ? JSON.parse(saved) : ['cpf-generator', 'json-formatter', 'pix-generator', 'jwt-inspector'];
     } catch {
-      return ['gerador-de-cpf', 'formatar-json', 'gerador-pix', 'jwt-encode-decode'];
+      return ['cpf-generator', 'json-formatter', 'pix-generator', 'jwt-inspector'];
     }
   });
 
@@ -74,12 +74,45 @@ export default function App() {
     localStorage.setItem('stackkit_sidebar_collapsed', String(sidebarCollapsed));
   }, [sidebarCollapsed]);
 
-  // Hash router
+  // Dynamic SEO metadata updates
+  useEffect(() => {
+    if (activeToolId) {
+      const tool = tools.find(t => t.id === activeToolId);
+      if (tool) {
+        document.title = `${tool.nameEn} — Free Online Developer Tool | StackKit DevStudio`;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute(
+            'content',
+            `${tool.descriptionEn}. Free, private, client-side tool with instant results.`
+          );
+        }
+      }
+    } else {
+      document.title = 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute(
+          'content',
+          'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.'
+        );
+      }
+    }
+  }, [activeToolId]);
+
+  // English & Alias Hash Router
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace('#', '').trim();
-      if (hash && tools.some(t => t.id === hash)) {
-        openTool(hash);
+      const rawHash = window.location.hash.replace('#', '').trim();
+      if (rawHash) {
+        const found = findToolByIdOrAlias(rawHash);
+        if (found) {
+          // If the URL has an alias, replace with canonical English slug
+          if (rawHash !== found.id) {
+            window.location.replace(`#${found.id}`);
+          }
+          openTool(found.id);
+        }
       }
     };
     handleHash();
@@ -99,37 +132,52 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Tool Opening & Tabs Management
-  const openTool = (toolId) => {
-    if (!toolId) {
+  // Tool Opening & Tabs Management (Guaranteed ZERO Duplication)
+  const openTool = (rawToolId) => {
+    if (!rawToolId) {
       setActiveToolId(null);
-      window.location.hash = '';
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
       return;
     }
-    setActiveToolId(toolId);
-    window.location.hash = toolId;
-    if (!openToolIds.includes(toolId)) {
-      setOpenToolIds(prev => [...prev, toolId]);
+
+    const found = findToolByIdOrAlias(rawToolId);
+    const canonicalId = found ? found.id : rawToolId;
+
+    setActiveToolId(canonicalId);
+
+    if (window.location.hash !== `#${canonicalId}`) {
+      window.location.hash = canonicalId;
     }
+
+    setOpenToolIds(prev => (prev.includes(canonicalId) ? prev : [...prev, canonicalId]));
     setMobileOpen(false);
   };
 
-  const closeTab = (toolId) => {
-    const newTabs = openToolIds.filter(id => id !== toolId);
-    setOpenToolIds(newTabs);
-    if (activeToolId === toolId) {
-      if (newTabs.length > 0) {
-        openTool(newTabs[newTabs.length - 1]);
-      } else {
-        openTool(null);
+  const closeTab = (rawToolId) => {
+    const canonicalId = findToolByIdOrAlias(rawToolId)?.id || rawToolId;
+    setOpenToolIds(prev => {
+      const nextTabs = prev.filter(id => id !== canonicalId);
+      if (activeToolId === canonicalId) {
+        if (nextTabs.length > 0) {
+          const nextTool = nextTabs[nextTabs.length - 1];
+          setActiveToolId(nextTool);
+          window.location.hash = nextTool;
+        } else {
+          setActiveToolId(null);
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
       }
-    }
+      return nextTabs;
+    });
   };
 
-  const toggleFavorite = (toolId) => {
+  const toggleFavorite = (rawToolId) => {
+    const canonicalId = findToolByIdOrAlias(rawToolId)?.id || rawToolId;
     setFavorites(prev => {
-      const isFav = prev.includes(toolId);
-      const next = isFav ? prev.filter(id => id !== toolId) : [...prev, toolId];
+      const isFav = prev.includes(canonicalId);
+      const next = isFav ? prev.filter(id => id !== canonicalId) : [...prev, canonicalId];
       addToast(isFav ? 'Removido dos favoritos' : 'Adicionado aos favoritos ⭐');
       return next;
     });
@@ -248,7 +296,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: 18, fontWeight: 800 }}>StackKit DevStudio</h3>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Versão 2.0.0 · React 19 & Vite</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Versão 2.1.0 · React 19 & Vite</div>
                 </div>
               </div>
               <button className="btn-icon" onClick={() => setAboutOpen(false)}>
@@ -258,16 +306,16 @@ export default function App() {
 
             <div style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 12 }}>
               <p>
-                O <strong>StackKit DevStudio</strong> foi desenvolvido para oferecer a experiência mais rápida, completa e elegante para o dia a dia de desenvolvedores e estudantes de tecnologia.
+                O <strong>StackKit DevStudio</strong> foi desenvolvido para oferecer a experiência mais rápida, completa e elegante para desenvolvedores e equipes globais.
               </p>
               <p>
-                Inspirado nas funcionalidades do <strong>GeraDev</strong>, implementa uma arquitetura moderna baseada em um estúdio com barra de abas multi-tarefas, paleta de comandos rápida (<kbd>Ctrl+K</kbd>), tema escuro/claro e 37 ferramentas 100% processadas no seu navegador.
+                Apresenta 40 ferramentas essenciais, incluindo gerador de paleta de cores (estilo Coolors), conversor de fuso horário mundial (World Time Buddy), geradores de QR Code/senhas/hashes, formatadores e codificadores, com execução 100% no seu navegador.
               </p>
               <div style={{
                 padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)',
                 border: '1px solid var(--border-subtle)', fontSize: 12
               }}>
-                🔒 <strong>Zero Telemetria de Dados:</strong> Nenhuma informação digitada ou gerada (senhas, CPFs, tokens JWT, payloads) é enviada para servidores.
+                🔒 <strong>100% Client-Side & Privado:</strong> Seus dados, textos e códigos nunca saem do seu computador.
               </div>
             </div>
 

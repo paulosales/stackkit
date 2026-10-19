@@ -23,7 +23,7 @@ export default function Sidebar({
   mobileOpen,
   onCloseMobile
 }) {
-  const favoritedTools = tools.filter(t => favorites.includes(t.id));
+  const favoritedTools = tools.filter(t => favorites.includes(t.id) || (t.aliasIds && t.aliasIds.some(a => favorites.includes(a))));
 
   return (
     <aside className={`app-sidebar ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>

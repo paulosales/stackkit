@@ -3,7 +3,7 @@ import { QrCode, Download, Copy, Check, Settings, Sparkles } from 'lucide-react'
 import QRCodeLib from 'qrcode';
 
 export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
-  const [text, setText] = useState('https://stackkit.dev');
+  const [text, setText] = useState('https://stackkit.com.br');
   const [size, setSize] = useState(260);
   const [darkColor, setDarkColor] = useState('#000000');
   const [lightColor, setLightColor] = useState('#ffffff');

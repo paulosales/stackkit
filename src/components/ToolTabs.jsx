@@ -1,31 +1,43 @@
 import React from 'react';
 import { X, Layers, Plus } from 'lucide-react';
-import { tools } from '../data/toolsData';
+import { tools, findToolByIdOrAlias } from '../data/toolsData';
 import DynamicIcon from './DynamicIcon';
 
 export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onCloseTab, onOpenNew, lang = 'pt' }) {
+  // Ensure strict uniqueness and resolve canonical IDs
+  const uniqueToolIds = Array.from(
+    new Set(
+      openToolIds.map(id => {
+        const found = findToolByIdOrAlias(id);
+        return found ? found.id : id;
+      })
+    )
+  );
+
+  const activeCanonicalId = findToolByIdOrAlias(activeToolId)?.id || activeToolId;
+
   return (
     <div className="tool-tabs-bar custom-scrollbar">
       {/* Home / Catalog tab */}
       <div
-        className={`tool-tab ${!activeToolId ? 'active' : ''}`}
+        className={`tool-tab ${!activeCanonicalId ? 'active' : ''}`}
         onClick={() => onSelectTab(null)}
       >
         <Layers size={14} />
         <span>{lang === 'pt' ? 'Catálogo' : 'Catalog'}</span>
       </div>
 
-      {/* Dynamic open tool tabs */}
-      {openToolIds.map(toolId => {
-        const tool = tools.find(t => t.id === toolId);
+      {/* Dynamic open tool tabs (Deduplicated & Canonical) */}
+      {uniqueToolIds.map(toolId => {
+        const tool = findToolByIdOrAlias(toolId);
         if (!tool) return null;
-        const isActive = activeToolId === toolId;
+        const isActive = activeCanonicalId === tool.id;
 
         return (
           <div
-            key={toolId}
+            key={tool.id}
             className={`tool-tab ${isActive ? 'active' : ''}`}
-            onClick={() => onSelectTab(toolId)}
+            onClick={() => onSelectTab(tool.id)}
             title={lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
           >
             <DynamicIcon name={tool.icon} size={14} />
@@ -34,7 +46,7 @@ export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onClo
               className="tool-tab-close"
               onClick={(e) => {
                 e.stopPropagation();
-                onCloseTab(toolId);
+                onCloseTab(tool.id);
               }}
               aria-label="Fechar aba"
             >

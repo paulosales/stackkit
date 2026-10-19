@@ -14,7 +14,7 @@ const PRESETS = [
 export default function RegexTester({ onCopy, lang = 'pt' }) {
   const [pattern, setPattern] = useState('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}');
   const [flags, setFlags] = useState('g');
-  const [testText, setTestText] = useState('Contatos: suporte@stackkit.dev, contato@empresa.com.br e teste123@gmail.com.');
+  const [testText, setTestText] = useState('Contatos: suporte@stackkit.com.br, contato@empresa.com.br e teste123@gmail.com.');
   const [errorMsg, setErrorMsg] = useState(null);
 
   const testRegex = () => {

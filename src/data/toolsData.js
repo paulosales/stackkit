@@ -1,4 +1,5 @@
-// Master registry of all developer tools in StackKit
+// Master registry of all developer tools in StackKit DevStudio
+// Optimized for SEO with descriptive English slugs and Portuguese alias resolution
 
 export const categories = [
   { id: 'all', name: 'Todas', nameEn: 'All', icon: 'LayoutGrid' },
@@ -7,14 +8,15 @@ export const categories = [
   { id: 'formatters', name: 'Formatadores', nameEn: 'Formatters', icon: 'Code' },
   { id: 'converters', name: 'Conversores', nameEn: 'Converters', icon: 'ArrowLeftRight' },
   { id: 'encoders', name: 'Encode / Decode', nameEn: 'Encode / Decode', icon: 'Binary' },
-  { id: 'network', name: 'Rede', nameEn: 'Network', icon: 'Globe' },
+  { id: 'network', name: 'Rede & Tempo', nameEn: 'Network & Time', icon: 'Globe' },
   { id: 'utilities', name: 'Utilidades', nameEn: 'Utilities', icon: 'Wrench' }
 ];
 
 export const tools = [
   // BRASIL
   {
-    id: 'gerador-de-cpf',
+    id: 'cpf-generator',
+    aliasIds: ['gerador-de-cpf'],
     categoryId: 'brazil',
     name: 'Gerador de CPF',
     nameEn: 'CPF Generator',
@@ -25,7 +27,8 @@ export const tools = [
     tags: ['cpf', 'brasil', 'documentos', 'validacao', 'lote']
   },
   {
-    id: 'gerador-de-cnpj',
+    id: 'cnpj-generator',
+    aliasIds: ['gerador-de-cnpj'],
     categoryId: 'brazil',
     name: 'Gerador de CNPJ',
     nameEn: 'CNPJ Generator',
@@ -36,7 +39,8 @@ export const tools = [
     tags: ['cnpj', 'brasil', 'empresa', 'alfanumerico', 'documentos']
   },
   {
-    id: 'gerador-de-rg',
+    id: 'rg-generator',
+    aliasIds: ['gerador-de-rg'],
     categoryId: 'brazil',
     name: 'Gerador de RG',
     nameEn: 'RG Generator',
@@ -47,7 +51,8 @@ export const tools = [
     tags: ['rg', 'identidade', 'brasil', 'documentos']
   },
   {
-    id: 'gerar-documentos',
+    id: 'document-generator',
+    aliasIds: ['gerar-documentos'],
     categoryId: 'brazil',
     name: 'Gerar Documentos',
     nameEn: 'Generate Documents',
@@ -58,7 +63,8 @@ export const tools = [
     tags: ['documentos', 'cpf', 'cnpj', 'rg', 'pacote']
   },
   {
-    id: 'validar-cpf-cnpj',
+    id: 'cpf-cnpj-validator',
+    aliasIds: ['validar-cpf-cnpj'],
     categoryId: 'brazil',
     name: 'Validar CPF e CNPJ',
     nameEn: 'Validate CPF & CNPJ',
@@ -69,7 +75,8 @@ export const tools = [
     tags: ['validar', 'cpf', 'cnpj', 'checar', 'verificador']
   },
   {
-    id: 'gerador-pix',
+    id: 'pix-generator',
+    aliasIds: ['gerador-pix'],
     categoryId: 'brazil',
     name: 'Gerador de PIX',
     nameEn: 'PIX QR Code Generator',
@@ -80,7 +87,8 @@ export const tools = [
     tags: ['pix', 'pagamento', 'qr code', 'banco central', 'emv']
   },
   {
-    id: 'gerar-pessoa',
+    id: 'fake-person-generator',
+    aliasIds: ['gerar-pessoa'],
     categoryId: 'brazil',
     name: 'Gerar Pessoa',
     nameEn: 'Person Generator',
@@ -91,7 +99,8 @@ export const tools = [
     tags: ['pessoa', 'fake data', 'mock', 'perfil', 'endereco', 'cep']
   },
   {
-    id: 'calculo-hora-extra',
+    id: 'overtime-calculator',
+    aliasIds: ['calculo-hora-extra'],
     categoryId: 'brazil',
     name: 'Calcular Hora Extra',
     nameEn: 'Overtime Calculator',
@@ -104,7 +113,8 @@ export const tools = [
 
   // GERADORES
   {
-    id: 'gerador-paleta-cores',
+    id: 'color-palette-generator',
+    aliasIds: ['gerador-paleta-cores', 'coolors'],
     categoryId: 'generators',
     name: 'Gerador de Paleta de Cores (Coolors)',
     nameEn: 'Color Palette Generator (Coolors)',
@@ -115,7 +125,8 @@ export const tools = [
     tags: ['coolors', 'paleta', 'cores', 'color', 'palette', 'harmonia', 'css', 'design', 'contraste', 'daltonismo']
   },
   {
-    id: 'gerar-qrcode',
+    id: 'qr-code-generator',
+    aliasIds: ['gerar-qrcode'],
     categoryId: 'generators',
     name: 'Gerar QR Code',
     nameEn: 'QR Code Generator',
@@ -126,7 +137,8 @@ export const tools = [
     tags: ['qrcode', 'qr', 'codigo', 'imagem', 'png', 'svg']
   },
   {
-    id: 'gerar-senha',
+    id: 'password-generator',
+    aliasIds: ['gerar-senha'],
     categoryId: 'generators',
     name: 'Gerar Senha Segura',
     nameEn: 'Password Generator',
@@ -137,7 +149,8 @@ export const tools = [
     tags: ['senha', 'password', 'seguranca', 'criptografia', 'forte']
   },
   {
-    id: 'link-whatsapp',
+    id: 'whatsapp-link-generator',
+    aliasIds: ['link-whatsapp'],
     categoryId: 'generators',
     name: 'Gerar Link WhatsApp',
     nameEn: 'WhatsApp Link Generator',
@@ -148,7 +161,8 @@ export const tools = [
     tags: ['whatsapp', 'link', 'wa.me', 'mensagem', 'contato']
   },
   {
-    id: 'gerador-cartao-de-credito',
+    id: 'credit-card-generator',
+    aliasIds: ['gerador-cartao-de-credito'],
     categoryId: 'generators',
     name: 'Cartão de Crédito para Testes',
     nameEn: 'Test Credit Card',
@@ -159,7 +173,8 @@ export const tools = [
     tags: ['cartao', 'visa', 'mastercard', 'amex', 'luhn', 'checkout']
   },
   {
-    id: 'gerar-hash',
+    id: 'hash-generator',
+    aliasIds: ['gerar-hash'],
     categoryId: 'generators',
     name: 'Gerador de Hash',
     nameEn: 'Hash Generator',
@@ -170,7 +185,8 @@ export const tools = [
     tags: ['hash', 'md5', 'sha1', 'sha256', 'sha512', 'checksum']
   },
   {
-    id: 'guid-generator',
+    id: 'guid-uuid-generator',
+    aliasIds: ['guid-generator'],
     categoryId: 'generators',
     name: 'Gerar GUID / UUID',
     nameEn: 'GUID / UUID Generator',
@@ -181,7 +197,8 @@ export const tools = [
     tags: ['guid', 'uuid', 'v4', 'id', 'aleatorio']
   },
   {
-    id: 'lorem-ipsum',
+    id: 'lorem-ipsum-generator',
+    aliasIds: ['lorem-ipsum'],
     categoryId: 'generators',
     name: 'Lorem Ipsum',
     nameEn: 'Lorem Ipsum Generator',
@@ -194,7 +211,8 @@ export const tools = [
 
   // FORMATADORES
   {
-    id: 'formatar-json',
+    id: 'json-formatter',
+    aliasIds: ['formatar-json'],
     categoryId: 'formatters',
     name: 'Formatar JSON',
     nameEn: 'JSON Formatter',
@@ -205,7 +223,8 @@ export const tools = [
     tags: ['json', 'formatar', 'prettify', 'minificar', 'validar']
   },
   {
-    id: 'formatar-xml',
+    id: 'xml-formatter',
+    aliasIds: ['formatar-xml'],
     categoryId: 'formatters',
     name: 'Formatar XML',
     nameEn: 'XML Formatter',
@@ -216,7 +235,8 @@ export const tools = [
     tags: ['xml', 'formatar', 'identar', 'minificar', 'markup']
   },
   {
-    id: 'formatar-sql',
+    id: 'sql-formatter',
+    aliasIds: ['formatar-sql'],
     categoryId: 'formatters',
     name: 'Formatar SQL',
     nameEn: 'SQL Formatter',
@@ -229,7 +249,8 @@ export const tools = [
 
   // CONVERSORES
   {
-    id: 'conversor-json-class',
+    id: 'json-to-csharp',
+    aliasIds: ['conversor-json-class'],
     categoryId: 'converters',
     name: 'JSON ↔ C#',
     nameEn: 'JSON to C# Classes',
@@ -240,7 +261,8 @@ export const tools = [
     tags: ['json', 'c#', 'csharp', 'dotnet', 'poco', 'classes']
   },
   {
-    id: 'conversor-xml-json',
+    id: 'xml-to-json',
+    aliasIds: ['conversor-xml-json'],
     categoryId: 'converters',
     name: 'XML ↔ JSON',
     nameEn: 'XML to JSON',
@@ -251,7 +273,8 @@ export const tools = [
     tags: ['xml', 'json', 'converter', 'transformar']
   },
   {
-    id: 'conversor-csv-json',
+    id: 'csv-to-json',
+    aliasIds: ['conversor-csv-json'],
     categoryId: 'converters',
     name: 'CSV ↔ JSON',
     nameEn: 'CSV to JSON',
@@ -262,7 +285,8 @@ export const tools = [
     tags: ['csv', 'json', 'planilha', 'excel', 'dados']
   },
   {
-    id: 'conversor-json-yaml',
+    id: 'json-to-yaml',
+    aliasIds: ['conversor-json-yaml'],
     categoryId: 'converters',
     name: 'JSON ↔ YAML',
     nameEn: 'JSON to YAML',
@@ -274,6 +298,7 @@ export const tools = [
   },
   {
     id: 'json-stringify',
+    aliasIds: [],
     categoryId: 'converters',
     name: 'JSON ↔ String',
     nameEn: 'JSON ↔ String Escaper',
@@ -284,7 +309,8 @@ export const tools = [
     tags: ['stringify', 'escape', 'unescape', 'string', 'env']
   },
   {
-    id: 'conversor-base64-arquivo',
+    id: 'base64-to-file',
+    aliasIds: ['conversor-base64-arquivo'],
     categoryId: 'converters',
     name: 'Base64 ↔ Arquivo',
     nameEn: 'Base64 ↔ File',
@@ -296,6 +322,7 @@ export const tools = [
   },
   {
     id: 'timestamp-converter',
+    aliasIds: [],
     categoryId: 'converters',
     name: 'Timestamp / Epoch',
     nameEn: 'Unix Timestamp Converter',
@@ -306,7 +333,8 @@ export const tools = [
     tags: ['timestamp', 'epoch', 'data', 'hora', 'unix', 'utc']
   },
   {
-    id: 'conversor-cores',
+    id: 'color-converter',
+    aliasIds: ['conversor-cores'],
     categoryId: 'converters',
     name: 'Conversor de Cores',
     nameEn: 'Color Converter & Contrast',
@@ -317,7 +345,8 @@ export const tools = [
     tags: ['cores', 'hex', 'rgb', 'hsl', 'wcag', 'contraste', 'design']
   },
   {
-    id: 'conversor-base-numerica',
+    id: 'number-base-converter',
+    aliasIds: ['conversor-base-numerica'],
     categoryId: 'converters',
     name: 'Base Numérica',
     nameEn: 'Number Base Converter',
@@ -330,7 +359,8 @@ export const tools = [
 
   // ENCODE / DECODE
   {
-    id: 'url-encode-decode',
+    id: 'url-encoder-decoder',
+    aliasIds: ['url-encode-decode'],
     categoryId: 'encoders',
     name: 'URL Encode / Decode',
     nameEn: 'URL Encode / Decode',
@@ -341,7 +371,8 @@ export const tools = [
     tags: ['url', 'uri', 'encode', 'decode', 'query', 'params']
   },
   {
-    id: 'base64-encode-decode',
+    id: 'base64-encoder-decoder',
+    aliasIds: ['base64-encode-decode'],
     categoryId: 'encoders',
     name: 'Base64 Encode / Decode',
     nameEn: 'Base64 Text Encode / Decode',
@@ -352,7 +383,8 @@ export const tools = [
     tags: ['base64', 'texto', 'encode', 'decode', 'utf-8']
   },
   {
-    id: 'jwt-encode-decode',
+    id: 'jwt-inspector',
+    aliasIds: ['jwt-encode-decode'],
     categoryId: 'encoders',
     name: 'JWT Inspector',
     nameEn: 'JWT Token Inspector',
@@ -363,12 +395,25 @@ export const tools = [
     tags: ['jwt', 'token', 'auth', 'bearer', 'claims', 'seguranca']
   },
 
-  // REDE
+  // REDE & TEMPO
   {
-    id: 'meu-ip',
+    id: 'world-time-buddy',
+    aliasIds: ['world-time-converter', 'world-clock', 'wtb'],
+    categoryId: 'network',
+    name: 'World Time Buddy & Fuso Horário',
+    nameEn: 'World Time Buddy & Time Zone Converter',
+    description: 'Compare horários mundiais em grade interativa de 24h, encontre horários ideais e agende reuniões globais',
+    descriptionEn: 'Compare world time zones side-by-side with interactive 24-hour scrubber, day/night indicators, and meeting scheduler',
+    icon: 'Clock',
+    popular: true,
+    tags: ['world time buddy', 'time zone', 'fuso horario', 'reuniao', 'horario mundial', 'relogio', 'meeting', 'gmt', 'utc']
+  },
+  {
+    id: 'my-ip-address',
+    aliasIds: ['meu-ip'],
     categoryId: 'network',
     name: 'Obter Meu IP',
-    nameEn: 'What is My IP',
+    nameEn: 'What is My IP Address',
     description: 'Veja seu endereço de IP público atual e informações de conexão',
     descriptionEn: 'Check your public IP address and connection environment details',
     icon: 'Globe',
@@ -378,7 +423,8 @@ export const tools = [
 
   // UTILIDADES
   {
-    id: 'visualizar-html',
+    id: 'html-viewer',
+    aliasIds: ['visualizar-html'],
     categoryId: 'utilities',
     name: 'Visualizar HTML',
     nameEn: 'HTML Real-Time Preview',
@@ -390,6 +436,7 @@ export const tools = [
   },
   {
     id: 'string-utilities',
+    aliasIds: [],
     categoryId: 'utilities',
     name: 'Padronizador de Texto',
     nameEn: 'String Utilities',
@@ -400,7 +447,8 @@ export const tools = [
     tags: ['texto', 'string', 'camelcase', 'snake_case', 'slug', 'acentos']
   },
   {
-    id: 'testador-regex',
+    id: 'regex-tester',
+    aliasIds: ['testador-regex'],
     categoryId: 'utilities',
     name: 'Testador de Regex',
     nameEn: 'Regex Tester',
@@ -411,7 +459,8 @@ export const tools = [
     tags: ['regex', 'expressao regular', 'match', 'pattern', 'validacao']
   },
   {
-    id: 'comparar-textos',
+    id: 'text-diff',
+    aliasIds: ['comparar-textos'],
     categoryId: 'utilities',
     name: 'Diff de Textos',
     nameEn: 'Text Diff Checker',
@@ -422,18 +471,20 @@ export const tools = [
     tags: ['diff', 'comparar', 'texto', 'git', 'alteracoes']
   },
   {
-    id: 'explicador-cron',
+    id: 'cron-expression-explainer',
+    aliasIds: ['explicador-cron'],
     categoryId: 'utilities',
     name: 'Explicador de Cron',
     nameEn: 'Cron Expression Explainer',
-    description: 'Entenda qualquer expressão cron de 5 partes explicada em português claro',
+    description: 'Entenda qualquer expressão cron de 5 partes explicada em linguagem humana',
     descriptionEn: 'Translate any standard 5-part cron schedule into clear human language',
     icon: 'Timer',
     popular: false,
     tags: ['cron', 'agendamento', 'schedule', 'tempo', 'explica']
   },
   {
-    id: 'preview-markdown',
+    id: 'markdown-previewer',
+    aliasIds: ['preview-markdown'],
     categoryId: 'utilities',
     name: 'Preview de Markdown',
     nameEn: 'Markdown Live Editor',
@@ -444,7 +495,8 @@ export const tools = [
     tags: ['markdown', 'md', 'editor', 'preview', 'documentacao']
   },
   {
-    id: 'contador-de-caracteres',
+    id: 'character-counter',
+    aliasIds: ['contador-de-caracteres'],
     categoryId: 'utilities',
     name: 'Contador de Caracteres',
     nameEn: 'Character & Word Counter',
@@ -455,3 +507,10 @@ export const tools = [
     tags: ['contador', 'palavras', 'caracteres', 'leitura', 'estatisticas']
   }
 ];
+
+// Helper: Resolve tool by exact ID or legacy alias
+export function findToolByIdOrAlias(searchId) {
+  if (!searchId) return null;
+  const clean = searchId.replace('#', '').trim().toLowerCase();
+  return tools.find(t => t.id === clean || (t.aliasIds && t.aliasIds.includes(clean))) || null;
+}
