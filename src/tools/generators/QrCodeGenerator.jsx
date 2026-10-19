@@ -1,30 +1,78 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { QrCode, Download, Copy, Check, Settings, Sparkles } from 'lucide-react';
+import { QrCode, Download, Copy, Check, Settings, Sparkles, Image as ImageIcon, Upload, Trash2, Ban } from 'lucide-react';
 import QRCodeLib from 'qrcode';
+import { drawQrWithLogo, getSvgWithLogo, PRESET_LOGOS } from '../../utils/qrCodeUtils';
 
 export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
   const [text, setText] = useState('https://stackkit.com.br');
-  const [size, setSize] = useState(260);
+  const [size, setSize] = useState(280);
   const [darkColor, setDarkColor] = useState('#000000');
   const [lightColor, setLightColor] = useState('#ffffff');
-  const [errorLevel, setErrorLevel] = useState('M'); // L, M, Q, H
+  const [errorLevel, setErrorLevel] = useState('H'); // Default H for best logo tolerance
   const [copied, setCopied] = useState(false);
+
+  // Logo / Image in QR Code state
+  const [logoPreset, setLogoPreset] = useState('none'); // 'none' | 'pix' | 'whatsapp' | 'globe' | 'star' | 'custom'
+  const [customLogoUrl, setCustomLogoUrl] = useState(null);
+  const [logoSizePercent, setLogoSizePercent] = useState(22);
+  const [logoShape, setLogoShape] = useState('rounded'); // 'rounded' | 'circle'
+  const fileInputRef = useRef(null);
   const canvasRef = useRef(null);
 
+  // Active logo data URL
+  const activeLogoUrl = logoPreset === 'custom'
+    ? customLogoUrl
+    : (PRESET_LOGOS.find(p => p.id === logoPreset)?.svg || null);
+
+  // Re-render QR code whenever properties change
   useEffect(() => {
     if (!canvasRef.current) return;
-    QRCodeLib.toCanvas(canvasRef.current, text || ' ', {
-      width: size,
-      margin: 2,
-      errorCorrectionLevel: errorLevel,
-      color: {
-        dark: darkColor,
-        light: lightColor
-      }
-    }, (err) => {
-      if (err) console.error(err);
+
+    drawQrWithLogo({
+      canvas: canvasRef.current,
+      text: text || ' ',
+      size,
+      darkColor,
+      lightColor,
+      errorLevel: activeLogoUrl ? 'H' : errorLevel,
+      logoUrl: activeLogoUrl,
+      logoSizePercent,
+      logoShape,
+      logoBgColor: lightColor
     });
-  }, [text, size, darkColor, lightColor, errorLevel]);
+  }, [text, size, darkColor, lightColor, errorLevel, activeLogoUrl, logoSizePercent, logoShape]);
+
+  // Handle user uploading custom image
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      if (onCopy) onCopy('Por favor, selecione um arquivo de imagem válido (PNG, JPG, SVG, WebP).');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      if (onCopy) onCopy('O arquivo deve ter no máximo 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setCustomLogoUrl(event.target.result);
+      setLogoPreset('custom');
+      setErrorLevel('H');
+      if (onCopy) onCopy('Imagem adicionada ao QR Code!');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveCustomLogo = () => {
+    setCustomLogoUrl(null);
+    setLogoPreset('none');
+    if (fileInputRef.current) fileInputRef.current.value = '';
+    if (onCopy) onCopy('Imagem removida do QR Code.');
+  };
 
   const handleDownloadPng = () => {
     if (!canvasRef.current) return;
@@ -33,22 +81,32 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
     a.href = url;
     a.download = `qrcode_${Date.now()}.png`;
     a.click();
-    if (onCopy) onCopy('QR Code baixado como PNG!');
+    if (onCopy) onCopy('QR Code com imagem baixado como PNG!');
   };
 
   const handleDownloadSvg = async () => {
     try {
-      const svgString = await QRCodeLib.toString(text || ' ', {
+      const baseSvg = await QRCodeLib.toString(text || ' ', {
         type: 'svg',
         width: size,
         margin: 2,
-        errorCorrectionLevel: errorLevel,
+        errorCorrectionLevel: activeLogoUrl ? 'H' : errorLevel,
         color: {
           dark: darkColor,
           light: lightColor
         }
       });
-      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+
+      const finalSvg = getSvgWithLogo({
+        svgString: baseSvg,
+        size,
+        logoUrl: activeLogoUrl,
+        logoSizePercent,
+        logoShape,
+        lightColor
+      });
+
+      const blob = new Blob([finalSvg], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -69,12 +127,12 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);
-        if (onCopy) onCopy('Imagem do QR Code copiada!');
+        if (onCopy) onCopy('Imagem do QR Code copiada para a área de transferência!');
       });
     } catch (e) {
       // Fallback: copy text
       navigator.clipboard.writeText(text);
-      if (onCopy) onCopy('Conteúdo copiado!');
+      if (onCopy) onCopy('Conteúdo de texto copiado!');
     }
   };
 
@@ -85,7 +143,7 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Settings size={16} />
-            <span>Conteúdo e Personalização</span>
+            <span>Conteúdo e Cores</span>
           </div>
         </div>
 
@@ -138,15 +196,138 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
             </div>
           </div>
 
+          {/* Logo / Image in QR Code Section */}
+          <div className="qr-logo-section">
+            <div className="qr-logo-section-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <ImageIcon size={15} className="text-cyan" />
+                <span style={{ fontWeight: 700, fontSize: 13 }}>Imagem ou Logotipo no Centro</span>
+              </div>
+              {activeLogoUrl && (
+                <span className="badge badge-emerald" style={{ fontSize: 10.5 }}>Ativo</span>
+              )}
+            </div>
+
+            {/* Presets and Upload Selector */}
+            <div className="qr-presets-row">
+              {PRESET_LOGOS.map(preset => {
+                const isActive = logoPreset === preset.id;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    className={`qr-preset-chip ${isActive ? 'active' : ''}`}
+                    onClick={() => {
+                      setLogoPreset(preset.id);
+                      if (preset.id !== 'none') setErrorLevel('H');
+                    }}
+                  >
+                    {preset.svg ? (
+                      <img src={preset.svg} alt={preset.label} className="qr-preset-icon-img" />
+                    ) : (
+                      <Ban size={13} style={{ opacity: 0.6 }} />
+                    )}
+                    <span>{preset.label}</span>
+                  </button>
+                );
+              })}
+
+              <button
+                type="button"
+                className={`qr-preset-chip ${logoPreset === 'custom' ? 'active' : ''}`}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload size={13} />
+                <span>Upload</span>
+              </button>
+            </div>
+
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              style={{ display: 'none' }}
+              onChange={handleFileUpload}
+            />
+
+            {/* Custom Logo Details */}
+            {logoPreset === 'custom' && customLogoUrl && (
+              <div className="qr-custom-logo-card">
+                <img src={customLogoUrl} alt="Custom Logo Preview" className="qr-custom-logo-thumb" />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)' }}>Sua imagem carregada</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Centralizada no QR Code</div>
+                </div>
+                <button
+                  type="button"
+                  className="city-action-btn delete-btn"
+                  title="Remover imagem"
+                  onClick={handleRemoveCustomLogo}
+                >
+                  <Trash2 size={13} />
+                </button>
+              </div>
+            )}
+
+            {/* Logo Customization Settings (if a logo is active) */}
+            {activeLogoUrl && (
+              <div className="qr-logo-options-box">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">
+                      <span>Tamanho da Imagem</span>
+                      <span className="badge badge-cyan">{logoSizePercent}%</span>
+                    </label>
+                    <input
+                      type="range"
+                      min="15"
+                      max="26"
+                      step="1"
+                      value={logoSizePercent}
+                      onChange={e => setLogoSizePercent(Number(e.target.value))}
+                      style={{ width: '100%', accentColor: 'var(--accent-cyan)' }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Formato do Emblema</label>
+                    <div className="qr-shape-toggle">
+                      <button
+                        type="button"
+                        className={`qr-shape-btn ${logoShape === 'rounded' ? 'active' : ''}`}
+                        onClick={() => setLogoShape('rounded')}
+                      >
+                        Arredondado
+                      </button>
+                      <button
+                        type="button"
+                        className={`qr-shape-btn ${logoShape === 'circle' ? 'active' : ''}`}
+                        onClick={() => setLogoShape('circle')}
+                      >
+                        Círculo
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ fontSize: 11, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 5, marginTop: 4 }}>
+                  <span>🛡️</span>
+                  <span>Correção de erro elevada automaticamente para <strong>Máxima (H: 30%)</strong> para garantir a leitura em celulares.</span>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">
-                <span>Dimensão</span>
+                <span>Dimensão do QR Code</span>
                 <span className="badge badge-cyan">{size}px</span>
               </label>
               <input
                 type="range"
-                min="160"
+                min="180"
                 max="400"
                 step="20"
                 value={size}
@@ -157,11 +338,15 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
 
             <div className="form-group">
               <label className="form-label">Correção de Erro</label>
-              <select value={errorLevel} onChange={e => setErrorLevel(e.target.value)}>
+              <select
+                value={activeLogoUrl ? 'H' : errorLevel}
+                disabled={Boolean(activeLogoUrl)}
+                onChange={e => setErrorLevel(e.target.value)}
+              >
                 <option value="L">Baixa (7% redundância)</option>
                 <option value="M">Média (15% redundância)</option>
                 <option value="Q">Alta (25% redundância)</option>
-                <option value="H">Máxima (30% redundância)</option>
+                <option value="H">Máxima (30% redundância - Recomendada com imagem)</option>
               </select>
             </div>
           </div>
@@ -205,7 +390,7 @@ export default function QrCodeGenerator({ onCopy, lang = 'pt' }) {
 
         <div className="panel-footer">
           <span>{text.length} caracteres codificados</span>
-          <span>Pronto para impressão ou leitura em celulares</span>
+          <span>{activeLogoUrl ? 'Logotipo central incorporado' : 'Pronto para impressão ou leitura em celulares'}</span>
         </div>
       </div>
     </div>
