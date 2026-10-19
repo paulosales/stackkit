@@ -110,6 +110,30 @@ export const tools = [
     popular: false,
     tags: ['hora extra', 'trabalho', 'clt', 'salario', 'dsr']
   },
+  {
+    id: 'nb-generator',
+    aliasIds: ['gerador-nb', 'numero-beneficio', 'nb-inss', 'inss-nb'],
+    categoryId: 'brazil',
+    name: 'Gerador de NB (INSS)',
+    nameEn: 'INSS Benefit Number Generator (NB)',
+    description: 'Gere e valide números de benefício do INSS (NB) com dígito verificador módulo 11 em lote ou individual',
+    descriptionEn: 'Generate and validate official Brazilian INSS benefit numbers (NB) with modulo 11 check digit',
+    icon: 'FileBadge',
+    popular: true,
+    tags: ['nb', 'inss', 'beneficio', 'previdencia', 'aposentadoria', 'gerador', 'validador', 'batch', 'lote']
+  },
+  {
+    id: 'processo-generator',
+    aliasIds: ['gerador-processo', 'numero-processo', 'processo-judicial', 'cnj-generator', 'lawsuit-generator'],
+    categoryId: 'brazil',
+    name: 'Gerador de Processo Judicial (CNJ)',
+    nameEn: 'Lawsuit Number Generator (CNJ)',
+    description: 'Gere e valide números de processo judicial no padrão unificado do CNJ (Resolução 65/2008) com cálculo módulo 97',
+    descriptionEn: 'Generate and validate official Brazilian lawsuit numbers formatted according to CNJ standard (Res. 65/2008) with modulo 97 checksum',
+    icon: 'Scale',
+    popular: true,
+    tags: ['processo', 'judicial', 'cnj', 'tribunal', 'stf', 'stj', 'trf', 'trt', 'tj', 'advogado', 'direito', 'gerador', 'validador', 'batch', 'lote']
+  },
 
   // GERADORES
   {

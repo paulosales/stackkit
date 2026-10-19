@@ -12,6 +12,8 @@ const CpfCnpjValidator = lazy(() => import('../tools/brazil/CpfCnpjValidator'));
 const PixGenerator = lazy(() => import('../tools/brazil/PixGenerator'));
 const PersonGenerator = lazy(() => import('../tools/brazil/PersonGenerator'));
 const OvertimeCalculator = lazy(() => import('../tools/brazil/OvertimeCalculator'));
+const NbGenerator = lazy(() => import('../tools/brazil/NbGenerator'));
+const ProcessoGenerator = lazy(() => import('../tools/brazil/ProcessoGenerator'));
 
 // Generator Tools - Lazy Loaded chunks
 const PaletteGenerator = lazy(() => import('../tools/generators/PaletteGenerator'));
@@ -135,6 +137,17 @@ export default function ToolLayout({
       case 'overtime-calculator':
       case 'calculo-hora-extra':
         return <OvertimeCalculator {...props} />;
+      case 'nb-generator':
+      case 'gerador-nb':
+      case 'numero-beneficio':
+      case 'nb-inss':
+        return <NbGenerator {...props} />;
+      case 'processo-generator':
+      case 'gerador-processo':
+      case 'numero-processo':
+      case 'processo-judicial':
+      case 'cnj-generator':
+        return <ProcessoGenerator {...props} />;
 
       // Generators
       case 'color-palette-generator':

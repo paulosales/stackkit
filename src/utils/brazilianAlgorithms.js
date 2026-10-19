@@ -504,3 +504,335 @@ export function generatePixPayload({
   const checksum = crc16CCITT(payload);
   return `${payload}${checksum}`;
 }
+
+// -------------------------------------------------------------
+// NÚMERO DO BENEFÍCIO (NB) - INSS
+// -------------------------------------------------------------
+
+/**
+ * Format raw NB into 000.000.000-0
+ * @param {string|number} nb 
+ */
+export function formatNB(nb) {
+  if (!nb) return '';
+  let clean = String(nb).replace(/\D/g, '');
+  while (clean.length < 10) {
+    clean = '0' + clean;
+  }
+  return `${clean.slice(0, 3)}.${clean.slice(3, 6)}.${clean.slice(6, 9)}-${clean.slice(9, 10)}`;
+}
+
+/**
+ * Generate a valid INSS Benefit Number (NB)
+ * Uses Modulo 11 with weights [2, 9, 8, 7, 6, 5, 4, 3, 2]
+ * @param {boolean} mask - format as 000.000.000-0
+ */
+export function generateNB(mask = true) {
+  const pesos = [2, 9, 8, 7, 6, 5, 4, 3, 2];
+  const digits = [];
+  let sum = 0;
+
+  for (let i = 0; i < 9; i++) {
+    const d = Math.floor(Math.random() * 10);
+    digits.push(d);
+    sum += d * pesos[i];
+  }
+
+  let dv = sum % 11;
+  if (dv === 0 || dv === 1) {
+    dv = 0;
+  } else {
+    dv = 11 - dv;
+  }
+
+  digits.push(dv);
+  const raw = digits.join('');
+  return mask ? formatNB(raw) : raw;
+}
+
+/**
+ * Validate an INSS Benefit Number (NB)
+ * @param {string} nb 
+ */
+export function validateNB(nb) {
+  if (!nb) return { valid: false, message: 'Número do Benefício vazio' };
+  const clean = cleanDigits(nb);
+  if (clean.length !== 10) {
+    return { valid: false, message: `O NB deve conter 10 dígitos (encontrados ${clean.length})` };
+  }
+
+  const digits = clean.split('').map(Number);
+  const pesos = [2, 9, 8, 7, 6, 5, 4, 3, 2];
+  let sum = 0;
+
+  for (let i = 0; i < 9; i++) {
+    sum += digits[i] * pesos[i];
+  }
+
+  let expectedDv = sum % 11;
+  if (expectedDv === 0 || expectedDv === 1) {
+    expectedDv = 0;
+  } else {
+    expectedDv = 11 - expectedDv;
+  }
+
+  if (digits[9] !== expectedDv) {
+    return {
+      valid: false,
+      message: `Dígito verificador inválido: esperado ${expectedDv}, encontrado ${digits[9]}`
+    };
+  }
+
+  return {
+    valid: true,
+    message: 'Número do Benefício (NB) válido',
+    details: {
+      sequence: clean.slice(0, 9),
+      dv: digits[9],
+      formatted: formatNB(clean)
+    }
+  };
+}
+
+// -------------------------------------------------------------
+// NÚMERO DE PROCESSO JUDICIAL UNIFICADO (CNJ) - Resolução 65/2008
+// Formato: NNNNNNN-DD.AAAA.J.TR.OOOO
+// -------------------------------------------------------------
+
+export const JUSTICE_SEGMENTS = [
+  { value: 0, label: 'Qualquer Segmento (Aleatório)', labelEn: 'Any Segment (Random)' },
+  { value: 1, label: '1 - STF (Supremo Tribunal Federal)', labelEn: '1 - STF (Supreme Federal Court)' },
+  { value: 2, label: '2 - CNJ (Conselho Nacional de Justiça)', labelEn: '2 - CNJ (National Justice Council)' },
+  { value: 3, label: '3 - STJ (Superior Tribunal de Justiça)', labelEn: '3 - STJ (Superior Court of Justice)' },
+  { value: 4, label: '4 - Justiça Federal (TRF)', labelEn: '4 - Federal Justice (TRF)' },
+  { value: 5, label: '5 - Justiça do Trabalho (TRT)', labelEn: '5 - Labor Justice (TRT)' },
+  { value: 6, label: '6 - Justiça Eleitoral (TRE)', labelEn: '6 - Electoral Justice (TRE)' },
+  { value: 7, label: '7 - Justiça Militar da União (CJM)', labelEn: '7 - Military Justice of the Union' },
+  { value: 8, label: '8 - Justiça dos Estados e DF (TJ)', labelEn: '8 - State Justice & DF (TJ)' },
+  { value: 9, label: '9 - Justiça Militar Estadual (TJM)', labelEn: '9 - State Military Justice (TJM)' }
+];
+
+export const JUSTICE_TRIBUNALS = {
+  1: [{ value: 0, label: '00 - STF Único', labelEn: '00 - Single STF' }],
+  2: [{ value: 0, label: '00 - CNJ Único', labelEn: '00 - Single CNJ' }],
+  3: [{ value: 0, label: '00 - STJ Único', labelEn: '00 - Single STJ' }],
+  4: [
+    { value: 1, label: '01 - TRF 1ª Região (DF, GO, TO, MT, BA, PI, MA, PA, AM, AC, RO, RR, AP)' },
+    { value: 2, label: '02 - TRF 2ª Região (RJ, ES)' },
+    { value: 3, label: '03 - TRF 3ª Região (SP, MS)' },
+    { value: 4, label: '04 - TRF 4ª Região (RS, PR, SC)' },
+    { value: 5, label: '05 - TRF 5ª Região (PE, CE, AL, SE, RN, PB)' },
+    { value: 6, label: '06 - TRF 6ª Região (MG)' }
+  ],
+  5: [
+    { value: 1, label: '01 - TRT 1ª Região (RJ)' },
+    { value: 2, label: '02 - TRT 2ª Região (SP - Capital/Litoral)' },
+    { value: 3, label: '03 - TRT 3ª Região (MG)' },
+    { value: 4, label: '04 - TRT 4ª Região (RS)' },
+    { value: 5, label: '05 - TRT 5ª Região (BA)' },
+    { value: 6, label: '06 - TRT 6ª Região (PE)' },
+    { value: 7, label: '07 - TRT 7ª Região (CE)' },
+    { value: 8, label: '08 - TRT 8ª Região (PA/AP)' },
+    { value: 9, label: '09 - TRT 9ª Região (PR)' },
+    { value: 10, label: '10 - TRT 10ª Região (DF/TO)' },
+    { value: 11, label: '11 - TRT 11ª Região (AM/RR)' },
+    { value: 12, label: '12 - TRT 12ª Região (SC)' },
+    { value: 13, label: '13 - TRT 13ª Região (PB)' },
+    { value: 14, label: '14 - TRT 14ª Região (RO/AC)' },
+    { value: 15, label: '15 - TRT 15ª Região (Campinas/Interior SP)' },
+    { value: 16, label: '16 - TRT 16ª Região (MA)' },
+    { value: 17, label: '17 - TRT 17ª Região (ES)' },
+    { value: 18, label: '18 - TRT 18ª Região (GO)' },
+    { value: 19, label: '19 - TRT 19ª Região (AL)' },
+    { value: 20, label: '20 - TRT 20ª Região (SE)' },
+    { value: 21, label: '21 - TRT 21ª Região (RN)' },
+    { value: 22, label: '22 - TRT 22ª Região (PI)' },
+    { value: 23, label: '23 - TRT 23ª Região (MT)' },
+    { value: 24, label: '24 - TRT 24ª Região (MS)' }
+  ],
+  6: [
+    { value: 1, label: '01 - TRE Acre (AC)' },
+    { value: 2, label: '02 - TRE Alagoas (AL)' },
+    { value: 3, label: '03 - TRE Amapá (AP)' },
+    { value: 4, label: '04 - TRE Amazonas (AM)' },
+    { value: 5, label: '05 - TRE Bahia (BA)' },
+    { value: 6, label: '06 - TRE Ceará (CE)' },
+    { value: 7, label: '07 - TRE Distrito Federal (DF)' },
+    { value: 8, label: '08 - TRE Espírito Santo (ES)' },
+    { value: 9, label: '09 - TRE Goiás (GO)' },
+    { value: 10, label: '10 - TRE Maranhão (MA)' },
+    { value: 11, label: '11 - TRE Mato Grosso (MT)' },
+    { value: 12, label: '12 - TRE Mato Grosso do Sul (MS)' },
+    { value: 13, label: '13 - TRE Minas Gerais (MG)' },
+    { value: 14, label: '14 - TRE Pará (PA)' },
+    { value: 15, label: '15 - TRE Paraíba (PB)' },
+    { value: 16, label: '16 - TRE Paraná (PR)' },
+    { value: 17, label: '17 - TRE Pernambuco (PE)' },
+    { value: 18, label: '18 - TRE Piauí (PI)' },
+    { value: 19, label: '19 - TRE Rio de Janeiro (RJ)' },
+    { value: 20, label: '20 - TRE Rio Grande do Norte (RN)' },
+    { value: 21, label: '21 - TRE Rio Grande do Sul (RS)' },
+    { value: 22, label: '22 - TRE Rondônia (RO)' },
+    { value: 23, label: '23 - TRE Roraima (RR)' },
+    { value: 24, label: '24 - TRE Santa Catarina (SC)' },
+    { value: 25, label: '25 - TRE São Paulo (SP)' },
+    { value: 26, label: '26 - TRE Sergipe (SE)' },
+    { value: 27, label: '27 - TRE Tocantins (TO)' }
+  ],
+  7: [
+    { value: 1, label: '01 - 1ª CJM (RJ/ES)' },
+    { value: 2, label: '02 - 2ª CJM (SP)' },
+    { value: 3, label: '03 - 3ª CJM (RS)' },
+    { value: 4, label: '04 - 4ª CJM (MG)' },
+    { value: 5, label: '05 - 5ª CJM (PR/SC)' },
+    { value: 6, label: '06 - 6ª CJM (BA/SE)' },
+    { value: 7, label: '07 - 7ª CJM (PE/AL/PB/RN)' },
+    { value: 8, label: '08 - 8ª CJM (PA/AP/MA)' },
+    { value: 9, label: '09 - 9ª CJM (MS/MT)' },
+    { value: 10, label: '10 - 10ª CJM (CE/PI)' },
+    { value: 11, label: '11 - 11ª CJM (DF/GO/TO)' },
+    { value: 12, label: '12 - 12ª CJM (AM/AC/RO/RR)' }
+  ],
+  8: [
+    { value: 1, label: '01 - TJAC (Acre)' },
+    { value: 2, label: '02 - TJAL (Alagoas)' },
+    { value: 3, label: '03 - TJAP (Amapá)' },
+    { value: 4, label: '04 - TJAM (Amazonas)' },
+    { value: 5, label: '05 - TJBA (Bahia)' },
+    { value: 6, label: '06 - TJCE (Ceará)' },
+    { value: 7, label: '07 - TJDFT (Distrito Federal e Territórios)' },
+    { value: 8, label: '08 - TJES (Espírito Santo)' },
+    { value: 9, label: '09 - TJGO (Goiás)' },
+    { value: 10, label: '10 - TJMA (Maranhão)' },
+    { value: 11, label: '11 - TJMT (Mato Grosso)' },
+    { value: 12, label: '12 - TJMS (Mato Grosso do Sul)' },
+    { value: 13, label: '13 - TJMG (Minas Gerais)' },
+    { value: 14, label: '14 - TJPA (Pará)' },
+    { value: 15, label: '15 - TJPB (Paraíba)' },
+    { value: 16, label: '16 - TJPR (Paraná)' },
+    { value: 17, label: '17 - TJPE (Pernambuco)' },
+    { value: 18, label: '18 - TJPI (Piauí)' },
+    { value: 19, label: '19 - TJRJ (Rio de Janeiro)' },
+    { value: 20, label: '20 - TJRN (Rio Grande do Norte)' },
+    { value: 21, label: '21 - TJRS (Rio Grande do Sul)' },
+    { value: 22, label: '22 - TJRO (Rondônia)' },
+    { value: 23, label: '23 - TJRR (Roraima)' },
+    { value: 24, label: '24 - TJSC (Santa Catarina)' },
+    { value: 25, label: '25 - TJSP (São Paulo)' },
+    { value: 26, label: '26 - TJSE (Sergipe)' },
+    { value: 27, label: '27 - TJTO (Tocantins)' }
+  ],
+  9: [
+    { value: 13, label: '13 - TJMMG (Minas Gerais)' },
+    { value: 21, label: '21 - TJMRS (Rio Grande do Sul)' },
+    { value: 26, label: '26 - TJMSP (São Paulo)' }
+  ]
+};
+
+const padZero = (num, size) => String(num).padStart(size, '0');
+
+/**
+ * Calculate CNJ checksum (mod 97)
+ */
+export function checksumCNJ(sequence, ano, orgao, tribunal, origem) {
+  const r1 = Number(sequence) % 97;
+  const r2 = Number(`${r1}${padZero(ano, 4)}${orgao}${padZero(tribunal, 2)}`) % 97;
+  const r3 = Number(`${r2}${padZero(origem, 4)}00`) % 97;
+  return 98 - r3;
+}
+
+/**
+ * Generate a valid Lawsuit Process Number (CNJ)
+ * @param {object} options
+ */
+export function generateNumeroProcesso(options = {}) {
+  const { orgao = 0, tribunal = 0, ano = null, mask = true } = options;
+
+  const sequence = Math.floor(Math.random() * 9999999) + 1;
+  const currentYear = new Date().getFullYear();
+  const anoAjuizamento = ano && !isNaN(Number(ano)) && Number(ano) >= 1900 && Number(ano) <= 2100
+    ? Number(ano)
+    : currentYear;
+
+  let orgaoSegmento = Number(orgao);
+  if (!orgaoSegmento || orgaoSegmento < 1 || orgaoSegmento > 9) {
+    orgaoSegmento = Math.floor(Math.random() * 9) + 1;
+  }
+
+  let selectedTribunal = Number(tribunal);
+  const possibleTribunals = JUSTICE_TRIBUNALS[orgaoSegmento];
+  if (!selectedTribunal && possibleTribunals && possibleTribunals.length) {
+    const randomPick = possibleTribunals[Math.floor(Math.random() * possibleTribunals.length)];
+    selectedTribunal = randomPick.value;
+  } else if (!selectedTribunal) {
+    selectedTribunal = 0;
+  }
+
+  const origem = Math.floor(Math.random() * 8998) + 1;
+
+  const dv = checksumCNJ(sequence, anoAjuizamento, orgaoSegmento, selectedTribunal, origem);
+
+  const formatted = `${padZero(sequence, 7)}-${padZero(dv, 2)}.${padZero(anoAjuizamento, 4)}.${padZero(orgaoSegmento, 1)}.${padZero(selectedTribunal, 2)}.${padZero(origem, 4)}`;
+
+  return mask ? formatted : formatted.replace(/\D/g, '');
+}
+
+/**
+ * Format raw 20-digit string into CNJ format NNNNNNN-DD.AAAA.J.TR.OOOO
+ * @param {string} val 
+ */
+export function formatNumeroProcesso(val) {
+  if (!val) return '';
+  const clean = cleanDigits(val);
+  if (clean.length !== 20) return val;
+  return `${clean.slice(0, 7)}-${clean.slice(7, 9)}.${clean.slice(9, 13)}.${clean.slice(13, 14)}.${clean.slice(14, 16)}.${clean.slice(16, 20)}`;
+}
+
+/**
+ * Validate a Lawsuit Process Number (CNJ)
+ * @param {string} val 
+ */
+export function validateNumeroProcesso(val) {
+  if (!val) return { valid: false, message: 'Número de processo vazio' };
+  const clean = cleanDigits(val);
+  if (clean.length !== 20) {
+    return { valid: false, message: `O número de processo CNJ deve conter 20 dígitos (encontrados ${clean.length})` };
+  }
+
+  const sequence = Number(clean.slice(0, 7));
+  const dv = Number(clean.slice(7, 9));
+  const ano = Number(clean.slice(9, 13));
+  const orgao = Number(clean.slice(13, 14));
+  const tribunal = Number(clean.slice(14, 16));
+  const origem = Number(clean.slice(16, 20));
+
+  const expectedDv = checksumCNJ(sequence, ano, orgao, tribunal, origem);
+
+  if (dv !== expectedDv) {
+    return {
+      valid: false,
+      message: `Dígito verificador inválido: esperado ${padZero(expectedDv, 2)}, encontrado ${padZero(dv, 2)}`
+    };
+  }
+
+  const segmentObj = JUSTICE_SEGMENTS.find(s => s.value === orgao);
+  const tribunalObj = JUSTICE_TRIBUNALS[orgao]?.find(t => t.value === tribunal);
+
+  return {
+    valid: true,
+    message: 'Número de processo judicial válido (Padrão CNJ)',
+    details: {
+      sequence: padZero(sequence, 7),
+      dv: padZero(dv, 2),
+      ano,
+      orgao,
+      orgaoName: segmentObj ? segmentObj.label : `Órgão ${orgao}`,
+      orgaoNameEn: segmentObj ? segmentObj.labelEn : `Organ ${orgao}`,
+      tribunal: padZero(tribunal, 2),
+      tribunalName: tribunalObj ? tribunalObj.label : `Tribunal ${tribunal}`,
+      origem: padZero(origem, 4),
+      formatted: formatNumeroProcesso(clean)
+    }
+  };
+}
+
