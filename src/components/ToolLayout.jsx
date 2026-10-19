@@ -14,6 +14,7 @@ import PersonGenerator from '../tools/brazil/PersonGenerator';
 import OvertimeCalculator from '../tools/brazil/OvertimeCalculator';
 
 // Generator Tools
+import PaletteGenerator from '../tools/generators/PaletteGenerator';
 import QrCodeGenerator from '../tools/generators/QrCodeGenerator';
 import PasswordGenerator from '../tools/generators/PasswordGenerator';
 import WhatsAppLinkGenerator from '../tools/generators/WhatsAppLinkGenerator';
@@ -101,6 +102,7 @@ export default function ToolLayout({
       case 'calculo-hora-extra': return <OvertimeCalculator {...props} />;
 
       // Generators
+      case 'gerador-paleta-cores': return <PaletteGenerator {...props} />;
       case 'gerar-qrcode': return <QrCodeGenerator {...props} />;
       case 'gerar-senha': return <PasswordGenerator {...props} />;
       case 'link-whatsapp': return <WhatsAppLinkGenerator {...props} />;

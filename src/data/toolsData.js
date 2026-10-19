@@ -104,6 +104,17 @@ export const tools = [
 
   // GERADORES
   {
+    id: 'gerador-paleta-cores',
+    categoryId: 'generators',
+    name: 'Gerador de Paleta de Cores (Coolors)',
+    nameEn: 'Color Palette Generator (Coolors)',
+    description: 'Gere paletas harmônicas com barra de espaço, trave cores, ajuste tons e exporte em CSS, SVG e PNG',
+    descriptionEn: 'Generate harmonious color palettes with spacebar, lock colors, pick shades, and export to CSS, SVG, and PNG',
+    icon: 'Palette',
+    popular: true,
+    tags: ['coolors', 'paleta', 'cores', 'color', 'palette', 'harmonia', 'css', 'design', 'contraste', 'daltonismo']
+  },
+  {
     id: 'gerar-qrcode',
     categoryId: 'generators',
     name: 'Gerar QR Code',
