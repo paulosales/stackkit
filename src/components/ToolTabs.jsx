@@ -48,7 +48,7 @@ export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onClo
                 e.stopPropagation();
                 onCloseTab(tool.id);
               }}
-              aria-label="Fechar aba"
+              aria-label={lang === 'pt' ? 'Fechar aba' : 'Close tab'}
             >
               <X size={12} />
             </button>

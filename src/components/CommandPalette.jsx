@@ -19,7 +19,7 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
     if (!query.trim()) return true;
     const q = query.toLowerCase();
     const nameMatch = t.name.toLowerCase().includes(q) || (t.nameEn && t.nameEn.toLowerCase().includes(q));
-    const descMatch = t.description.toLowerCase().includes(q);
+    const descMatch = t.description.toLowerCase().includes(q) || (t.descriptionEn && t.descriptionEn.toLowerCase().includes(q));
     const tagMatch = t.tags && t.tags.some(tag => tag.toLowerCase().includes(q));
     return nameMatch || descMatch || tagMatch;
   });
@@ -110,9 +110,9 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
 
         <div className="command-footer">
           <div style={{ display: 'flex', gap: 12 }}>
-            <span><kbd>↑</kbd> <kbd>↓</kbd> para navegar</span>
-            <span><kbd>Enter</kbd> para abrir</span>
-            <span><kbd>Esc</kbd> para fechar</span>
+            <span><kbd>↑</kbd> <kbd>↓</kbd> {lang === 'pt' ? 'para navegar' : 'to navigate'}</span>
+            <span><kbd>Enter</kbd> {lang === 'pt' ? 'para abrir' : 'to open'}</span>
+            <span><kbd>Esc</kbd> {lang === 'pt' ? 'para fechar' : 'to close'}</span>
           </div>
           <div>{filtered.length} {lang === 'pt' ? 'ferramentas' : 'tools'}</div>
         </div>

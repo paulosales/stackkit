@@ -84,7 +84,7 @@ export default function AppHeader({
           className="btn-icon"
           onClick={onShowAbout}
           title={lang === 'pt' ? 'Sobre o StackKit' : 'About StackKit'}
-          aria-label="Sobre"
+          aria-label={lang === 'pt' ? 'Sobre o StackKit' : 'About StackKit'}
         >
           <Info size={18} />
         </button>

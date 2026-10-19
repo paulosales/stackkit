@@ -260,7 +260,9 @@ export default function ToolLayout({
                 {lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
               </h1>
               {category && (
-                <span className="badge badge-cyan">{category.name}</span>
+                <span className="badge badge-cyan">
+                  {lang === 'pt' ? category.name : (category.nameEn || category.name)}
+                </span>
               )}
             </div>
             <p className="tool-header-desc">

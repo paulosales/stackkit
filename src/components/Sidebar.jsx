@@ -43,8 +43,8 @@ export default function Sidebar({
         <button
           className="sidebar-collapse-btn"
           onClick={onToggleCollapse}
-          title={collapsed ? 'Expandir Menu' : 'Recolher Menu'}
-          aria-label="Toggle Sidebar"
+          title={collapsed ? (lang === 'pt' ? 'Expandir Menu' : 'Expand Sidebar') : (lang === 'pt' ? 'Recolher Menu' : 'Collapse Sidebar')}
+          aria-label={collapsed ? (lang === 'pt' ? 'Expandir Menu' : 'Expand Sidebar') : (lang === 'pt' ? 'Recolher Menu' : 'Collapse Sidebar')}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
@@ -97,7 +97,7 @@ export default function Sidebar({
                   key={tool.id}
                   className={`sidebar-menu-item ${activeToolId === tool.id ? 'active' : ''}`}
                   onClick={() => onSelectTool(tool.id)}
-                  title={tool.name}
+                  title={lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
                 >
                   <div className="sidebar-menu-item-icon" style={{ color: 'var(--accent-amber)' }}>
                     <DynamicIcon name={tool.icon} size={16} />
@@ -151,11 +151,11 @@ export default function Sidebar({
         <button
           className="header-control-btn"
           onClick={onToggleTheme}
-          title={theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
+          title={theme === 'dark' ? (lang === 'pt' ? 'Mudar para tema claro' : 'Switch to light theme') : (lang === 'pt' ? 'Mudar para tema escuro' : 'Switch to dark theme')}
           style={{ flex: 1, justifyContent: 'center' }}
         >
           {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-          {!collapsed && <span>{theme === 'dark' ? 'Claro' : 'Escuro'}</span>}
+          {!collapsed && <span>{theme === 'dark' ? (lang === 'pt' ? 'Claro' : 'Light') : (lang === 'pt' ? 'Escuro' : 'Dark')}</span>}
         </button>
 
         <button

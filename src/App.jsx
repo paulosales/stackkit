@@ -10,6 +10,37 @@ import ToolLayout from './components/ToolLayout';
 import { X, Check, Shield, Zap, Terminal, Code2 } from 'lucide-react';
 import './App.css';
 
+// Detect default language from user's explicit preference or browser preferences
+function getInitialLanguage() {
+  try {
+    const userSelected = localStorage.getItem('stackkit_user_lang');
+    if (userSelected === 'pt' || userSelected === 'en') {
+      return userSelected;
+    }
+  } catch {
+    // Ignore localStorage errors
+  }
+
+  try {
+    // Read browser preferred languages array or fallback to primary navigator.language
+    const browserLangs = (typeof navigator !== 'undefined' && navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [(typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)) || ''];
+
+    for (const langTag of browserLangs) {
+      if (!langTag) continue;
+      const clean = langTag.toLowerCase();
+      if (clean.startsWith('pt')) return 'pt';
+      if (clean.startsWith('en')) return 'en';
+    }
+  } catch {
+    // Ignore navigator errors
+  }
+
+  // Fallback to English for international users
+  return 'en';
+}
+
 export default function App() {
   const [activeToolId, setActiveToolId] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -27,9 +58,7 @@ export default function App() {
     return localStorage.getItem('stackkit_theme') || 'dark';
   });
 
-  const [lang, setLang] = useState(() => {
-    return localStorage.getItem('stackkit_lang') || 'pt';
-  });
+  const [lang, setLang] = useState(getInitialLanguage);
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     return localStorage.getItem('stackkit_sidebar_collapsed') === 'true';
@@ -53,16 +82,46 @@ export default function App() {
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
+  // Explicit user language toggle handler
+  const handleToggleLang = () => {
+    setLang(prevLang => {
+      const nextLang = prevLang === 'pt' ? 'en' : 'pt';
+      try {
+        localStorage.setItem('stackkit_user_lang', nextLang);
+        localStorage.setItem('stackkit_lang', nextLang);
+      } catch {
+        // ignore
+      }
+      return nextLang;
+    });
+  };
+
   // Sync theme
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('stackkit_theme', theme);
   }, [theme]);
 
-  // Sync lang
+  // Sync lang to document html tag
   useEffect(() => {
-    localStorage.setItem('stackkit_lang', lang);
+    document.documentElement.lang = lang;
   }, [lang]);
+
+  // React to browser language change if user hasn't explicitly overridden it
+  useEffect(() => {
+    const handleBrowserLanguageChange = () => {
+      try {
+        if (!localStorage.getItem('stackkit_user_lang')) {
+          setLang(getInitialLanguage());
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    window.addEventListener('languagechange', handleBrowserLanguageChange);
+    return () => window.removeEventListener('languagechange', handleBrowserLanguageChange);
+  }, []);
 
   // Sync favorites
   useEffect(() => {
@@ -79,26 +138,32 @@ export default function App() {
     if (activeToolId) {
       const tool = tools.find(t => t.id === activeToolId);
       if (tool) {
-        document.title = `${tool.nameEn} — Free Online Developer Tool | StackKit DevStudio`;
+        const titleName = lang === 'pt' ? tool.name : (tool.nameEn || tool.name);
+        const desc = lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description);
+        document.title = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc) {
           metaDesc.setAttribute(
             'content',
-            `${tool.descriptionEn}. Free, private, client-side tool with instant results.`
+            `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`
           );
         }
       }
     } else {
-      document.title = 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator';
+      document.title = lang === 'pt'
+        ? 'StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores'
+        : 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute(
           'content',
-          'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.'
+          lang === 'pt'
+            ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
+            : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.'
         );
       }
     }
-  }, [activeToolId]);
+  }, [activeToolId, lang]);
 
   // English & Alias Hash Router
   useEffect(() => {
@@ -213,7 +278,7 @@ export default function App() {
         theme={theme}
         onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
         lang={lang}
-        onToggleLang={() => setLang(l => l === 'pt' ? 'en' : 'pt')}
+        onToggleLang={handleToggleLang}
         mobileOpen={mobileOpen}
         onCloseMobile={() => setMobileOpen(false)}
       />
@@ -296,32 +361,46 @@ export default function App() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: 18, fontWeight: 800 }}>StackKit DevStudio</h3>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Versão 2.1.0 · React 19 & Vite</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                    {lang === 'pt' ? 'Versão 2.1.0 · React 19 & Vite' : 'Version 2.1.0 · React 19 & Vite'}
+                  </div>
                 </div>
               </div>
-              <button className="btn-icon" onClick={() => setAboutOpen(false)}>
+              <button className="btn-icon" onClick={() => setAboutOpen(false)} aria-label={lang === 'pt' ? 'Fechar' : 'Close'}>
                 <X size={18} />
               </button>
             </div>
 
             <div style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 12 }}>
               <p>
-                O <strong>StackKit DevStudio</strong> foi desenvolvido para oferecer a experiência mais rápida, completa e elegante para desenvolvedores e equipes globais.
+                {lang === 'pt' ? (
+                  <>O <strong>StackKit DevStudio</strong> foi desenvolvido para oferecer a experiência mais rápida, completa e elegante para desenvolvedores e equipes globais.</>
+                ) : (
+                  <><strong>StackKit DevStudio</strong> was engineered to provide the fastest, most comprehensive, and elegant experience for developers and global teams.</>
+                )}
               </p>
               <p>
-                Apresenta 40 ferramentas essenciais, incluindo gerador de paleta de cores (estilo Coolors), conversor de fuso horário mundial (World Time Buddy), geradores de QR Code/senhas/hashes, formatadores e codificadores, com execução 100% no seu navegador.
+                {lang === 'pt' ? (
+                  <>Apresenta 40 ferramentas essenciais, incluindo gerador de paleta de cores (estilo Coolors), conversor de fuso horário mundial (World Time Buddy), geradores de QR Code/senhas/hashes, formatadores e codificadores, com execução 100% no seu navegador.</>
+                ) : (
+                  <>Features 40 essential developer utilities including a color palette generator (Coolors style), world time converter (World Time Buddy), QR Code / password / hash generators, formatters, and encoders — running 100% client-side in your browser.</>
+                )}
               </p>
               <div style={{
                 padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)',
                 border: '1px solid var(--border-subtle)', fontSize: 12
               }}>
-                🔒 <strong>100% Client-Side & Privado:</strong> Seus dados, textos e códigos nunca saem do seu computador.
+                {lang === 'pt' ? (
+                  <>🔒 <strong>100% Client-Side & Privado:</strong> Seus dados, textos e códigos nunca saem do seu computador.</>
+                ) : (
+                  <>🔒 <strong>100% Client-Side & Private:</strong> Your data, text, and code never leave your browser.</>
+                )}
               </div>
             </div>
 
             <div style={{ marginTop: 20, textAlign: 'right' }}>
               <button className="btn-primary" onClick={() => setAboutOpen(false)}>
-                Entendido
+                {lang === 'pt' ? 'Entendido' : 'Got it'}
               </button>
             </div>
           </div>
