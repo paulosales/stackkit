@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { Resvg } from '@resvg/resvg-js';
 import { tools } from '../src/data/toolsData.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -255,29 +255,28 @@ export function generateBannerSvg({
 
 function renderAndSaveBanner(config, slug, aliases = []) {
   const svg = generateBannerSvg(config);
-  const tempSvgPath = path.resolve('/tmp', `banner_${slug}.svg`);
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: 'width', value: 1200 }
+  });
+  const pngData = resvg.render();
+  const pngBuffer = pngData.asPng();
+
   const publicPngPath = path.resolve(publicOgDir, `${slug}.png`);
-  
-  fs.writeFileSync(tempSvgPath, svg, 'utf-8');
-  execSync(`sips -s format png "${tempSvgPath}" --out "${publicPngPath}" > /dev/null 2>&1`);
+  fs.writeFileSync(publicPngPath, pngBuffer);
 
   // Copy to dist/og if dist exists
   if (fs.existsSync(distOgDir)) {
-    fs.copyFileSync(publicPngPath, path.resolve(distOgDir, `${slug}.png`));
+    fs.writeFileSync(path.resolve(distOgDir, `${slug}.png`), pngBuffer);
   }
 
   // Handle aliases (symlink or copy)
   for (const alias of aliases) {
     const aliasPublicPng = path.resolve(publicOgDir, `${alias}.png`);
-    fs.copyFileSync(publicPngPath, aliasPublicPng);
+    fs.writeFileSync(aliasPublicPng, pngBuffer);
     if (fs.existsSync(distOgDir)) {
-      fs.copyFileSync(publicPngPath, path.resolve(distOgDir, `${alias}.png`));
+      fs.writeFileSync(path.resolve(distOgDir, `${alias}.png`), pngBuffer);
     }
   }
-
-  try {
-    fs.unlinkSync(tempSvgPath);
-  } catch (e) {}
 }
 
 console.log(`Generating English Open Graph banners (1200x630 PNG) for all ${tools.length} tools...`);
