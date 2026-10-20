@@ -1387,6 +1387,7 @@
   flex-shrink: 0;
   position: relative;
   transition: all 0.15s ease;
+  padding: 0px;
 }
 
 .cct-gov-radio:checked {
@@ -1416,6 +1417,7 @@
   cursor: pointer;
   flex-shrink: 0;
   position: relative;
+  padding: 0px;
 }
 
 .cct-gov-checkbox:checked {
@@ -1595,9 +1597,17 @@
   flex-shrink: 0;
 }
 
-.cct-gov-legend-color.yellow { background: #eab308; }
-.cct-gov-legend-color.gray { background: #9ca3af; }
-.cct-gov-legend-color.blue { background: #284162; }
+.cct-gov-legend-color.yellow {
+  background: #eab308;
+}
+
+.cct-gov-legend-color.gray {
+  background: #9ca3af;
+}
+
+.cct-gov-legend-color.blue {
+  background: #284162;
+}
 
 /* Simulation Results Certificate (Official Style) */
 .cct-gov-results-card {
