@@ -45,6 +45,16 @@ function getInitialLanguage() {
   return 'en';
 }
 
+const DEFAULT_FAVORITES = [
+  'pix-generator',
+  'email-signature-generator',
+  'color-palette-generator',
+  'password-generator',
+  'whatsapp-link-generator',
+  'world-time-buddy',
+  'canadian-citizenship-test'
+];
+
 export default function App() {
   const [activeToolId, setActiveToolId] = useState(null);
   const [compliancePage, setCompliancePage] = useState(null);
@@ -53,9 +63,20 @@ export default function App() {
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('stackkit_favorites');
-      return saved ? JSON.parse(saved) : ['cpf-generator', 'json-formatter', 'pix-generator', 'jwt-inspector'];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Automatically migrate users having legacy default 4 favorites
+        const legacyDefault = ['cpf-generator', 'json-formatter', 'pix-generator', 'jwt-inspector'];
+        const isLegacy = Array.isArray(parsed) &&
+          parsed.length === legacyDefault.length &&
+          legacyDefault.every(id => parsed.includes(id));
+        if (!isLegacy && Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+      return DEFAULT_FAVORITES;
     } catch {
-      return ['cpf-generator', 'json-formatter', 'pix-generator', 'jwt-inspector'];
+      return DEFAULT_FAVORITES;
     }
   });
 

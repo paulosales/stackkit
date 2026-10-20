@@ -193,7 +193,7 @@ export const tools = [
     description: 'Crie links diretos para WhatsApp prontos para compartilhar com mensagem',
     descriptionEn: 'Create click-to-chat WhatsApp direct links with pre-filled messages',
     icon: 'MessageCircle',
-    popular: false,
+    popular: true,
     tags: ['whatsapp', 'link', 'wa.me', 'mensagem', 'contato']
   },
   {
