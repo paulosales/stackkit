@@ -7,7 +7,11 @@ import CommandPalette from './components/CommandPalette';
 import ToastContainer from './components/ToastContainer';
 import CatalogView from './components/CatalogView';
 import ToolLayout from './components/ToolLayout';
+import PrivacyPolicy from './components/compliance/PrivacyPolicy';
+import TermsOfService from './components/compliance/TermsOfService';
+import AboutUs from './components/compliance/AboutUs';
 import { X, Check, Shield, Zap, Terminal, Code2 } from 'lucide-react';
+
 import './App.css';
 
 // Detect default language from user's explicit preference or browser preferences
@@ -43,6 +47,7 @@ function getInitialLanguage() {
 
 export default function App() {
   const [activeToolId, setActiveToolId] = useState(null);
+  const [compliancePage, setCompliancePage] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [openToolIds, setOpenToolIds] = useState([]);
   const [favorites, setFavorites] = useState(() => {
@@ -156,7 +161,54 @@ export default function App() {
       }
     };
 
-    if (activeToolId) {
+    if (compliancePage) {
+      if (compliancePage === 'privacy-policy') {
+        const title = lang === 'pt'
+          ? 'Política de Privacidade | StackKit DevStudio'
+          : 'Privacy Policy | StackKit DevStudio';
+        const desc = lang === 'pt'
+          ? 'Política de privacidade do StackKit DevStudio: arquitetura 100% client-side, sem armazenamento de dados em servidores, e conformidade estrita com LGPD, GDPR e Google AdSense.'
+          : 'StackKit DevStudio Privacy Policy: 100% client-side architecture, zero server data storage, and strict compliance with LGPD, GDPR, and Google AdSense.';
+        const url = 'https://stackkit.com.br/privacy-policy';
+
+        document.title = title;
+        updateMetaTag('meta[name="description"]', 'content', desc);
+        updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateMetaTag('meta[property="og:title"]', 'content', title);
+        updateMetaTag('meta[property="og:description"]', 'content', desc);
+        updateMetaTag('meta[property="og:url"]', 'content', url);
+      } else if (compliancePage === 'terms-of-service') {
+        const title = lang === 'pt'
+          ? 'Termos de Serviço e Uso | StackKit DevStudio'
+          : 'Terms of Service | StackKit DevStudio';
+        const desc = lang === 'pt'
+          ? 'Termos de uso e diretrizes para desenvolvedores e testes de software no StackKit DevStudio.'
+          : 'Terms of service and software testing guidelines for StackKit DevStudio users.';
+        const url = 'https://stackkit.com.br/terms-of-service';
+
+        document.title = title;
+        updateMetaTag('meta[name="description"]', 'content', desc);
+        updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateMetaTag('meta[property="og:title"]', 'content', title);
+        updateMetaTag('meta[property="og:description"]', 'content', desc);
+        updateMetaTag('meta[property="og:url"]', 'content', url);
+      } else if (compliancePage === 'about') {
+        const title = lang === 'pt'
+          ? 'Sobre o StackKit DevStudio | Ferramentas Gratuitas para Desenvolvedores'
+          : 'About StackKit DevStudio | Free Developer Tools & Workstation';
+        const desc = lang === 'pt'
+          ? 'Conheça o StackKit DevStudio: missão, arquitetura client-side de alta performance e compromisso com privacidade para desenvolvedores.'
+          : 'Learn about StackKit DevStudio: mission, high-performance client-side architecture, and developer privacy standards.';
+        const url = 'https://stackkit.com.br/about';
+
+        document.title = title;
+        updateMetaTag('meta[name="description"]', 'content', desc);
+        updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateMetaTag('meta[property="og:title"]', 'content', title);
+        updateMetaTag('meta[property="og:description"]', 'content', desc);
+        updateMetaTag('meta[property="og:url"]', 'content', url);
+      }
+    } else if (activeToolId) {
       const tool = tools.find(t => t.id === activeToolId);
       if (tool) {
         const titleName = lang === 'pt' ? tool.name : (tool.nameEn || tool.name);
@@ -192,11 +244,31 @@ export default function App() {
       updateMetaTag('meta[name="twitter:title"]', 'content', defaultTitle);
       updateMetaTag('meta[name="twitter:description"]', 'content', defaultDesc);
     }
-  }, [activeToolId, lang]);
+  }, [activeToolId, compliancePage, lang]);
 
-  // Clean Path & Hash Router (supports /jwt-inspector, /#jwt-inspector, and window.__INITIAL_TOOL_ID__)
+  // Clean Path & Hash Router (supports /jwt-inspector, /privacy-policy, /terms-of-service, /about)
   useEffect(() => {
     const resolveToolFromUrl = () => {
+      const pathnameSlug = window.location.pathname.replace(/^\/|\/$/g, '').trim().toLowerCase();
+      const rawHash = window.location.hash.replace(/^#\/?/, '').trim().split('?')[0].toLowerCase();
+      const currentSlug = pathnameSlug || rawHash;
+
+      // Compliance routes
+      if (['privacy-policy', 'privacidade'].includes(currentSlug)) {
+        setCompliancePage('privacy-policy');
+        return null;
+      }
+      if (['terms-of-service', 'termos', 'termos-de-uso'].includes(currentSlug)) {
+        setCompliancePage('terms-of-service');
+        return null;
+      }
+      if (['about', 'sobre'].includes(currentSlug)) {
+        setCompliancePage('about');
+        return null;
+      }
+
+      setCompliancePage(null);
+
       // 1. Injected from static HTML page
       if (typeof window !== 'undefined' && window.__INITIAL_TOOL_ID__) {
         const found = findToolByIdOrAlias(window.__INITIAL_TOOL_ID__);
@@ -204,17 +276,14 @@ export default function App() {
       }
 
       // 2. From pathname (e.g. /jwt-inspector or /canadian-citizenship-test)
-      const pathnameSlug = window.location.pathname.replace(/^\/|\/$/g, '').trim();
       if (pathnameSlug && pathnameSlug !== 'index.html') {
         const found = findToolByIdOrAlias(pathnameSlug);
         if (found) return found.id;
       }
 
       // 3. From hash (backward-compatibility for /#jwt-inspector)
-      const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
       if (rawHash) {
-        const cleanHash = rawHash.split('?')[0];
-        const found = findToolByIdOrAlias(cleanHash);
+        const found = findToolByIdOrAlias(rawHash);
         if (found) return found.id;
       }
 
@@ -227,6 +296,7 @@ export default function App() {
         openTool(toolId, false);
       } else if (window.location.pathname === '/' && !window.location.hash) {
         setActiveToolId(null);
+        setCompliancePage(null);
       }
     };
 
@@ -253,6 +323,7 @@ export default function App() {
 
   // Tool Opening & Tabs Management (Clean URL path synchronization)
   const openTool = (rawToolId, updateHistory = true) => {
+    setCompliancePage(null);
     if (!rawToolId) {
       setActiveToolId(null);
       if (window.location.pathname !== '/' || window.location.hash) {
@@ -315,6 +386,16 @@ export default function App() {
     addToast(`Ferramenta aleatória: ${rand.name}`);
   };
 
+  const navigateToCompliance = (pageSlug) => {
+    setActiveToolId(null);
+    setCompliancePage(pageSlug);
+    if (window.location.pathname !== `/${pageSlug}`) {
+      window.history.pushState(null, '', `/${pageSlug}`);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileOpen(false);
+  };
+
   return (
     <div className="app-shell">
       {/* Sidebar Navigation */}
@@ -322,15 +403,20 @@ export default function App() {
         activeToolId={activeToolId}
         activeCategory={activeCategory}
         onSelectCategory={(catId) => {
+          setCompliancePage(null);
           setActiveCategory(catId);
           setActiveToolId(null);
           setMobileOpen(false);
         }}
         onSelectTool={openTool}
         onGoHome={() => {
+          setCompliancePage(null);
           setActiveCategory('all');
           setActiveToolId(null);
           setMobileOpen(false);
+          if (window.location.pathname !== '/' || window.location.hash) {
+            window.history.pushState(null, '', '/');
+          }
         }}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
@@ -351,17 +437,22 @@ export default function App() {
           activeToolId={activeToolId}
           activeCategory={activeCategory}
           onGoHome={() => {
+            setCompliancePage(null);
             setActiveCategory('all');
             setActiveToolId(null);
+            if (window.location.pathname !== '/' || window.location.hash) {
+              window.history.pushState(null, '', '/');
+            }
           }}
           onSelectCategory={(catId) => {
+            setCompliancePage(null);
             setActiveCategory(catId);
             setActiveToolId(null);
           }}
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
           onRandomTool={openRandomTool}
           onToggleMobile={() => setMobileOpen(prev => !prev)}
-          onShowAbout={() => setAboutOpen(true)}
+          onShowAbout={() => navigateToCompliance('about')}
           lang={lang}
         />
 
@@ -377,7 +468,13 @@ export default function App() {
 
         {/* Content Body Area */}
         <main className="app-content-body custom-scrollbar">
-          {activeToolId ? (
+          {compliancePage === 'privacy-policy' ? (
+            <PrivacyPolicy onGoBack={() => openTool(null)} lang={lang} />
+          ) : compliancePage === 'terms-of-service' ? (
+            <TermsOfService onGoBack={() => openTool(null)} lang={lang} />
+          ) : compliancePage === 'about' ? (
+            <AboutUs onGoBack={() => openTool(null)} lang={lang} />
+          ) : activeToolId ? (
             <ToolLayout
               toolId={activeToolId}
               onGoBack={() => openTool(null)}
@@ -385,6 +482,8 @@ export default function App() {
               onToggleFavorite={toggleFavorite}
               onToast={addToast}
               lang={lang}
+              onSelectTool={openTool}
+              onNavigateCompliance={navigateToCompliance}
             />
           ) : (
             <CatalogView
@@ -394,6 +493,7 @@ export default function App() {
               favorites={favorites}
               onToggleFavorite={toggleFavorite}
               lang={lang}
+              onNavigateCompliance={navigateToCompliance}
             />
           )}
         </main>

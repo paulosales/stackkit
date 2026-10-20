@@ -9,7 +9,8 @@ export default function CatalogView({
   onSelectTool,
   favorites = [],
   onToggleFavorite,
-  lang = 'pt'
+  lang = 'pt',
+  onNavigateCompliance
 }) {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -296,9 +297,50 @@ export default function CatalogView({
         </div>
       </section>
 
-      {/* Footer Info */}
+      {/* Editorial Publisher Overview & Specifications */}
+      <section className="editorial-card" style={{ marginTop: 32 }}>
+        <div className="editorial-badge">
+          <span>{lang === 'pt' ? 'Documentação & Especificações' : 'Documentation & Specifications'}</span>
+        </div>
+        <h2 className="editorial-title" style={{ fontSize: 20 }}>
+          {lang === 'pt'
+            ? 'StackKit DevStudio — Estação Completa de Utilitários Client-Side'
+            : 'StackKit DevStudio — Complete Client-Side Developer Suite'}
+        </h2>
+        <p className="editorial-overview" style={{ marginBottom: 16 }}>
+          {lang === 'pt'
+            ? 'O StackKit DevStudio reúne mais de 40 ferramentas de alta performance projetadas especificamente para programadores, analistas de qualidade (QA) e equipes remotas. Todas as rotinas — desde a geração de identificadores fiscais brasileiros (CPF, CNPJ, RG, INSS) e tokens criptográficos até a validação de esquemas JSON, decodificação Base64 e agendamento de reuniões internacionais (World Time Buddy) — operam com segurança absoluta e sem envio de dados a servidores.'
+            : 'StackKit DevStudio provides over 40 high-performance utilities engineered specifically for software developers, QA engineers, and distributed global teams. All processing — ranging from Brazilian fiscal identifiers and cryptographic tokens to JSON validation, Base64 decoding, and international time zone scheduling — executes client-side with zero data transmission.'}
+        </p>
+
+        <div className="editorial-card-grid" style={{ marginTop: 20 }}>
+          <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--accent-cyan)' }}>
+              {lang === 'pt' ? 'Padrões Abertos e RFCs' : 'Open Standards & RFCs'}
+            </h4>
+            <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+              {lang === 'pt'
+                ? 'Conformidade com RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64), ISO/IEC 18004 (QR Code) e algoritmos oficiais de Módulo 11 da Receita Federal.'
+                : 'Full compliance with RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64), ISO/IEC 18004 (QR Code), and official public verification algorithms.'}
+            </p>
+          </div>
+
+          <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--accent-emerald)' }}>
+              {lang === 'pt' ? 'Segurança e LGPD/GDPR' : 'Privacy & Security'}
+            </h4>
+            <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+              {lang === 'pt'
+                ? 'Zero Server Storage: seus tokens, senhas e códigos nunca saem do seu navegador. Total transparência e conformidade estrita com a LGPD e GDPR.'
+                : 'Zero Server Storage: sensitive tokens, passwords, and source code never leave your device. Fully transparent and compliant with LGPD and GDPR.'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Info with Compliance Links */}
       <footer style={{
-        marginTop: 20,
+        marginTop: 24,
         paddingTop: 24,
         borderTop: '1px solid var(--border-subtle)',
         display: 'flex',
@@ -310,14 +352,41 @@ export default function CatalogView({
         gap: 12
       }}>
         <div>
-          © 2026 StackKit DevStudio · Inspirado na utilidade do GeraDev com layout Studio Moderno
+          © 2026 StackKit DevStudio · {lang === 'pt' ? 'Ferramentas Gratuitas e Seguras para Desenvolvedores' : 'Free & Secure Developer Utilities'}
         </div>
-        <div style={{ display: 'flex', gap: 16 }}>
-          <span>Privacidade</span>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          <a
+            href="/privacy-policy"
+            onClick={(e) => {
+              e.preventDefault();
+              if (onNavigateCompliance) onNavigateCompliance('privacy-policy');
+            }}
+            style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
+          >
+            {lang === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
+          </a>
           <span>·</span>
-          <span>Open Source</span>
+          <a
+            href="/terms-of-service"
+            onClick={(e) => {
+              e.preventDefault();
+              if (onNavigateCompliance) onNavigateCompliance('terms-of-service');
+            }}
+            style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
+          >
+            {lang === 'pt' ? 'Termos de Uso' : 'Terms of Service'}
+          </a>
           <span>·</span>
-          <span>Totalmente Offline</span>
+          <a
+            href="/about"
+            onClick={(e) => {
+              e.preventDefault();
+              if (onNavigateCompliance) onNavigateCompliance('about');
+            }}
+            style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
+          >
+            {lang === 'pt' ? 'Sobre Nós' : 'About Us'}
+          </a>
         </div>
       </footer>
     </div>
