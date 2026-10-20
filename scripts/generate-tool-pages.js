@@ -115,13 +115,23 @@ for (const tool of tools) {
     `<meta property="og:description" content="${escapeHtml(metaDesc)}" />`
   );
 
-  // Ensure og:image exists
-  if (!pageHtml.includes('property="og:image"')) {
+  // Ensure tool-specific og:image, width and height
+  const ogImageUrl = `https://stackkit.com.br/og/${tool.id}.png`;
+  if (pageHtml.includes('property="og:image"')) {
+    pageHtml = pageHtml.replace(
+      /<meta property="og:image"\s+content=".*?"\s*\/?>/s,
+      `<meta property="og:image" content="${ogImageUrl}" />`
+    );
+  } else {
     pageHtml = pageHtml.replace(
       /<meta property="og:site_name"/,
-      `<meta property="og:image" content="https://stackkit.com.br/og-banner.jpg" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="675" />\n  <meta property="og:site_name"`
+      `<meta property="og:image" content="${ogImageUrl}" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />\n  <meta property="og:site_name"`
     );
   }
+  pageHtml = pageHtml.replace(
+    /<meta property="og:image:height"\s+content=".*?"\s*\/?>/s,
+    `<meta property="og:image:height" content="630" />`
+  );
 
   // 6. Replace Twitter tags
   pageHtml = pageHtml.replace(
@@ -132,10 +142,15 @@ for (const tool of tools) {
     /<meta name="twitter:description"\s+content=".*?"\s*\/?>/s,
     `<meta name="twitter:description" content="${escapeHtml(metaDesc)}" />`
   );
-  if (!pageHtml.includes('name="twitter:image"')) {
+  if (pageHtml.includes('name="twitter:image"')) {
+    pageHtml = pageHtml.replace(
+      /<meta name="twitter:image"\s+content=".*?"\s*\/?>/s,
+      `<meta name="twitter:image" content="${ogImageUrl}" />`
+    );
+  } else {
     pageHtml = pageHtml.replace(
       /<\/head>/,
-      `  <meta name="twitter:image" content="https://stackkit.com.br/og-banner.jpg" />\n</head>`
+      `  <meta name="twitter:image" content="${ogImageUrl}" />\n</head>`
     );
   }
 
@@ -234,6 +249,12 @@ function generateCompliancePage({ slug, aliases = [], title, description, h1, co
   pageHtml = pageHtml.replace(/<meta property="og:url"\s+content=".*?"\s*\/?>/s, `<meta property="og:url" content="${url}" />`);
   pageHtml = pageHtml.replace(/<meta property="og:title"\s+content=".*?"\s*\/?>/s, `<meta property="og:title" content="${escapeHtml(title)}" />`);
   pageHtml = pageHtml.replace(/<meta property="og:description"\s+content=".*?"\s*\/?>/s, `<meta property="og:description" content="${escapeHtml(description)}" />`);
+
+  const ogImageUrl = `https://stackkit.com.br/og/${slug}.png`;
+  pageHtml = pageHtml.replace(/<meta property="og:image"\s+content=".*?"\s*\/?>/s, `<meta property="og:image" content="${ogImageUrl}" />`);
+  pageHtml = pageHtml.replace(/<meta property="og:image:width"\s+content=".*?"\s*\/?>/s, `<meta property="og:image:width" content="1200" />`);
+  pageHtml = pageHtml.replace(/<meta property="og:image:height"\s+content=".*?"\s*\/?>/s, `<meta property="og:image:height" content="630" />`);
+  pageHtml = pageHtml.replace(/<meta name="twitter:image"\s+content=".*?"\s*\/?>/s, `<meta name="twitter:image" content="${ogImageUrl}" />`);
 
   const prerenderedBody = `
   <div id="root">
@@ -437,7 +458,19 @@ const homePrerenderedBody = `
     </div>
   </div>`;
 
-const homeHtml = template.replace('<div id="root"></div>', homePrerenderedBody);
+let homeHtml = template.replace('<div id="root"></div>', homePrerenderedBody);
+homeHtml = homeHtml.replace(
+  /<meta property="og:image"\s+content=".*?"\s*\/?>/s,
+  `<meta property="og:image" content="https://stackkit.com.br/og/default.png" />`
+);
+homeHtml = homeHtml.replace(
+  /<meta property="og:image:height"\s+content=".*?"\s*\/?>/s,
+  `<meta property="og:image:height" content="630" />`
+);
+homeHtml = homeHtml.replace(
+  /<meta name="twitter:image"\s+content=".*?"\s*\/?>/s,
+  `<meta name="twitter:image" content="https://stackkit.com.br/og/default.png" />`
+);
 fs.writeFileSync(templatePath, homeHtml, 'utf-8');
 
 console.log(`Successfully generated ${generatedCount} static HTML pages, compliance pages, pre-rendered homepage, and updated sitemap.xml!`);

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-tool-pages.js",
+    "generate:og": "node scripts/generate-og-banners.js",
+    "build": "node scripts/generate-og-banners.js && vite build && node scripts/generate-tool-pages.js",
     "lint": "oxlint",
     "preview": "vite preview"
   },

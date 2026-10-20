@@ -198,6 +198,10 @@ export default function App() {
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
+        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/privacy-policy.png');
+        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/privacy-policy.png');
+        updateMetaTag('meta[name="twitter:title"]', 'content', title);
+        updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'terms-of-service') {
         const title = lang === 'pt'
           ? 'Termos de Serviço e Uso | StackKit DevStudio'
@@ -213,6 +217,10 @@ export default function App() {
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
+        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/terms-of-service.png');
+        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/terms-of-service.png');
+        updateMetaTag('meta[name="twitter:title"]', 'content', title);
+        updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'about') {
         const title = lang === 'pt'
           ? 'Sobre o StackKit DevStudio | Ferramentas Gratuitas para Desenvolvedores'
@@ -228,6 +236,10 @@ export default function App() {
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
+        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/about.png');
+        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/about.png');
+        updateMetaTag('meta[name="twitter:title"]', 'content', title);
+        updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       }
     } else if (activeToolId) {
       const tool = tools.find(t => t.id === activeToolId);
@@ -237,6 +249,7 @@ export default function App() {
         const fullTitle = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
         const fullDesc = `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`;
         const canonicalUrl = `https://stackkit.com.br/${tool.id}`;
+        const toolOgImage = `https://stackkit.com.br/og/${tool.id}.png`;
 
         document.title = fullTitle;
         updateMetaTag('meta[name="description"]', 'content', fullDesc);
@@ -244,6 +257,8 @@ export default function App() {
         updateMetaTag('meta[property="og:title"]', 'content', fullTitle);
         updateMetaTag('meta[property="og:description"]', 'content', fullDesc);
         updateMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
+        updateMetaTag('meta[property="og:image"]', 'content', toolOgImage);
+        updateMetaTag('meta[name="twitter:image"]', 'content', toolOgImage);
         updateMetaTag('meta[name="twitter:title"]', 'content', fullTitle);
         updateMetaTag('meta[name="twitter:description"]', 'content', fullDesc);
       }
@@ -255,6 +270,7 @@ export default function App() {
         ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
         : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.';
       const homeUrl = 'https://stackkit.com.br/';
+      const defaultOgImage = 'https://stackkit.com.br/og/default.png';
 
       document.title = defaultTitle;
       updateMetaTag('meta[name="description"]', 'content', defaultDesc);
@@ -262,6 +278,8 @@ export default function App() {
       updateMetaTag('meta[property="og:title"]', 'content', defaultTitle);
       updateMetaTag('meta[property="og:description"]', 'content', defaultDesc);
       updateMetaTag('meta[property="og:url"]', 'content', homeUrl);
+      updateMetaTag('meta[property="og:image"]', 'content', defaultOgImage);
+      updateMetaTag('meta[name="twitter:image"]', 'content', defaultOgImage);
       updateMetaTag('meta[name="twitter:title"]', 'content', defaultTitle);
       updateMetaTag('meta[name="twitter:description"]', 'content', defaultDesc);
     }
