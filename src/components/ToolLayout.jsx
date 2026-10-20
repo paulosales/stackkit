@@ -16,6 +16,7 @@ const NbGenerator = lazy(() => import('../tools/brazil/NbGenerator'));
 const ProcessoGenerator = lazy(() => import('../tools/brazil/ProcessoGenerator'));
 
 // Generator Tools - Lazy Loaded chunks
+const EmailSignatureGenerator = lazy(() => import('../tools/generators/EmailSignatureGenerator'));
 const PaletteGenerator = lazy(() => import('../tools/generators/PaletteGenerator'));
 const QrCodeGenerator = lazy(() => import('../tools/generators/QrCodeGenerator'));
 const PasswordGenerator = lazy(() => import('../tools/generators/PasswordGenerator'));
@@ -58,6 +59,7 @@ const TextDiff = lazy(() => import('../tools/utilities/TextDiff'));
 const CronExplainer = lazy(() => import('../tools/utilities/CronExplainer'));
 const MarkdownPreview = lazy(() => import('../tools/utilities/MarkdownPreview'));
 const CharacterCounter = lazy(() => import('../tools/utilities/CharacterCounter'));
+const CanadianCitizenshipTest = lazy(() => import('../tools/utilities/CanadianCitizenshipTest'));
 
 // Sleek loading skeleton for lazy-loaded tools
 function ToolSkeletonLoader() {
@@ -150,6 +152,12 @@ export default function ToolLayout({
         return <ProcessoGenerator {...props} />;
 
       // Generators
+      case 'email-signature-generator':
+      case 'gerador-assinatura-email':
+      case 'gerador-assinaturas':
+      case 'assinatura-email':
+      case 'email-signature':
+        return <EmailSignatureGenerator {...props} />;
       case 'color-palette-generator':
       case 'gerador-paleta-cores':
         return <PaletteGenerator {...props} />;
@@ -252,6 +260,11 @@ export default function ToolLayout({
       case 'character-counter':
       case 'contador-de-caracteres':
         return <CharacterCounter {...props} />;
+      case 'canadian-citizenship-test':
+      case 'citizenship-test':
+      case 'teste-cidadania-canada':
+      case 'canada-citizenship':
+        return <CanadianCitizenshipTest {...props} />;
 
       default:
         return <div>Ferramenta em desenvolvimento.</div>;

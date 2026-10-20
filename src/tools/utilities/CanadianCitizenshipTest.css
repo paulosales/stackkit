@@ -1,0 +1,1649 @@
+/* ==========================================================================
+   CANADIAN CITIZENSHIP TEST - STACKKIT DEVSTUDIO
+   High-contrast theme integration + Authentic Official IRCC Exam Simulation
+   ========================================================================== */
+
+.cct-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  gap: 20px;
+  color: var(--text-primary, #f8fafc);
+  font-family: inherit;
+}
+
+/* Common Header Banner */
+.cct-nav-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+}
+
+[data-theme='light'] .cct-nav-banner {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.cct-leaf-logo {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.cct-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cct-brand-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f59e0b;
+  line-height: 1.15;
+}
+
+[data-theme='light'] .cct-brand-name {
+  color: #b45309;
+}
+
+.cct-brand-tag {
+  font-size: 11px;
+  color: var(--text-muted, #64748b);
+  font-weight: 500;
+}
+
+.cct-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cct-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cct-nav-btn:hover {
+  background: var(--bg-surface-elevated, #1a2336);
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme='light'] .cct-nav-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.cct-nav-btn.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+[data-theme='light'] .cct-nav-btn.active {
+  background: rgba(217, 119, 6, 0.12);
+  border-color: rgba(217, 119, 6, 0.35);
+  color: #b45309;
+}
+
+.cct-lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-input, #0f1523);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+[data-theme='light'] .cct-lang-selector {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.cct-lang-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #64748b);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cct-lang-btn.active {
+  background: #d97706;
+  color: #ffffff;
+}
+
+/* Hub Hero */
+.cct-hero {
+  padding: 8px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cct-hero-title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--text-primary, #f8fafc);
+}
+
+.cct-hero-title span.accent {
+  color: #f59e0b;
+}
+
+[data-theme='light'] .cct-hero-title span.accent {
+  color: #b45309;
+}
+
+.cct-hero-sub {
+  font-size: 14px;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0;
+}
+
+.cct-hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.cct-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+  font-weight: 500;
+}
+
+[data-theme='light'] .cct-badge-pill {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.cct-badge-pill.gold {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+[data-theme='light'] .cct-badge-pill.gold {
+  background: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+/* Readiness Card */
+.cct-readiness-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 22px 26px;
+  background: var(--bg-surface, #131a29);
+  border: 1.5px solid rgba(245, 158, 11, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='light'] .cct-readiness-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.02) 100%);
+  border-color: rgba(217, 119, 6, 0.25);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+}
+
+.cct-readiness-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.cct-gauge-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cct-gauge-svg {
+  transform: rotate(-90deg);
+  width: 72px;
+  height: 72px;
+}
+
+.cct-gauge-value {
+  position: absolute;
+  font-size: 16px;
+  font-weight: 800;
+  color: #f59e0b;
+}
+
+[data-theme='light'] .cct-gauge-value {
+  color: #b45309;
+}
+
+.cct-readiness-info h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary, #f8fafc);
+}
+
+.cct-readiness-info p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.cct-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cct-stat-box {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 14px;
+  background: var(--bg-surface-elevated, #1a2336);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  text-align: center;
+}
+
+[data-theme='light'] .cct-stat-box {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.cct-stat-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary, #f8fafc);
+}
+
+.cct-stat-label {
+  font-size: 11px;
+  color: var(--text-muted, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Hub Action Cards Grid */
+.cct-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.cct-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--bg-surface, #131a29);
+  border: 1.5px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme='light'] .cct-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.cct-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.12);
+}
+
+.cct-card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cct-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+}
+
+[data-theme='light'] .cct-card-icon {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
+.cct-card-icon.red {
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+}
+
+[data-theme='light'] .cct-card-icon.red {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+.cct-card-icon.blue {
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+}
+
+[data-theme='light'] .cct-card-icon.blue {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+}
+
+.cct-card-icon.emerald {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
+
+[data-theme='light'] .cct-card-icon.emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.cct-card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cct-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 3px;
+  color: var(--text-primary, #f8fafc);
+}
+
+.cct-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0 0 6px;
+}
+
+.cct-card-meta {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted, #64748b);
+}
+
+/* Practice View - Leaf Grid */
+.cct-practice-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cct-leaf-grid-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 16px;
+}
+
+[data-theme='light'] .cct-leaf-grid-box {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-leaf-grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 8px;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .cct-leaf-grid {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.cct-leaf-item {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--bg-input, #0f1523);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-muted, #64748b);
+  position: relative;
+}
+
+[data-theme='light'] .cct-leaf-item {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.cct-leaf-item:hover {
+  transform: scale(1.15);
+  z-index: 2;
+  border-color: #d97706;
+}
+
+.cct-leaf-item.passed {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.6);
+  color: #34d399;
+}
+
+[data-theme='light'] .cct-leaf-item.passed {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #10b981;
+}
+
+.cct-leaf-item.attempted {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.6);
+  color: #fbbf24;
+}
+
+[data-theme='light'] .cct-leaf-item.attempted {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #b45309;
+}
+
+.cct-leaf-item.not-started {
+  opacity: 0.7;
+}
+
+/* Tests List Grid */
+.cct-tests-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cct-filter-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-surface, #131a29);
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+[data-theme='light'] .cct-filter-tabs {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.cct-filter-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #94a3b8);
+  cursor: pointer;
+}
+
+.cct-filter-btn.active {
+  background: var(--bg-surface-elevated, #1a2336);
+  color: var(--text-primary, #f8fafc);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='light'] .cct-filter-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.cct-tests-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.cct-test-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--bg-surface, #131a29);
+  border: 1.5px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-theme='light'] .cct-test-item-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-test-item-card:hover {
+  transform: translateY(-2px);
+  border-color: #f59e0b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .cct-test-item-card:hover {
+  border-color: #d97706;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.cct-test-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cct-test-num-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+[data-theme='light'] .cct-test-num-badge {
+  background: rgba(245, 158, 11, 0.1);
+  color: #b45309;
+}
+
+.cct-test-num-badge.passed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+
+[data-theme='light'] .cct-test-num-badge.passed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+
+.cct-test-meta h4 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary, #f8fafc);
+}
+
+.cct-test-meta p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted, #64748b);
+}
+
+/* ==========================================================================
+   QUIZ SCREEN (Practice / Topic / Mistakes / Saved Mode)
+   ========================================================================== */
+
+.cct-quiz-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cct-quiz-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+}
+
+[data-theme='light'] .cct-quiz-top-bar {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-quiz-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.cct-quiz-counter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #f8fafc);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.cct-quiz-counter-btn:hover {
+  background: var(--bg-surface-elevated, #1a2336);
+}
+
+[data-theme='light'] .cct-quiz-counter-btn:hover {
+  background: #f1f5f9;
+}
+
+/* 20-Segment Progress Bar */
+.cct-segment-bar {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  height: 6px;
+}
+
+.cct-segment {
+  flex: 1;
+  border-radius: 3px;
+  background: var(--border-subtle, rgba(255, 255, 255, 0.12));
+  transition: all 0.2s ease;
+}
+
+[data-theme='light'] .cct-segment {
+  background: #cbd5e1;
+}
+
+.cct-segment.current {
+  background: #f59e0b;
+  transform: scaleY(1.3);
+}
+
+.cct-segment.correct {
+  background: #10b981;
+}
+
+.cct-segment.incorrect {
+  background: #f43f5e;
+}
+
+.cct-segment.answered {
+  background: #3b82f6;
+}
+
+.cct-segment.flagged {
+  background: #eab308;
+}
+
+/* Question Card */
+.cct-question-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 26px 28px;
+  background: var(--bg-surface, #131a29);
+  border: 1.5px solid var(--border-strong, rgba(255, 255, 255, 0.14));
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='light'] .cct-question-card {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.cct-question-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cct-topic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+[data-theme='light'] .cct-topic-pill {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.cct-question-text {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--text-primary, #f8fafc);
+}
+
+/* Multiple Choice Options */
+.cct-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cct-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg-input, #0f1523);
+  border: 1.5px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+  color: var(--text-primary, #f8fafc);
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  width: 100%;
+}
+
+[data-theme='light'] .cct-option-btn {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.cct-option-btn:hover:not(:disabled) {
+  border-color: #f59e0b;
+  background: var(--bg-surface-elevated, #1a2336);
+  transform: translateX(2px);
+}
+
+[data-theme='light'] .cct-option-btn:hover:not(:disabled) {
+  border-color: #d97706;
+  background: #f1f5f9;
+}
+
+.cct-option-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface-elevated, #1a2336);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary, #94a3b8);
+  flex-shrink: 0;
+}
+
+[data-theme='light'] .cct-option-letter {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.cct-option-btn.selected {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.cct-option-btn.selected .cct-option-letter {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.cct-option-btn.correct {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
+
+[data-theme='light'] .cct-option-btn.correct {
+  background: rgba(16, 185, 129, 0.12);
+  color: #065f46;
+}
+
+.cct-option-btn.correct .cct-option-letter {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.cct-option-btn.incorrect {
+  border-color: #f43f5e;
+  background: rgba(244, 63, 94, 0.18);
+  color: #fb7185;
+}
+
+[data-theme='light'] .cct-option-btn.incorrect {
+  background: rgba(244, 63, 94, 0.12);
+  color: #9f1239;
+}
+
+.cct-option-btn.incorrect .cct-option-letter {
+  background: #f43f5e;
+  color: #ffffff;
+}
+
+/* Explanation Box */
+.cct-explanation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--bg-surface-elevated, #1a2336);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+[data-theme='light'] .cct-explanation-card {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.cct-explanation-card.is-correct {
+  border-left: 4px solid #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.cct-explanation-card.is-incorrect {
+  border-left: 4px solid #f43f5e;
+  background: rgba(244, 63, 94, 0.08);
+}
+
+.cct-exp-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cct-exp-header.correct {
+  color: #34d399;
+}
+
+[data-theme='light'] .cct-exp-header.correct {
+  color: #059669;
+}
+
+.cct-exp-header.incorrect {
+  color: #fb7185;
+}
+
+[data-theme='light'] .cct-exp-header.incorrect {
+  color: #e11d48;
+}
+
+.cct-exp-body {
+  font-size: 13px;
+  color: var(--text-secondary, #94a3b8);
+  line-height: 1.5;
+}
+
+[data-theme='light'] .cct-exp-body {
+  color: #475569;
+}
+
+.cct-exp-body strong {
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme='light'] .cct-exp-body strong {
+  color: #0f172a;
+}
+
+/* Navigation Actions */
+.cct-quiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+/* Simulation Intro Briefing Card */
+.cct-intro-card {
+  max-width: 640px;
+  margin: 20px auto;
+  padding: 28px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.14));
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme='light'] .cct-intro-card {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.cct-intro-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: var(--bg-input, #0f1523);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+}
+
+[data-theme='light'] .cct-intro-rules {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+/* Empty State Card */
+.cct-empty-review {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--bg-surface, #131a29);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme='light'] .cct-empty-review {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Question Matrix Modal */
+.cct-matrix-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cct-matrix-modal {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.14));
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme='light'] .cct-matrix-modal {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+}
+
+.cct-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.cct-matrix-num-btn {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1.5px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--bg-surface-elevated, #1a2336);
+  color: var(--text-secondary, #94a3b8);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+[data-theme='light'] .cct-matrix-num-btn {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.cct-matrix-num-btn:hover {
+  border-color: #f59e0b;
+}
+
+.cct-matrix-num-btn.current {
+  border-color: #f59e0b;
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.cct-matrix-num-btn.answered {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+
+.cct-matrix-num-btn.flagged {
+  border-color: #eab308;
+  color: #fde047;
+}
+
+/* Chapters Grid */
+.cct-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.cct-chapter-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 16px;
+  gap: 14px;
+  transition: all 0.2s ease;
+}
+
+[data-theme='light'] .cct-chapter-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-chapter-card:hover {
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .cct-chapter-card:hover {
+  border-color: #d97706;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+/* Review Questions List */
+.cct-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.cct-review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--bg-surface, #131a29);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+}
+
+[data-theme='light'] .cct-review-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.cct-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Modals */
+.cct-modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  line-height: 1.6;
+  font-size: 14px;
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme='light'] .cct-modal-content {
+  color: #475569;
+}
+
+.cct-modal-content h3 {
+  color: var(--text-primary, #f8fafc);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+[data-theme='light'] .cct-modal-content h3 {
+  color: #0f172a;
+}
+
+/* ==========================================================================
+   OFFICIAL CANADIAN CITIZENSHIP TEST SIMULATOR UI
+   Exact reproduction of the official Government of Canada online test interface
+   ========================================================================== */
+
+.cct-official-test-wrapper {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  background: #ffffff !important;
+  color: #18181b !important;
+  border: 1px solid #d4d4d8;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Government of Canada Top Header */
+.cct-gov-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: #ffffff;
+  border-bottom: 4px solid #6b7280;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cct-gov-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cct-flag-emblem {
+  width: 32px;
+  height: 20px;
+  background: #dc2626;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.cct-flag-emblem::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 20px;
+  background: #ffffff;
+}
+
+.cct-flag-leaf {
+  position: relative;
+  z-index: 2;
+  color: #dc2626;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.cct-gov-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cct-gov-title-en {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.cct-gov-title-fr {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.cct-gov-app-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.cct-gov-app-meta strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Test Title Bar with Red Canadian Line */
+.cct-gov-title-section {
+  padding: 20px 28px 12px;
+}
+
+.cct-gov-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #18181b;
+  margin: 0 0 10px;
+}
+
+.cct-gov-red-line {
+  width: 100%;
+  height: 2px;
+  background: #ef4444;
+}
+
+/* Two-column Official Layout */
+.cct-gov-layout {
+  display: flex;
+  padding: 20px 28px 40px;
+  gap: 36px;
+}
+
+@media (max-width: 820px) {
+  .cct-gov-layout {
+    flex-direction: column;
+  }
+}
+
+/* Left Question Column */
+.cct-gov-question-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cct-gov-q-counter {
+  font-size: 26px;
+  font-weight: 700;
+  color: #18181b;
+  margin: 0 0 14px;
+}
+
+.cct-gov-q-prompt {
+  font-size: 16px;
+  font-weight: 700;
+  color: #18181b;
+  line-height: 1.45;
+  margin: 0 0 20px;
+}
+
+/* Official Radio Options */
+.cct-gov-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.cct-gov-option-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #18181b;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.cct-gov-radio {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #9ca3af;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.cct-gov-radio:checked {
+  border-color: #284162;
+  border-width: 5px;
+}
+
+/* Review Later Checkbox */
+.cct-gov-review-later {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #18181b;
+  margin: 16px 0 32px;
+  cursor: pointer;
+}
+
+.cct-gov-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #9ca3af;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cct-gov-checkbox:checked {
+  background: #284162;
+  border-color: #284162;
+}
+
+.cct-gov-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -3px;
+  left: 2px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* Official Government Navigation Buttons */
+.cct-gov-btn-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.cct-gov-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #e4e6eb;
+  color: #284162;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: background 0.15s ease;
+  min-width: 180px;
+}
+
+.cct-gov-btn-nav:hover:not(:disabled) {
+  background: #d1d5db;
+}
+
+.cct-gov-btn-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cct-gov-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: none;
+  background: #284162;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(40, 65, 98, 0.4);
+  transition: background 0.15s ease;
+  width: 100%;
+  max-width: 380px;
+}
+
+.cct-gov-btn-submit:hover {
+  background: #1c2e46;
+}
+
+/* Right Sidebar: Official Timer & Question Matrix */
+.cct-gov-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (max-width: 820px) {
+  .cct-gov-sidebar {
+    width: 100%;
+  }
+}
+
+.cct-gov-timer-box {
+  font-size: 22px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.cct-gov-timer-box.urgent {
+  color: #dc2626;
+  animation: cct-pulse 1s infinite alternate;
+}
+
+.cct-gov-sidebar-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #18181b;
+  margin: 0;
+}
+
+/* 5x4 Official Grid */
+.cct-gov-grid-palette {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.cct-gov-q-btn {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+/* Official States:
+   - not answered: gray background with #284162 blue text
+   - current: white with blue border
+   - answered: blue background #284162 with white text
+   - flagged (to be reviewed): yellow #eab308 with black or white text
+*/
+.cct-gov-q-btn.not-answered {
+  background: #e4e6eb;
+  color: #284162;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.cct-gov-q-btn.current {
+  background: #ffffff;
+  border: 2px solid #284162;
+  color: #284162;
+}
+
+.cct-gov-q-btn.answered {
+  background: #284162;
+  color: #ffffff;
+}
+
+.cct-gov-q-btn.flagged {
+  background: #eab308;
+  color: #18181b;
+}
+
+/* Official Status Legend */
+.cct-gov-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #18181b;
+}
+
+.cct-gov-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cct-gov-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.cct-gov-legend-color.yellow { background: #eab308; }
+.cct-gov-legend-color.gray { background: #9ca3af; }
+.cct-gov-legend-color.blue { background: #284162; }
+
+/* Simulation Results Certificate (Official Style) */
+.cct-gov-results-card {
+  padding: 36px 32px;
+  background: #ffffff;
+  border: 1px solid #d4d4d8;
+  border-radius: 14px;
+  color: #18181b;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.cct-gov-result-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.cct-gov-result-banner.passed {
+  background: #ecfdf5;
+  border: 1.5px solid #10b981;
+  color: #065f46;
+}
+
+.cct-gov-result-banner.failed {
+  background: #fef2f2;
+  border: 1.5px solid #ef4444;
+  color: #991b1b;
+}
+
+.cct-gov-score-hero {
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.cct-gov-review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+}

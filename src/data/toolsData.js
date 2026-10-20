@@ -137,6 +137,18 @@ export const tools = [
 
   // GERADORES
   {
+    id: 'email-signature-generator',
+    aliasIds: ['gerador-assinatura-email', 'gerador-assinaturas', 'assinatura-email', 'email-signature'],
+    categoryId: 'generators',
+    name: 'Gerador de Assinatura de E-mail',
+    nameEn: 'HTML Email Signature Generator',
+    description: 'Crie assinaturas de e-mail profissionais em HTML compatíveis com Gmail, Outlook e Apple Mail',
+    descriptionEn: 'Create professional HTML email signatures 100% compatible with Gmail, Outlook, Apple Mail and Thunderbird',
+    icon: 'Mail',
+    popular: true,
+    tags: ['assinatura', 'email', 'signature', 'html', 'gmail', 'outlook', 'marketing', 'gerador', 'templates']
+  },
+  {
     id: 'color-palette-generator',
     aliasIds: ['gerador-paleta-cores', 'coolors'],
     categoryId: 'generators',
@@ -529,6 +541,18 @@ export const tools = [
     icon: 'LetterText',
     popular: true,
     tags: ['contador', 'palavras', 'caracteres', 'leitura', 'estatisticas']
+  },
+  {
+    id: 'canadian-citizenship-test',
+    aliasIds: ['citizenship-test', 'teste-cidadania-canada', 'canada-citizenship'],
+    categoryId: 'utilities',
+    name: 'Teste de Cidadania Canadense',
+    nameEn: 'Canadian Citizenship Test',
+    description: 'Pratique para o exame oficial de cidadania canadense com 30 simulados, 600 questões e simulador real IRCC',
+    descriptionEn: 'Prepare for the official Canadian Citizenship Test with 30 practice tests, 600 questions, and a realistic timed IRCC exam simulator',
+    icon: 'GraduationCap',
+    popular: true,
+    tags: ['canada', 'cidadania', 'citizenship', 'ircc', 'discover canada', 'simulado', 'exam']
   }
 ];
 
