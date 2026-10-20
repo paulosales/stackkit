@@ -48,26 +48,29 @@ const DEFAULT_PALETTE = [
 export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
   // Main palette state
   const [colors, setColors] = useState(() => {
-    // Check if URL has a saved palette in hash (e.g. #palette-264653-2a9d8f...)
-    if (typeof window !== 'undefined' && window.location.hash.includes('palette=')) {
-      try {
-        const hashMatch = window.location.hash.match(/palette=([0-9a-fA-F-]+)/);
-        if (hashMatch && hashMatch[1]) {
-          const hexes = hashMatch[1].split('-');
-          if (hexes.length >= 2) {
-            return hexes.map((h, i) => {
-              const fullHex = `#${h}`.toUpperCase();
-              return {
-                id: `c-url-${i}`,
-                hex: fullHex,
-                name: getColorName(fullHex),
-                locked: false
-              };
-            });
+    // Check if URL has a saved palette in query or hash (e.g. ?palette=264653-2a9d8f or #palette=...)
+    if (typeof window !== 'undefined') {
+      const fullUrl = window.location.search + window.location.hash;
+      if (fullUrl.includes('palette=')) {
+        try {
+          const match = fullUrl.match(/palette=([0-9a-fA-F-]+)/);
+          if (match && match[1]) {
+            const hexes = match[1].split('-');
+            if (hexes.length >= 2) {
+              return hexes.map((h, i) => {
+                const fullHex = `#${h}`.toUpperCase();
+                return {
+                  id: `c-url-${i}`,
+                  hex: fullHex,
+                  name: getColorName(fullHex),
+                  locked: false
+                };
+              });
+            }
           }
+        } catch (err) {
+          console.warn('Could not parse palette from URL', err);
         }
-      } catch (err) {
-        console.warn('Could not parse palette from URL hash', err);
       }
     }
     return DEFAULT_PALETTE;
@@ -275,7 +278,7 @@ export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
   // Copy URL Share Link
   const handleSharePalette = () => {
     const hexTokens = colors.map(c => c.hex.replace('#', '')).join('-');
-    const shareUrl = `${window.location.origin}/#gerador-paleta-cores?palette=${hexTokens}`;
+    const shareUrl = `${window.location.origin}/color-palette-generator?palette=${hexTokens}`;
     navigator.clipboard.writeText(shareUrl);
     if (onCopy) onCopy('Link compartilhável copiado para a área de transferência!');
   };

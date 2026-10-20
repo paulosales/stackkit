@@ -105,9 +105,13 @@ export default function ToolLayout({
   const isFav = favorites.includes(tool.id);
 
   const handleShare = () => {
-    const url = `${window.location.origin}/#${tool.id}`;
-    navigator.clipboard.writeText(url);
-    if (onToast) onToast('Link da ferramenta copiado para a área de transferência!');
+    const url = `${window.location.origin}/${tool.id}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+      if (onToast) {
+        onToast(lang === 'pt' ? 'Link da ferramenta copiado: ' + url : 'Tool link copied: ' + url);
+      }
+    }
   };
 
   const renderToolComponent = () => {

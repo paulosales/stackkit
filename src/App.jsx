@@ -133,56 +133,110 @@ export default function App() {
     localStorage.setItem('stackkit_sidebar_collapsed', String(sidebarCollapsed));
   }, [sidebarCollapsed]);
 
-  // Dynamic SEO metadata updates
+  // Dynamic SEO & Open Graph metadata updates
   useEffect(() => {
+    const updateMetaTag = (selector, attribute, value) => {
+      let tag = document.querySelector(selector);
+      if (!tag && value) {
+        tag = document.createElement(selector.startsWith('link') ? 'link' : 'meta');
+        if (selector.includes('property="')) {
+          const prop = selector.match(/property="([^"]+)"/)?.[1];
+          if (prop) tag.setAttribute('property', prop);
+        } else if (selector.includes('name="')) {
+          const name = selector.match(/name="([^"]+)"/)?.[1];
+          if (name) tag.setAttribute('name', name);
+        } else if (selector.includes('rel="')) {
+          const rel = selector.match(/rel="([^"]+)"/)?.[1];
+          if (rel) tag.setAttribute('rel', rel);
+        }
+        document.head.appendChild(tag);
+      }
+      if (tag && value) {
+        tag.setAttribute(attribute, value);
+      }
+    };
+
     if (activeToolId) {
       const tool = tools.find(t => t.id === activeToolId);
       if (tool) {
         const titleName = lang === 'pt' ? tool.name : (tool.nameEn || tool.name);
         const desc = lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description);
-        document.title = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-          metaDesc.setAttribute(
-            'content',
-            `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`
-          );
-        }
+        const fullTitle = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
+        const fullDesc = `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`;
+        const canonicalUrl = `https://stackkit.com.br/${tool.id}`;
+
+        document.title = fullTitle;
+        updateMetaTag('meta[name="description"]', 'content', fullDesc);
+        updateMetaTag('link[rel="canonical"]', 'href', canonicalUrl);
+        updateMetaTag('meta[property="og:title"]', 'content', fullTitle);
+        updateMetaTag('meta[property="og:description"]', 'content', fullDesc);
+        updateMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
+        updateMetaTag('meta[name="twitter:title"]', 'content', fullTitle);
+        updateMetaTag('meta[name="twitter:description"]', 'content', fullDesc);
       }
     } else {
-      document.title = lang === 'pt'
+      const defaultTitle = lang === 'pt'
         ? 'StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores'
         : 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator';
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute(
-          'content',
-          lang === 'pt'
-            ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
-            : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.'
-        );
-      }
+      const defaultDesc = lang === 'pt'
+        ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
+        : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.';
+      const homeUrl = 'https://stackkit.com.br/';
+
+      document.title = defaultTitle;
+      updateMetaTag('meta[name="description"]', 'content', defaultDesc);
+      updateMetaTag('link[rel="canonical"]', 'href', homeUrl);
+      updateMetaTag('meta[property="og:title"]', 'content', defaultTitle);
+      updateMetaTag('meta[property="og:description"]', 'content', defaultDesc);
+      updateMetaTag('meta[property="og:url"]', 'content', homeUrl);
+      updateMetaTag('meta[name="twitter:title"]', 'content', defaultTitle);
+      updateMetaTag('meta[name="twitter:description"]', 'content', defaultDesc);
     }
   }, [activeToolId, lang]);
 
-  // English & Alias Hash Router
+  // Clean Path & Hash Router (supports /jwt-inspector, /#jwt-inspector, and window.__INITIAL_TOOL_ID__)
   useEffect(() => {
-    const handleHash = () => {
-      const rawHash = window.location.hash.replace('#', '').trim();
+    const resolveToolFromUrl = () => {
+      // 1. Injected from static HTML page
+      if (typeof window !== 'undefined' && window.__INITIAL_TOOL_ID__) {
+        const found = findToolByIdOrAlias(window.__INITIAL_TOOL_ID__);
+        if (found) return found.id;
+      }
+
+      // 2. From pathname (e.g. /jwt-inspector or /canadian-citizenship-test)
+      const pathnameSlug = window.location.pathname.replace(/^\/|\/$/g, '').trim();
+      if (pathnameSlug && pathnameSlug !== 'index.html') {
+        const found = findToolByIdOrAlias(pathnameSlug);
+        if (found) return found.id;
+      }
+
+      // 3. From hash (backward-compatibility for /#jwt-inspector)
+      const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
       if (rawHash) {
-        const found = findToolByIdOrAlias(rawHash);
-        if (found) {
-          // If the URL has an alias, replace with canonical English slug
-          if (rawHash !== found.id) {
-            window.location.replace(`#${found.id}`);
-          }
-          openTool(found.id);
-        }
+        const cleanHash = rawHash.split('?')[0];
+        const found = findToolByIdOrAlias(cleanHash);
+        if (found) return found.id;
+      }
+
+      return null;
+    };
+
+    const handleLocationChange = () => {
+      const toolId = resolveToolFromUrl();
+      if (toolId) {
+        openTool(toolId, false);
+      } else if (window.location.pathname === '/' && !window.location.hash) {
+        setActiveToolId(null);
       }
     };
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+
+    handleLocationChange();
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   // Global Keyboard shortcuts (Cmd+K / Ctrl+K)
@@ -197,12 +251,12 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Tool Opening & Tabs Management (Guaranteed ZERO Duplication)
-  const openTool = (rawToolId) => {
+  // Tool Opening & Tabs Management (Clean URL path synchronization)
+  const openTool = (rawToolId, updateHistory = true) => {
     if (!rawToolId) {
       setActiveToolId(null);
-      if (window.location.hash) {
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (window.location.pathname !== '/' || window.location.hash) {
+        window.history.pushState(null, '', `/${window.location.search}`);
       }
       return;
     }
@@ -212,8 +266,16 @@ export default function App() {
 
     setActiveToolId(canonicalId);
 
-    if (window.location.hash !== `#${canonicalId}`) {
-      window.location.hash = canonicalId;
+    const targetPath = `/${canonicalId}`;
+    if (updateHistory) {
+      if (window.location.pathname !== targetPath || window.location.hash) {
+        window.history.pushState({ toolId: canonicalId }, '', targetPath + window.location.search);
+      }
+    } else {
+      // Normalize URL to clean path without hash
+      if (window.location.pathname !== targetPath || window.location.hash) {
+        window.history.replaceState({ toolId: canonicalId }, '', targetPath + window.location.search);
+      }
     }
 
     setOpenToolIds(prev => (prev.includes(canonicalId) ? prev : [...prev, canonicalId]));
@@ -227,11 +289,10 @@ export default function App() {
       if (activeToolId === canonicalId) {
         if (nextTabs.length > 0) {
           const nextTool = nextTabs[nextTabs.length - 1];
-          setActiveToolId(nextTool);
-          window.location.hash = nextTool;
+          openTool(nextTool, true);
         } else {
           setActiveToolId(null);
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+          window.history.pushState(null, '', `/${window.location.search}`);
         }
       }
       return nextTabs;
