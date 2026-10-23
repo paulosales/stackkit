@@ -18,6 +18,7 @@ const NbGenerator = lazy(() => import('../tools/brazil/NbGenerator'));
 const ProcessoGenerator = lazy(() => import('../tools/brazil/ProcessoGenerator'));
 
 // Generator Tools - Lazy Loaded chunks
+const ResumeBuilder = lazy(() => import('../tools/generators/ResumeBuilder'));
 const EmailSignatureGenerator = lazy(() => import('../tools/generators/EmailSignatureGenerator'));
 const PaletteGenerator = lazy(() => import('../tools/generators/PaletteGenerator'));
 const QrCodeGenerator = lazy(() => import('../tools/generators/QrCodeGenerator'));
@@ -166,6 +167,12 @@ export default function ToolLayout({
         return <ProcessoGenerator {...props} />;
 
       // Generators
+      case 'resume-builder':
+      case 'gerador-de-curriculo':
+      case 'curriculo-maker':
+      case 'cv-generator':
+      case 'resume-maker':
+        return <ResumeBuilder {...props} />;
       case 'email-signature-generator':
       case 'gerador-assinatura-email':
       case 'gerador-assinaturas':

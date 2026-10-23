@@ -137,6 +137,18 @@ export const tools = [
 
   // GERADORES
   {
+    id: 'resume-builder',
+    aliasIds: ['gerador-de-curriculo', 'curriculo-maker', 'cv-generator', 'resume-maker'],
+    categoryId: 'generators',
+    name: 'Gerador de Currículo',
+    nameEn: 'Resume Builder & CV Maker',
+    description: 'Crie currículos profissionais com importação do LinkedIn, múltiplos layouts e exportação para PDF',
+    descriptionEn: 'Create professional resumes with LinkedIn import, multiple layouts, local storage, and crisp PDF export',
+    icon: 'FileText',
+    popular: true,
+    tags: ['curriculo', 'resume', 'cv', 'linkedin', 'pdf', 'ats', 'templates', 'gerador', 'carreira']
+  },
+  {
     id: 'email-signature-generator',
     aliasIds: ['gerador-assinatura-email', 'gerador-assinaturas', 'assinatura-email', 'email-signature'],
     categoryId: 'generators',

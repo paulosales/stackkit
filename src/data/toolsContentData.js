@@ -319,6 +319,47 @@ export const toolSpecificContent = {
     ]
   },
 
+  'resume-builder': {
+    titlePt: 'Gerador de Currículo Profissional com Importação do LinkedIn e Exportação em PDF',
+    titleEn: 'Professional Resume & CV Builder with LinkedIn Import and PDF Export',
+    overviewPt: 'Um currículo moderno e bem estruturado é indispensável para se destacar em processos seletivos e avançar na carreira de tecnologia e negócios. O Gerador de Currículo do StackKit permite criar, gerenciar e personalizar múltiplos currículos salvos diretamente no seu navegador (armazenamento 100% local e privado). Você pode importar dados diretamente do seu perfil do LinkedIn ou colar o texto do perfil, alternar entre 5 modelos profissionais (Modern Tech, Executive Classic, Creative Split, Nordic Timeline e Compact ATS), ajustar seções e gerar PDFs nítidos em alta definição no padrão A4 internacional prontos para envio.',
+    overviewEn: 'A well-crafted, structured resume is essential for standing out in technical and corporate job applications. StackKit Resume Builder lets you design, manage, and tailor multiple resumes stored securely in your browser\'s local storage with zero server persistence. Seamlessly import information from your LinkedIn profile or pasted profile text, choose from 5 battle-tested layouts (Modern Tech, Executive Classic, Creative Split, Nordic Timeline, and Compact ATS), customize sections, and generate vector-sharp A4 PDF documents ready for hiring managers and applicant tracking systems.',
+    howToPt: [
+      'Escolha começar com dados de exemplo profissionais ou use "Importar LinkedIn" para puxar suas informações enviando o PDF exportado do seu perfil do LinkedIn.',
+      'Personalize suas informações de contato, resumo executivo, histórico de experiências, formação acadêmica, habilidades técnicas e projetos relevantes.',
+      'Selecione entre os 5 modelos disponíveis (Modern Tech, Executive Classic, Creative Split, Nordic Timeline ou Compact ATS) e escolha sua cor de destaque.',
+      'Crie variações para diferentes vagas usando o gerenciador de múltiplos currículos (salvos automaticamente no seu navegador).',
+      'Clique em "Baixar PDF" para gerar um arquivo PDF real e nítido de alta definição sem cabeçalhos indesejados do navegador.'
+    ],
+    howToEn: [
+      'Start with realistic industry presets or click "Import LinkedIn" to pull details by uploading your official LinkedIn profile PDF.',
+      'Customize your contact details, executive summary, work history, education, core skills, certifications, and featured projects.',
+      'Toggle between 5 professional templates (Modern Tech, Executive Classic, Creative Split, Nordic Timeline, or ATS-friendly Compact) and customize accent colors.',
+      'Save and manage multiple tailored versions for distinct job roles directly within your browser.',
+      'Click "Download PDF" to produce a crisp, real A4 PDF document directly saved to your device without unwanted browser print headers.'
+    ],
+    faqs: [
+      {
+        qPt: 'Os dados do meu currículo são enviados para algum servidor?',
+        qEn: 'Is my resume data or personal information stored on external servers?',
+        aPt: 'Não. Todo o conteúdo, histórico de trabalho e informações pessoais ficam armazenados exclusivamente no LocalStorage do seu navegador. O StackKit opera com zero persistência em servidor e nunca compartilha seus dados profissionais com terceiros.',
+        aEn: 'No. All resumes, contact details, and work histories are saved exclusively in your browser\'s LocalStorage. StackKit operates zero server persistence and never transmits your personal career data.'
+      },
+      {
+        qPt: 'O currículo gerado é compatível com sistemas de rastreamento de candidatos (ATS)?',
+        qEn: 'Are the generated resumes compatible with Applicant Tracking Systems (ATS)?',
+        aPt: 'Sim! Em especial o modelo "Compact ATS", que utiliza hierarquia tipográfica padrão, títulos semânticos de seção e layout em coluna única sem elementos gráficos complexos, facilitando a leitura por robôs de triagem como Workday, Greenhouse e Taleo.',
+        aEn: 'Yes! Specifically, the "Compact ATS" template uses standard semantic headings, linear single-column flow, and clean typography designed to parse flawlessly through recruitment ATS engines like Workday, Greenhouse, and Taleo.'
+      },
+      {
+        qPt: 'Como funciona a importação de dados do LinkedIn?',
+        qEn: 'How does the LinkedIn profile import work?',
+        aPt: 'No seu perfil do LinkedIn, clique no botão "Mais" ou "Recursos" e selecione "Salvar como PDF". Em seguida, arraste o arquivo PDF baixado para a ferramenta: nosso motor inteligente extrai 100% dos dados (experiências, empresas, formação acadêmica, idiomas e competências) e preenche todas as seções automaticamente em menos de um segundo!',
+        aEn: 'On your LinkedIn profile, click "More" or "Resources" and select "Save to PDF". Drop that downloaded PDF file into our Resume Builder: the client-side parser extracts all positions, companies, dates, education, and skills in under a second with zero server latency!'
+      }
+    ]
+  },
+
   'email-signature-generator': {
     titlePt: 'Gerador de Assinaturas de E-mail em HTML para Gmail, Outlook e Apple Mail',
     titleEn: 'HTML Email Signature Generator for Gmail, Outlook, and Apple Mail',

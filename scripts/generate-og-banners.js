@@ -108,7 +108,9 @@ const tagTranslations = {
   'processo': 'court-case',
   'juridico': 'legal',
   'beneficio': 'benefit',
-  'previdencia': 'pension'
+  'previdencia': 'pension',
+  'curriculo': 'resume',
+  'carreira': 'career'
 };
 
 function translateTag(tag) {
