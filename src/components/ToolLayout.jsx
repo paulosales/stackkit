@@ -116,7 +116,7 @@ export default function ToolLayout({
   const isFav = favorites.includes(tool.id);
 
   const handleShare = () => {
-    const url = `${window.location.origin}/${tool.id}`;
+    const url = `${window.location.origin}/${lang}/${tool.id}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
       if (onToast) {
@@ -477,7 +477,7 @@ export default function ToolLayout({
             </div>
             <div className="editorial-footer-links">
               <a
-                href="/privacy-policy"
+                href={`/${lang}/privacy-policy`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('privacy-policy');
@@ -487,7 +487,7 @@ export default function ToolLayout({
               </a>
               <span>·</span>
               <a
-                href="/terms-of-service"
+                href={`/${lang}/terms-of-service`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('terms-of-service');
@@ -497,7 +497,7 @@ export default function ToolLayout({
               </a>
               <span>·</span>
               <a
-                href="/about"
+                href={`/${lang}/about`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('about');

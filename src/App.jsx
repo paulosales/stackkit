@@ -14,8 +14,38 @@ import { X, Check, Shield, Zap, Terminal, Code2 } from 'lucide-react';
 
 import './App.css';
 
-// Detect default language from user's explicit preference or browser preferences
+// Clean URL path and hash parser with language prefix support
+export function parseUrlPath(pathname = '', hash = '') {
+  const cleanPath = (pathname || '').replace(/^\/+|\/+$/g, '').trim().toLowerCase();
+  const rawHash = (hash || '').replace(/^#\/?/, '').trim().split('?')[0].toLowerCase();
+  const full = cleanPath || rawHash;
+
+  const parts = full.split('/').filter(Boolean);
+  let detectedLang = null;
+  let remainingSlug = '';
+
+  if (parts.length > 0 && (parts[0] === 'en' || parts[0] === 'pt')) {
+    detectedLang = parts[0];
+    remainingSlug = parts.slice(1).join('/');
+  } else {
+    remainingSlug = full;
+  }
+
+  return { detectedLang, slug: remainingSlug };
+}
+
+// Detect default language from URL, user's explicit preference, or browser preferences
 function getInitialLanguage() {
+  if (typeof window !== 'undefined') {
+    const { detectedLang } = parseUrlPath(window.location.pathname, window.location.hash);
+    if (detectedLang) {
+      return detectedLang;
+    }
+    if (window.__INITIAL_LANG__ === 'pt' || window.__INITIAL_LANG__ === 'en') {
+      return window.__INITIAL_LANG__;
+    }
+  }
+
   try {
     const userSelected = localStorage.getItem('stackkit_user_lang');
     if (userSelected === 'pt' || userSelected === 'en') {
@@ -110,16 +140,31 @@ export default function App() {
 
   // Explicit user language toggle handler
   const handleToggleLang = () => {
-    setLang(prevLang => {
-      const nextLang = prevLang === 'pt' ? 'en' : 'pt';
-      try {
-        localStorage.setItem('stackkit_user_lang', nextLang);
-        localStorage.setItem('stackkit_lang', nextLang);
-      } catch {
-        // ignore
+    const nextLang = lang === 'pt' ? 'en' : 'pt';
+    setLang(nextLang);
+    try {
+      localStorage.setItem('stackkit_user_lang', nextLang);
+      localStorage.setItem('stackkit_lang', nextLang);
+    } catch {
+      // ignore
+    }
+
+    if (compliancePage) {
+      const targetPath = `/${nextLang}/${compliancePage}`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState(null, '', targetPath + window.location.search);
       }
-      return nextLang;
-    });
+    } else if (activeToolId) {
+      const targetPath = `/${nextLang}/${activeToolId}`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({ toolId: activeToolId }, '', targetPath + window.location.search);
+      }
+    } else {
+      const targetPath = `/${nextLang}`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState(null, '', targetPath + window.location.search);
+      }
+    }
   };
 
   // Sync theme
@@ -182,6 +227,40 @@ export default function App() {
       }
     };
 
+    const updateAlternateLinks = (slugPath = '') => {
+      const enUrl = `https://stackkit.com.br/en${slugPath ? `/${slugPath}` : ''}`;
+      const ptUrl = `https://stackkit.com.br/pt${slugPath ? `/${slugPath}` : ''}`;
+
+      let enLink = document.querySelector('link[rel="alternate"][hreflang="en"]');
+      if (!enLink) {
+        enLink = document.createElement('link');
+        enLink.setAttribute('rel', 'alternate');
+        enLink.setAttribute('hreflang', 'en');
+        document.head.appendChild(enLink);
+      }
+      enLink.setAttribute('href', enUrl);
+
+      let ptLink = document.querySelector('link[rel="alternate"][hreflang="pt"]');
+      if (!ptLink) {
+        ptLink = document.createElement('link');
+        ptLink.setAttribute('rel', 'alternate');
+        ptLink.setAttribute('hreflang', 'pt');
+        document.head.appendChild(ptLink);
+      }
+      ptLink.setAttribute('href', ptUrl);
+
+      let defLink = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+      if (!defLink) {
+        defLink = document.createElement('link');
+        defLink.setAttribute('rel', 'alternate');
+        defLink.setAttribute('hreflang', 'x-default');
+        document.head.appendChild(defLink);
+      }
+      defLink.setAttribute('href', enUrl);
+    };
+
+    const ogLocale = lang === 'pt' ? 'pt_BR' : 'en_US';
+
     if (compliancePage) {
       if (compliancePage === 'privacy-policy') {
         const title = lang === 'pt'
@@ -190,16 +269,19 @@ export default function App() {
         const desc = lang === 'pt'
           ? 'Política de privacidade do StackKit DevStudio: arquitetura 100% client-side, sem armazenamento de dados em servidores, e conformidade estrita com LGPD, GDPR e Google AdSense.'
           : 'StackKit DevStudio Privacy Policy: 100% client-side architecture, zero server data storage, and strict compliance with LGPD, GDPR, and Google AdSense.';
-        const url = 'https://stackkit.com.br/privacy-policy';
+        const url = `https://stackkit.com.br/${lang}/privacy-policy`;
+        const ogImage = `https://stackkit.com.br/og/${lang}/privacy-policy.png`;
 
         document.title = title;
         updateMetaTag('meta[name="description"]', 'content', desc);
         updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateAlternateLinks('privacy-policy');
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
-        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/privacy-policy.png');
-        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/privacy-policy.png');
+        updateMetaTag('meta[property="og:locale"]', 'content', ogLocale);
+        updateMetaTag('meta[property="og:image"]', 'content', ogImage);
+        updateMetaTag('meta[name="twitter:image"]', 'content', ogImage);
         updateMetaTag('meta[name="twitter:title"]', 'content', title);
         updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'terms-of-service') {
@@ -209,16 +291,19 @@ export default function App() {
         const desc = lang === 'pt'
           ? 'Termos de uso e diretrizes para desenvolvedores e testes de software no StackKit DevStudio.'
           : 'Terms of service and software testing guidelines for StackKit DevStudio users.';
-        const url = 'https://stackkit.com.br/terms-of-service';
+        const url = `https://stackkit.com.br/${lang}/terms-of-service`;
+        const ogImage = `https://stackkit.com.br/og/${lang}/terms-of-service.png`;
 
         document.title = title;
         updateMetaTag('meta[name="description"]', 'content', desc);
         updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateAlternateLinks('terms-of-service');
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
-        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/terms-of-service.png');
-        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/terms-of-service.png');
+        updateMetaTag('meta[property="og:locale"]', 'content', ogLocale);
+        updateMetaTag('meta[property="og:image"]', 'content', ogImage);
+        updateMetaTag('meta[name="twitter:image"]', 'content', ogImage);
         updateMetaTag('meta[name="twitter:title"]', 'content', title);
         updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'about') {
@@ -228,16 +313,19 @@ export default function App() {
         const desc = lang === 'pt'
           ? 'Conheça o StackKit DevStudio: missão, arquitetura client-side de alta performance e compromisso com privacidade para desenvolvedores.'
           : 'Learn about StackKit DevStudio: mission, high-performance client-side architecture, and developer privacy standards.';
-        const url = 'https://stackkit.com.br/about';
+        const url = `https://stackkit.com.br/${lang}/about`;
+        const ogImage = `https://stackkit.com.br/og/${lang}/about.png`;
 
         document.title = title;
         updateMetaTag('meta[name="description"]', 'content', desc);
         updateMetaTag('link[rel="canonical"]', 'href', url);
+        updateAlternateLinks('about');
         updateMetaTag('meta[property="og:title"]', 'content', title);
         updateMetaTag('meta[property="og:description"]', 'content', desc);
         updateMetaTag('meta[property="og:url"]', 'content', url);
-        updateMetaTag('meta[property="og:image"]', 'content', 'https://stackkit.com.br/og/about.png');
-        updateMetaTag('meta[name="twitter:image"]', 'content', 'https://stackkit.com.br/og/about.png');
+        updateMetaTag('meta[property="og:locale"]', 'content', ogLocale);
+        updateMetaTag('meta[property="og:image"]', 'content', ogImage);
+        updateMetaTag('meta[name="twitter:image"]', 'content', ogImage);
         updateMetaTag('meta[name="twitter:title"]', 'content', title);
         updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       }
@@ -248,15 +336,17 @@ export default function App() {
         const desc = lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description);
         const fullTitle = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
         const fullDesc = `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`;
-        const canonicalUrl = `https://stackkit.com.br/${tool.id}`;
-        const toolOgImage = `https://stackkit.com.br/og/${tool.id}.png`;
+        const canonicalUrl = `https://stackkit.com.br/${lang}/${tool.id}`;
+        const toolOgImage = `https://stackkit.com.br/og/${lang}/${tool.id}.png`;
 
         document.title = fullTitle;
         updateMetaTag('meta[name="description"]', 'content', fullDesc);
         updateMetaTag('link[rel="canonical"]', 'href', canonicalUrl);
+        updateAlternateLinks(tool.id);
         updateMetaTag('meta[property="og:title"]', 'content', fullTitle);
         updateMetaTag('meta[property="og:description"]', 'content', fullDesc);
         updateMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
+        updateMetaTag('meta[property="og:locale"]', 'content', ogLocale);
         updateMetaTag('meta[property="og:image"]', 'content', toolOgImage);
         updateMetaTag('meta[name="twitter:image"]', 'content', toolOgImage);
         updateMetaTag('meta[name="twitter:title"]', 'content', fullTitle);
@@ -269,15 +359,17 @@ export default function App() {
       const defaultDesc = lang === 'pt'
         ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
         : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.';
-      const homeUrl = 'https://stackkit.com.br/';
-      const defaultOgImage = 'https://stackkit.com.br/og/default.png';
+      const homeUrl = `https://stackkit.com.br/${lang}`;
+      const defaultOgImage = `https://stackkit.com.br/og/${lang}/default.png`;
 
       document.title = defaultTitle;
       updateMetaTag('meta[name="description"]', 'content', defaultDesc);
       updateMetaTag('link[rel="canonical"]', 'href', homeUrl);
+      updateAlternateLinks('');
       updateMetaTag('meta[property="og:title"]', 'content', defaultTitle);
       updateMetaTag('meta[property="og:description"]', 'content', defaultDesc);
       updateMetaTag('meta[property="og:url"]', 'content', homeUrl);
+      updateMetaTag('meta[property="og:locale"]', 'content', ogLocale);
       updateMetaTag('meta[property="og:image"]', 'content', defaultOgImage);
       updateMetaTag('meta[name="twitter:image"]', 'content', defaultOgImage);
       updateMetaTag('meta[name="twitter:title"]', 'content', defaultTitle);
@@ -285,57 +377,82 @@ export default function App() {
     }
   }, [activeToolId, compliancePage, lang]);
 
-  // Clean Path & Hash Router (supports /jwt-inspector, /privacy-policy, /terms-of-service, /about)
+  // Clean Path & Hash Router (supports /en/..., /pt/..., compliance pages, and aliases)
   useEffect(() => {
-    const resolveToolFromUrl = () => {
-      const pathnameSlug = window.location.pathname.replace(/^\/|\/$/g, '').trim().toLowerCase();
-      const rawHash = window.location.hash.replace(/^#\/?/, '').trim().split('?')[0].toLowerCase();
-      const currentSlug = pathnameSlug || rawHash;
+    const handleLocationChange = () => {
+      const { detectedLang, slug } = parseUrlPath(window.location.pathname, window.location.hash);
+
+      const activeLang = detectedLang || lang;
+      if (detectedLang && detectedLang !== lang) {
+        setLang(detectedLang);
+        try {
+          localStorage.setItem('stackkit_user_lang', detectedLang);
+          localStorage.setItem('stackkit_lang', detectedLang);
+        } catch {
+          // ignore
+        }
+      }
 
       // Compliance routes
-      if (['privacy-policy', 'privacidade'].includes(currentSlug)) {
+      if (['privacy-policy', 'privacidade'].includes(slug)) {
         setCompliancePage('privacy-policy');
-        return null;
+        setActiveToolId(null);
+        const expectedPath = `/${activeLang}/privacy-policy`;
+        if (window.location.pathname !== expectedPath || window.location.hash) {
+          window.history.replaceState(null, '', expectedPath + window.location.search);
+        }
+        return;
       }
-      if (['terms-of-service', 'termos', 'termos-de-uso'].includes(currentSlug)) {
+      if (['terms-of-service', 'termos', 'termos-de-uso'].includes(slug)) {
         setCompliancePage('terms-of-service');
-        return null;
+        setActiveToolId(null);
+        const expectedPath = `/${activeLang}/terms-of-service`;
+        if (window.location.pathname !== expectedPath || window.location.hash) {
+          window.history.replaceState(null, '', expectedPath + window.location.search);
+        }
+        return;
       }
-      if (['about', 'sobre'].includes(currentSlug)) {
+      if (['about', 'sobre'].includes(slug)) {
         setCompliancePage('about');
-        return null;
+        setActiveToolId(null);
+        const expectedPath = `/${activeLang}/about`;
+        if (window.location.pathname !== expectedPath || window.location.hash) {
+          window.history.replaceState(null, '', expectedPath + window.location.search);
+        }
+        return;
       }
 
       setCompliancePage(null);
 
-      // 1. Injected from static HTML page
+      // Injected tool ID from static preloader
+      let toolId = null;
       if (typeof window !== 'undefined' && window.__INITIAL_TOOL_ID__) {
         const found = findToolByIdOrAlias(window.__INITIAL_TOOL_ID__);
-        if (found) return found.id;
+        if (found) toolId = found.id;
       }
 
-      // 2. From pathname (e.g. /jwt-inspector or /canadian-citizenship-test)
-      if (pathnameSlug && pathnameSlug !== 'index.html') {
-        const found = findToolByIdOrAlias(pathnameSlug);
-        if (found) return found.id;
+      // Resolve from URL slug
+      if (!toolId && slug && slug !== 'index.html') {
+        const found = findToolByIdOrAlias(slug);
+        if (found) toolId = found.id;
       }
 
-      // 3. From hash (backward-compatibility for /#jwt-inspector)
-      if (rawHash) {
-        const found = findToolByIdOrAlias(rawHash);
-        if (found) return found.id;
-      }
-
-      return null;
-    };
-
-    const handleLocationChange = () => {
-      const toolId = resolveToolFromUrl();
       if (toolId) {
-        openTool(toolId, false);
-      } else if (window.location.pathname === '/' && !window.location.hash) {
+        setActiveToolId(toolId);
+        setOpenToolIds(prev => (prev.includes(toolId) ? prev : [...prev, toolId]));
+        const expectedPath = `/${activeLang}/${toolId}`;
+        if (window.location.pathname !== expectedPath || window.location.hash) {
+          window.history.replaceState({ toolId }, '', expectedPath + window.location.search);
+        }
+      } else {
         setActiveToolId(null);
         setCompliancePage(null);
+        if (detectedLang) {
+          const expectedPath = `/${detectedLang}`;
+          if (window.location.pathname !== expectedPath && window.location.pathname !== `${expectedPath}/`) {
+            window.history.replaceState(null, '', expectedPath + window.location.search);
+          }
+        }
       }
     };
 
@@ -346,7 +463,7 @@ export default function App() {
       window.removeEventListener('popstate', handleLocationChange);
       window.removeEventListener('hashchange', handleLocationChange);
     };
-  }, []);
+  }, [lang]);
 
   // Global Keyboard shortcuts (Cmd+K / Ctrl+K)
   useEffect(() => {
@@ -365,8 +482,9 @@ export default function App() {
     setCompliancePage(null);
     if (!rawToolId) {
       setActiveToolId(null);
-      if (window.location.pathname !== '/' || window.location.hash) {
-        window.history.pushState(null, '', `/${window.location.search}`);
+      const targetPath = `/${lang}`;
+      if (window.location.pathname !== targetPath && window.location.pathname !== `/${lang}/`) {
+        window.history.pushState(null, '', targetPath + window.location.search);
       }
       return;
     }
@@ -376,7 +494,7 @@ export default function App() {
 
     setActiveToolId(canonicalId);
 
-    const targetPath = `/${canonicalId}`;
+    const targetPath = `/${lang}/${canonicalId}`;
     if (updateHistory) {
       if (window.location.pathname !== targetPath || window.location.hash) {
         window.history.pushState({ toolId: canonicalId }, '', targetPath + window.location.search);
@@ -402,7 +520,7 @@ export default function App() {
           openTool(nextTool, true);
         } else {
           setActiveToolId(null);
-          window.history.pushState(null, '', `/${window.location.search}`);
+          window.history.pushState(null, '', `/${lang}${window.location.search}`);
         }
       }
       return nextTabs;
@@ -428,8 +546,9 @@ export default function App() {
   const navigateToCompliance = (pageSlug) => {
     setActiveToolId(null);
     setCompliancePage(pageSlug);
-    if (window.location.pathname !== `/${pageSlug}`) {
-      window.history.pushState(null, '', `/${pageSlug}`);
+    const targetPath = `/${lang}/${pageSlug}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState(null, '', targetPath);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileOpen(false);
@@ -453,8 +572,9 @@ export default function App() {
           setActiveCategory('all');
           setActiveToolId(null);
           setMobileOpen(false);
-          if (window.location.pathname !== '/' || window.location.hash) {
-            window.history.pushState(null, '', '/');
+          const targetPath = `/${lang}`;
+          if (window.location.pathname !== targetPath && window.location.pathname !== `/${lang}/`) {
+            window.history.pushState(null, '', targetPath);
           }
         }}
         collapsed={sidebarCollapsed}
@@ -479,8 +599,9 @@ export default function App() {
             setCompliancePage(null);
             setActiveCategory('all');
             setActiveToolId(null);
-            if (window.location.pathname !== '/' || window.location.hash) {
-              window.history.pushState(null, '', '/');
+            const targetPath = `/${lang}`;
+            if (window.location.pathname !== targetPath && window.location.pathname !== `/${lang}/`) {
+              window.history.pushState(null, '', targetPath);
             }
           }}
           onSelectCategory={(catId) => {

@@ -1,296 +1,894 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://stackkit.com.br/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/privacy-policy</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/privacy-policy" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/terms-of-service</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/privacy-policy" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/about</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/terms-of-service" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/cpf-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/terms-of-service" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/about" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/about" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/cpf-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cpf-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cpf-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cpf-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/cnpj-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/cpf-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cpf-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cpf-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cpf-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/rg-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/document-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/cpf-cnpj-validator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/pix-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/cnpj-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cnpj-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cnpj-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cnpj-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/fake-person-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/overtime-calculator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/nb-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/cnpj-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cnpj-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cnpj-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cnpj-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/processo-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/rg-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/rg-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/rg-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/rg-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/rg-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/rg-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/rg-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/rg-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/document-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/document-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/document-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/document-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/document-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/document-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/document-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/document-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/cpf-cnpj-validator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cpf-cnpj-validator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cpf-cnpj-validator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cpf-cnpj-validator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/cpf-cnpj-validator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cpf-cnpj-validator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cpf-cnpj-validator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cpf-cnpj-validator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/pix-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/pix-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/pix-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/pix-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/resume-builder</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/pix-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/pix-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/pix-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/pix-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/email-signature-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/fake-person-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/fake-person-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/fake-person-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/fake-person-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/fake-person-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/fake-person-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/fake-person-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/fake-person-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/overtime-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/overtime-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/overtime-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/overtime-calculator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/overtime-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/overtime-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/overtime-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/overtime-calculator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/nb-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/nb-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/nb-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/nb-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/color-palette-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/nb-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/nb-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/nb-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/nb-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/qr-code-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/processo-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/processo-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/processo-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/processo-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/password-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/processo-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/processo-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/processo-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/processo-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/whatsapp-link-generator</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/resume-builder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/resume-builder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/resume-builder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/resume-builder" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/credit-card-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/hash-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/guid-uuid-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/lorem-ipsum-generator</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/json-formatter</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/resume-builder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/resume-builder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/resume-builder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/resume-builder" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/xml-formatter</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/sql-formatter</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/json-to-csharp</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/xml-to-json</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/csv-to-json</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/json-to-yaml</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/json-stringify</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/base64-to-file</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/timestamp-converter</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/color-converter</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/number-base-converter</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/url-encoder-decoder</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/base64-encoder-decoder</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/jwt-inspector</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/email-signature-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/email-signature-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/email-signature-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/email-signature-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/world-time-buddy</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/email-signature-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/email-signature-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/email-signature-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/email-signature-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/my-ip-address</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/html-viewer</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/string-utilities</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/regex-tester</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/text-diff</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/cron-expression-explainer</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/markdown-previewer</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackkit.com.br/character-counter</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/en/color-palette-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/color-palette-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/color-palette-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/color-palette-generator" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackkit.com.br/canadian-citizenship-test</loc>
-    <lastmod>2026-10-23</lastmod>
+    <loc>https://stackkit.com.br/pt/color-palette-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/color-palette-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/color-palette-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/color-palette-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/qr-code-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/qr-code-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/qr-code-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/qr-code-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/password-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/password-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/password-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/password-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/password-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/password-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/password-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/password-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/whatsapp-link-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/whatsapp-link-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/whatsapp-link-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/whatsapp-link-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/whatsapp-link-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/whatsapp-link-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/whatsapp-link-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/whatsapp-link-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/credit-card-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/credit-card-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/credit-card-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/credit-card-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/credit-card-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/credit-card-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/credit-card-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/credit-card-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/hash-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/hash-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/hash-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/hash-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/hash-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/hash-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/hash-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/hash-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/guid-uuid-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/guid-uuid-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/guid-uuid-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/guid-uuid-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/guid-uuid-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/guid-uuid-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/guid-uuid-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/guid-uuid-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/lorem-ipsum-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/lorem-ipsum-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/lorem-ipsum-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/lorem-ipsum-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/lorem-ipsum-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/lorem-ipsum-generator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/lorem-ipsum-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/lorem-ipsum-generator" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/json-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/json-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/xml-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/xml-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/xml-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/xml-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/xml-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/xml-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/xml-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/xml-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/sql-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/sql-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/sql-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/sql-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/sql-formatter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/sql-formatter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/sql-formatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/sql-formatter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/json-to-csharp</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-to-csharp" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-to-csharp" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-to-csharp" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/json-to-csharp</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-to-csharp" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-to-csharp" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-to-csharp" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/xml-to-json</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/xml-to-json" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/xml-to-json" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/xml-to-json" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/xml-to-json</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/xml-to-json" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/xml-to-json" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/xml-to-json" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/csv-to-json</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/csv-to-json" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/csv-to-json" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/csv-to-json" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/csv-to-json</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/csv-to-json" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/csv-to-json" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/csv-to-json" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/json-to-yaml</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-to-yaml" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-to-yaml" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-to-yaml" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/json-to-yaml</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-to-yaml" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-to-yaml" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-to-yaml" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/json-stringify</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-stringify" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-stringify" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-stringify" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/json-stringify</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/json-stringify" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/json-stringify" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/json-stringify" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/base64-to-file</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/base64-to-file" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/base64-to-file" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/base64-to-file" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/base64-to-file</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/base64-to-file" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/base64-to-file" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/base64-to-file" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/timestamp-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/timestamp-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/timestamp-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/timestamp-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/timestamp-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/timestamp-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/timestamp-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/timestamp-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/color-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/color-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/color-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/color-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/color-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/color-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/color-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/color-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/number-base-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/number-base-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/number-base-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/number-base-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/number-base-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/number-base-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/number-base-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/number-base-converter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/url-encoder-decoder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/url-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/url-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/url-encoder-decoder" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/url-encoder-decoder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/url-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/url-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/url-encoder-decoder" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/base64-encoder-decoder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/base64-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/base64-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/base64-encoder-decoder" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/base64-encoder-decoder</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/base64-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/base64-encoder-decoder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/base64-encoder-decoder" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/jwt-inspector</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/jwt-inspector" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/jwt-inspector" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/jwt-inspector" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/jwt-inspector</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/jwt-inspector" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/jwt-inspector" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/jwt-inspector" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/world-time-buddy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/world-time-buddy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/world-time-buddy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/world-time-buddy" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/world-time-buddy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/world-time-buddy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/world-time-buddy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/world-time-buddy" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/my-ip-address</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/my-ip-address" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/my-ip-address" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/my-ip-address" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/my-ip-address</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/my-ip-address" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/my-ip-address" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/my-ip-address" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/html-viewer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/html-viewer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/html-viewer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/html-viewer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/html-viewer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/html-viewer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/html-viewer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/html-viewer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/string-utilities</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/string-utilities" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/string-utilities" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/string-utilities" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/string-utilities</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/string-utilities" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/string-utilities" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/string-utilities" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/regex-tester</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/regex-tester" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/regex-tester" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/regex-tester" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/regex-tester</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/regex-tester" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/regex-tester" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/regex-tester" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/text-diff</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/text-diff" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/text-diff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/text-diff" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/text-diff</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/text-diff" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/text-diff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/text-diff" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/cron-expression-explainer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cron-expression-explainer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cron-expression-explainer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cron-expression-explainer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/cron-expression-explainer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/cron-expression-explainer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/cron-expression-explainer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/cron-expression-explainer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/markdown-previewer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/markdown-previewer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/markdown-previewer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/markdown-previewer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/markdown-previewer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/markdown-previewer" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/markdown-previewer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/markdown-previewer" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/character-counter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/character-counter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/character-counter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/character-counter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/character-counter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/character-counter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/character-counter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/character-counter" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/en/canadian-citizenship-test</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/canadian-citizenship-test" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/canadian-citizenship-test" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/canadian-citizenship-test" />
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://stackkit.com.br/pt/canadian-citizenship-test</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/canadian-citizenship-test" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/canadian-citizenship-test" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/canadian-citizenship-test" />
+    <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

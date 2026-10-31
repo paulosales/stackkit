@@ -278,9 +278,9 @@ export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
   // Copy URL Share Link
   const handleSharePalette = () => {
     const hexTokens = colors.map(c => c.hex.replace('#', '')).join('-');
-    const shareUrl = `${window.location.origin}/color-palette-generator?palette=${hexTokens}`;
+    const shareUrl = `${window.location.origin}/${lang}/color-palette-generator?palette=${hexTokens}`;
     navigator.clipboard.writeText(shareUrl);
-    if (onCopy) onCopy('Link compartilhável copiado para a área de transferência!');
+    if (onCopy) onCopy(lang === 'pt' ? 'Link compartilhável copiado para a área de transferência!' : 'Shareable link copied to clipboard!');
   };
 
   // Download SVG

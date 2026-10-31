@@ -356,7 +356,7 @@ export default function CatalogView({
         </div>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
           <a
-            href="/privacy-policy"
+            href={`/${lang}/privacy-policy`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('privacy-policy');
@@ -367,7 +367,7 @@ export default function CatalogView({
           </a>
           <span>·</span>
           <a
-            href="/terms-of-service"
+            href={`/${lang}/terms-of-service`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('terms-of-service');
@@ -378,7 +378,7 @@ export default function CatalogView({
           </a>
           <span>·</span>
           <a
-            href="/about"
+            href={`/${lang}/about`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('about');

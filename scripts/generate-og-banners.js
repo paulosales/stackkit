@@ -10,22 +10,29 @@ const rootDir = path.resolve(__dirname, '..');
 const publicOgDir = path.resolve(rootDir, 'public/og');
 const distOgDir = path.resolve(rootDir, 'dist/og');
 
-// Ensure output directories exist
-for (const dir of [publicOgDir, distOgDir]) {
+// Ensure output directories exist including language subdirectories
+for (const dir of [
+  publicOgDir,
+  distOgDir,
+  path.resolve(publicOgDir, 'en'),
+  path.resolve(publicOgDir, 'pt'),
+  path.resolve(distOgDir, 'en'),
+  path.resolve(distOgDir, 'pt')
+]) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
 }
 
 const categoryThemes = {
-  brazil: { label: 'BRAZIL', accent: '#10b981', secondary: '#06b6d4', glow: '#10b981' },
-  generators: { label: 'GENERATORS', accent: '#a855f7', secondary: '#ec4899', glow: '#a855f7' },
-  formatters: { label: 'FORMATTERS', accent: '#3b82f6', secondary: '#06b6d4', glow: '#3b82f6' },
-  converters: { label: 'CONVERTERS', accent: '#f59e0b', secondary: '#ef4444', glow: '#f59e0b' },
-  encoders: { label: 'ENCODE / DECODE', accent: '#06b6d4', secondary: '#3b82f6', glow: '#06b6d4' },
-  network: { label: 'NETWORK & TIME', accent: '#0ea5e9', secondary: '#8b5cf6', glow: '#0ea5e9' },
-  utilities: { label: 'UTILITIES', accent: '#ec4899', secondary: '#f43f5e', glow: '#ec4899' },
-  default: { label: 'DEVSTUDIO', accent: '#38bdf8', secondary: '#818cf8', glow: '#38bdf8' }
+  brazil: { labelEn: 'BRAZIL', labelPt: 'BRASIL', accent: '#10b981', secondary: '#06b6d4', glow: '#10b981' },
+  generators: { labelEn: 'GENERATORS', labelPt: 'GERADORES', accent: '#a855f7', secondary: '#ec4899', glow: '#a855f7' },
+  formatters: { labelEn: 'FORMATTERS', labelPt: 'FORMATADORES', accent: '#3b82f6', secondary: '#06b6d4', glow: '#3b82f6' },
+  converters: { labelEn: 'CONVERTERS', labelPt: 'CONVERSORES', accent: '#f59e0b', secondary: '#ef4444', glow: '#f59e0b' },
+  encoders: { labelEn: 'ENCODE / DECODE', labelPt: 'ENCODE / DECODE', accent: '#06b6d4', secondary: '#3b82f6', glow: '#06b6d4' },
+  network: { labelEn: 'NETWORK & TIME', labelPt: 'REDE & TEMPO', accent: '#0ea5e9', secondary: '#8b5cf6', glow: '#0ea5e9' },
+  utilities: { labelEn: 'UTILITIES', labelPt: 'UTILIDADES', accent: '#ec4899', secondary: '#f43f5e', glow: '#ec4899' },
+  default: { labelEn: 'DEVSTUDIO', labelPt: 'DEVSTUDIO', accent: '#38bdf8', secondary: '#818cf8', glow: '#38bdf8' }
 };
 
 function escapeXml(unsafe) {
@@ -39,7 +46,7 @@ function escapeXml(unsafe) {
 }
 
 function wrapText(text, maxCharsPerLine = 68, maxLines = 2) {
-  const words = text.split(/\s+/);
+  const words = String(text || '').split(/\s+/);
   const lines = [];
   let currentLine = '';
 
@@ -125,28 +132,31 @@ export function generateBannerSvg({
   description,
   categoryId = 'default',
   tags = [],
-  urlPath = ''
+  urlPath = '',
+  lang = 'en'
 }) {
   const theme = categoryThemes[categoryId] || categoryThemes.default;
-  const url = urlPath ? `stackkit.com.br/${urlPath}` : `stackkit.com.br/${id}`;
+  const isPt = lang === 'pt';
+  const url = urlPath ? `stackkit.com.br/${lang}/${urlPath}` : `stackkit.com.br/${lang}`;
 
   // Dynamic font sizing for title to prevent overflow
   const cleanTitle = title.trim();
   let titleFontSize = 52;
   if (cleanTitle.length > 34) {
-    titleFontSize = 40;
+    titleFontSize = 38;
   } else if (cleanTitle.length > 25) {
-    titleFontSize = 46;
+    titleFontSize = 44;
   }
 
-  // Description lines (wrap to 2 lines max in English)
+  // Description lines (wrap to 2 lines max)
   const descLines = wrapText(description, 68, 2);
 
-  // Deduplicate and translate tags
-  const translatedTags = tags.map(translateTag);
-  const displayTags = [...new Set(translatedTags)].slice(0, 3);
-  if (!displayTags.includes('Zero Server Storage') && displayTags.length < 4) {
-    displayTags.push('Zero Server Storage');
+  // Process tags
+  const processedTags = isPt ? tags : tags.map(translateTag);
+  const displayTags = [...new Set(processedTags)].slice(0, 3);
+  const privacyTag = isPt ? 'Zero Armazenamento' : 'Zero Server Storage';
+  if (!displayTags.includes(privacyTag) && displayTags.length < 4) {
+    displayTags.push(privacyTag);
   }
 
   let tagPillsSvg = '';
@@ -166,8 +176,11 @@ export function generateBannerSvg({
   }
 
   // Category badge width
-  const catLabel = theme.label;
+  const catLabel = isPt ? (theme.labelPt || theme.labelEn) : theme.labelEn;
   const catBadgeWidth = Math.max(90, Math.round(catLabel.length * 8.5 + 32));
+
+  const clientSideIndicator = isPt ? '● 100% NO NAVEGADOR' : '● 100% CLIENT-SIDE';
+  const footerSecText = isPt ? '🔒 100% no Navegador · Gratuito e Seguro' : '🔒 100% Client-Side · Free &amp; Secure';
 
   return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -219,7 +232,7 @@ export function generateBannerSvg({
     <text x="58" y="29" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="900" letter-spacing="0.06em">STACKKIT</text>
     <text x="176" y="29" fill="${theme.accent}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="900" letter-spacing="0.06em">DEVSTUDIO</text>
 
-    <!-- Category Pill Badge (English) -->
+    <!-- Category Pill Badge -->
     <g transform="translate(340, 7)">
       <rect width="${catBadgeWidth}" height="30" rx="15" fill="${theme.accent}" fill-opacity="0.14" stroke="${theme.accent}" stroke-opacity="0.45" stroke-width="1.2"/>
       <text x="${Math.round(catBadgeWidth / 2)}" y="20" fill="${theme.accent}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="0.08em">${escapeXml(catLabel)}</text>
@@ -227,16 +240,16 @@ export function generateBannerSvg({
 
     <!-- Privacy Shield Indicator (Right Aligned) -->
     <g transform="translate(1056, 12)">
-      <text x="0" y="16" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="end" letter-spacing="0.05em">● 100% CLIENT-SIDE</text>
+      <text x="0" y="16" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="end" letter-spacing="0.05em">${clientSideIndicator}</text>
     </g>
   </g>
 
   <!-- MAIN CENTER HERO -->
   <g transform="translate(72, 195)">
-    <!-- Main Tool Title (English) -->
+    <!-- Main Tool Title -->
     <text x="0" y="44" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="${titleFontSize}" font-weight="900" letter-spacing="-0.02em">${escapeXml(cleanTitle)}</text>
 
-    <!-- Tool Description Lines (English) -->
+    <!-- Tool Description Lines -->
     <text x="0" y="112" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="400">${escapeXml(descLines[0] || '')}</text>
     ${descLines[1] ? `<text x="0" y="152" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="400">${escapeXml(descLines[1])}</text>` : ''}
   </g>
@@ -250,115 +263,191 @@ export function generateBannerSvg({
   <g transform="translate(72, 515)">
     <line x1="0" y1="0" x2="1056" y2="0" stroke="#334155" stroke-width="1.2" stroke-opacity="0.75"/>
     <text x="0" y="40" fill="${theme.accent}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="0.02em">${escapeXml(url)}</text>
-    <text x="1056" y="40" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" text-anchor="end">🔒 100% Client-Side · Free &amp; Secure</text>
+    <text x="1056" y="40" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" text-anchor="end">${footerSecText}</text>
   </g>
 </svg>`;
 }
 
-function renderAndSaveBanner(config, slug, aliases = []) {
-  const svg = generateBannerSvg(config);
+function renderAndSaveBanner(config, lang, slug, aliases = []) {
+  const svg = generateBannerSvg({ ...config, lang });
   const resvg = new Resvg(svg, {
     fitTo: { mode: 'width', value: 1200 }
   });
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
 
-  const publicPngPath = path.resolve(publicOgDir, `${slug}.png`);
-  fs.writeFileSync(publicPngPath, pngBuffer);
+  const langPublicDir = path.resolve(publicOgDir, lang);
+  const langDistDir = path.resolve(distOgDir, lang);
 
-  // Copy to dist/og if dist exists
-  if (fs.existsSync(distOgDir)) {
-    fs.writeFileSync(path.resolve(distOgDir, `${slug}.png`), pngBuffer);
+  for (const dir of [langPublicDir, langDistDir]) {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   }
 
-  // Handle aliases (symlink or copy)
+  // 1. Save language-prefixed banner in public/og/${lang}/${slug}.png
+  const publicPngPath = path.resolve(langPublicDir, `${slug}.png`);
+  fs.writeFileSync(publicPngPath, pngBuffer);
+
+  // Copy to dist/og/${lang} if dist exists
+  if (fs.existsSync(distOgDir)) {
+    fs.writeFileSync(path.resolve(langDistDir, `${slug}.png`), pngBuffer);
+  }
+
+  // Handle aliases in language subfolder
   for (const alias of aliases) {
-    const aliasPublicPng = path.resolve(publicOgDir, `${alias}.png`);
-    fs.writeFileSync(aliasPublicPng, pngBuffer);
+    fs.writeFileSync(path.resolve(langPublicDir, `${alias}.png`), pngBuffer);
     if (fs.existsSync(distOgDir)) {
-      fs.writeFileSync(path.resolve(distOgDir, `${alias}.png`), pngBuffer);
+      fs.writeFileSync(path.resolve(langDistDir, `${alias}.png`), pngBuffer);
+    }
+  }
+
+  // 2. Also maintain root public/og/${slug}.png fallback for root backwards-compatibility
+  const isDefaultFallback = (lang === 'pt' && config.categoryId === 'brazil') || (lang === 'en' && config.categoryId !== 'brazil');
+  if (isDefaultFallback) {
+    fs.writeFileSync(path.resolve(publicOgDir, `${slug}.png`), pngBuffer);
+    if (fs.existsSync(distOgDir)) {
+      fs.writeFileSync(path.resolve(distOgDir, `${slug}.png`), pngBuffer);
+    }
+    for (const alias of aliases) {
+      fs.writeFileSync(path.resolve(publicOgDir, `${alias}.png`), pngBuffer);
+      if (fs.existsSync(distOgDir)) {
+        fs.writeFileSync(path.resolve(distOgDir, `${alias}.png`), pngBuffer);
+      }
     }
   }
 }
 
-console.log(`Generating English Open Graph banners (1200x630 PNG) for all ${tools.length} tools...`);
+const languages = ['en', 'pt'];
+
+console.log(`Generating Multilingual Open Graph banners (1200x630 PNG) for EN and PT...`);
 let totalGenerated = 0;
 
-// 1. Generate for all tools using English titles and descriptions
-for (const tool of tools) {
-  const englishTitle = tool.nameEn || tool.name;
-  const englishDescription = tool.descriptionEn || tool.description;
+for (const lang of languages) {
+  console.log(`\nGenerating [${lang.toUpperCase()}] banners for all ${tools.length} tools...`);
+  for (const tool of tools) {
+    const isPt = lang === 'pt';
+    const title = isPt ? tool.name : (tool.nameEn || tool.name);
+    const description = isPt ? tool.description : (tool.descriptionEn || tool.description);
 
-  renderAndSaveBanner({
-    id: tool.id,
-    title: englishTitle,
-    description: englishDescription,
-    categoryId: tool.categoryId,
-    tags: tool.tags,
-    urlPath: tool.id
-  }, tool.id, tool.aliasIds || []);
+    renderAndSaveBanner({
+      id: tool.id,
+      title,
+      description,
+      categoryId: tool.categoryId,
+      tags: tool.tags,
+      urlPath: tool.id
+    }, lang, tool.id, tool.aliasIds || []);
 
-  totalGenerated++;
-  process.stdout.write(`\rGenerated: [${totalGenerated}/${tools.length}] ${tool.id}.png`);
-}
-console.log('\nAll tool banners generated!');
-
-// 2. Generate for compliance pages in English
-console.log('Generating compliance and homepage Open Graph banners in English...');
-const compliancePages = [
-  {
-    slug: 'privacy-policy',
-    aliases: ['privacidade'],
-    title: 'Privacy Policy',
-    subtitle: 'LGPD & GDPR Compliant',
-    description: '100% client-side architecture, zero server storage, and strict data privacy protection for developers.',
-    categoryId: 'default',
-    tags: ['privacy', 'lgpd', 'gdpr', 'client-side'],
-    urlPath: 'privacy-policy'
-  },
-  {
-    slug: 'terms-of-service',
-    aliases: ['termos', 'termos-de-uso'],
-    title: 'Terms of Service',
-    subtitle: 'Developer Guidelines & Usage Terms',
-    description: 'Guidelines and terms of use for developers, QA engineers, and software validation sandbox environments.',
-    categoryId: 'default',
-    tags: ['terms', 'sandbox', 'testing', 'license'],
-    urlPath: 'terms-of-service'
-  },
-  {
-    slug: 'about',
-    aliases: ['sobre'],
-    title: 'About StackKit DevStudio',
-    subtitle: 'Open Standards & Client-Side Engineering',
-    description: 'All-in-one developer workstation featuring 40+ free, private, high-performance client-side utilities.',
-    categoryId: 'default',
-    tags: ['devstudio', 'open-standards', 'performance', 'client-side'],
-    urlPath: 'about'
-  },
-  {
-    slug: 'default',
-    aliases: ['home'],
-    title: 'StackKit DevStudio',
-    subtitle: '40+ Free Developer Tools, World Clock & Color Palette',
-    description: 'All-in-one developer workstation with free client-side utilities: World Time Buddy, Coolors palette generator, QR Code, formatters, and encoders.',
-    categoryId: 'default',
-    tags: ['developer-tools', 'world-clock', 'coolors', 'jwt', 'json'],
-    urlPath: ''
+    totalGenerated++;
+    process.stdout.write(`\rGenerated: [${lang.toUpperCase()}] ${tool.id}.png`);
   }
-];
+}
+console.log('\nAll tool banners generated for EN and PT!');
 
-for (const page of compliancePages) {
-  renderAndSaveBanner(page, page.slug, page.aliases);
-  console.log(`Generated banner for ${page.slug} (+ aliases: ${page.aliases.join(', ')})`);
+// Generate compliance and homepage banners for each language
+const compliancePages = {
+  en: [
+    {
+      slug: 'privacy-policy',
+      aliases: ['privacidade'],
+      title: 'Privacy Policy',
+      subtitle: 'LGPD & GDPR Compliant',
+      description: '100% client-side architecture, zero server storage, and strict data privacy protection for developers.',
+      categoryId: 'default',
+      tags: ['privacy', 'lgpd', 'gdpr', 'client-side'],
+      urlPath: 'privacy-policy'
+    },
+    {
+      slug: 'terms-of-service',
+      aliases: ['termos', 'termos-de-uso'],
+      title: 'Terms of Service',
+      subtitle: 'Developer Guidelines & Usage Terms',
+      description: 'Guidelines and terms of use for developers, QA engineers, and software validation sandbox environments.',
+      categoryId: 'default',
+      tags: ['terms', 'sandbox', 'testing', 'license'],
+      urlPath: 'terms-of-service'
+    },
+    {
+      slug: 'about',
+      aliases: ['sobre'],
+      title: 'About StackKit DevStudio',
+      subtitle: 'Open Standards & Client-Side Engineering',
+      description: 'All-in-one developer workstation featuring 40+ free, private, high-performance client-side utilities.',
+      categoryId: 'default',
+      tags: ['devstudio', 'open-standards', 'performance', 'client-side'],
+      urlPath: 'about'
+    },
+    {
+      slug: 'default',
+      aliases: ['home'],
+      title: 'StackKit DevStudio',
+      subtitle: '40+ Free Developer Tools, World Clock & Color Palette',
+      description: 'All-in-one developer workstation with free client-side utilities: World Time Buddy, Coolors palette generator, QR Code, formatters, and encoders.',
+      categoryId: 'default',
+      tags: ['developer-tools', 'world-clock', 'coolors', 'jwt', 'json'],
+      urlPath: ''
+    }
+  ],
+  pt: [
+    {
+      slug: 'privacy-policy',
+      aliases: ['privacidade'],
+      title: 'Política de Privacidade',
+      subtitle: 'Conforme LGPD & GDPR',
+      description: 'Arquitetura 100% no navegador, zero armazenamento em servidores e proteção estrita de privacidade.',
+      categoryId: 'default',
+      tags: ['privacidade', 'lgpd', 'gdpr', 'client-side'],
+      urlPath: 'privacy-policy'
+    },
+    {
+      slug: 'terms-of-service',
+      aliases: ['termos', 'termos-de-uso'],
+      title: 'Termos de Uso e Serviço',
+      subtitle: 'Diretrizes para Desenvolvedores & QA',
+      description: 'Termos de uso para desenvolvedores e analistas de QA em ambientes de homologação de software.',
+      categoryId: 'default',
+      tags: ['termos', 'sandbox', 'testes', 'licenca'],
+      urlPath: 'terms-of-service'
+    },
+    {
+      slug: 'about',
+      aliases: ['sobre'],
+      title: 'Sobre o StackKit DevStudio',
+      subtitle: 'Padrões Abertos & Alta Performance',
+      description: 'Estúdio all-in-one com mais de 40 ferramentas client-side gratuitas, seguras e de alta performance.',
+      categoryId: 'default',
+      tags: ['devstudio', 'padroes-abertos', 'performance', 'client-side'],
+      urlPath: 'about'
+    },
+    {
+      slug: 'default',
+      aliases: ['home'],
+      title: 'StackKit DevStudio',
+      subtitle: 'Mais de 40 Ferramentas Gratuitas para Desenvolvedores',
+      description: 'Estúdio all-in-one para desenvolvedores com utilitários gratuitos: World Time Buddy, paleta Coolors, QR Code, formatadores e codificadores.',
+      categoryId: 'default',
+      tags: ['ferramentas-dev', 'world-clock', 'coolors', 'jwt', 'json'],
+      urlPath: ''
+    }
+  ]
+};
+
+console.log('Generating compliance and homepage Open Graph banners in EN and PT...');
+for (const lang of languages) {
+  for (const page of compliancePages[lang]) {
+    renderAndSaveBanner(page, lang, page.slug, page.aliases);
+    console.log(`Generated [${lang.toUpperCase()}] banner for ${page.slug} (+ aliases: ${page.aliases.join(', ')})`);
+  }
 }
 
-// Ensure default.png is copied to root public/og-banner.png for root fallback
-const defaultPng = path.resolve(publicOgDir, 'default.png');
-if (fs.existsSync(defaultPng)) {
-  fs.copyFileSync(defaultPng, path.resolve(rootDir, 'public/og-banner.png'));
+// Ensure default root og-banner fallback
+const defaultEnPng = path.resolve(publicOgDir, 'en/default.png');
+const rootDefaultPng = path.resolve(publicOgDir, 'default.png');
+if (fs.existsSync(defaultEnPng)) {
+  fs.copyFileSync(defaultEnPng, rootDefaultPng);
+  fs.copyFileSync(defaultEnPng, path.resolve(rootDir, 'public/og-banner.png'));
   if (fs.existsSync(path.resolve(rootDir, 'dist'))) {
-    fs.copyFileSync(defaultPng, path.resolve(rootDir, 'dist/og-banner.png'));
+    fs.copyFileSync(defaultEnPng, path.resolve(rootDir, 'dist/og-banner.png'));
+    fs.copyFileSync(defaultEnPng, path.resolve(rootDir, 'dist/og/default.png'));
   }
 }
 
@@ -368,4 +457,4 @@ if (fs.existsSync(testScript)) {
   fs.unlinkSync(testScript);
 }
 
-console.log('All English Open Graph banners generated successfully in public/og/ and dist/og/!');
+console.log('All Multilingual Open Graph banners generated successfully in public/og/ and dist/og/!');
