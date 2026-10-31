@@ -281,21 +281,18 @@ function renderAndSaveBanner(config, slug, aliases = []) {
   }
 }
 
-console.log(`Generating Open Graph banners (1200x630 PNG) for all ${tools.length} tools...`);
+console.log(`Generating English Open Graph banners (1200x630 PNG) for all ${tools.length} tools...`);
 let totalGenerated = 0;
 
-// 1. Generate for all tools using English titles and descriptions (Portuguese description for Brazil tools)
+// 1. Generate for all tools using English titles and descriptions
 for (const tool of tools) {
   const englishTitle = tool.nameEn || tool.name;
-  const isBrazil = tool.categoryId === 'brazil';
-  const description = isBrazil
-    ? (tool.description || tool.descriptionEn)
-    : (tool.descriptionEn || tool.description);
+  const englishDescription = tool.descriptionEn || tool.description;
 
   renderAndSaveBanner({
     id: tool.id,
     title: englishTitle,
-    description,
+    description: englishDescription,
     categoryId: tool.categoryId,
     tags: tool.tags,
     urlPath: tool.id
@@ -371,4 +368,4 @@ if (fs.existsSync(testScript)) {
   fs.unlinkSync(testScript);
 }
 
-console.log('All Open Graph banners generated successfully in public/og/ and dist/og/!');
+console.log('All English Open Graph banners generated successfully in public/og/ and dist/og/!');
