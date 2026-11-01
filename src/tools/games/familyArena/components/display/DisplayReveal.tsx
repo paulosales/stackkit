@@ -3,6 +3,7 @@ import { CheckCircle, XCircle, Zap, ArrowRight, Clock } from 'lucide-react';
 import { QuizQuestion, Player, AnswerSubmission } from '../../types/game';
 import { useTranslation } from '../../i18n/I18nContext';
 import { AvatarDisplay } from '../common/AvatarDisplay';
+import { QuestionMarkdown } from '../common/QuestionMarkdown';
 
 interface DisplayRevealProps {
   question: QuizQuestion;
@@ -76,9 +77,7 @@ export const DisplayReveal: React.FC<DisplayRevealProps> = ({
 
       {/* Question Text */}
       <div className="w-full bg-white dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 mb-6 shadow-2xl text-center transition-colors">
-        <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-          {question.text}
-        </h2>
+        <QuestionMarkdown content={question.text} size="medium" />
       </div>
 
       {/* Answer Distribution Cards with Bar Heights and Player Avatars */}

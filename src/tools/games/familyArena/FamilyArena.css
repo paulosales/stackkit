@@ -38,3 +38,22 @@
 .family-arena-root .animate-bounce-short {
   animation: bounceShort 0.8s ease-in-out 2;
 }
+
+/* Family Arena Question Markdown Rendering */
+.family-arena-root .family-arena-markdown {
+  word-break: break-word;
+}
+.family-arena-root .family-arena-markdown img {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+}
+.family-arena-root .family-arena-markdown pre {
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.family-arena-root .family-arena-markdown code {
+  word-break: break-word;
+}
+

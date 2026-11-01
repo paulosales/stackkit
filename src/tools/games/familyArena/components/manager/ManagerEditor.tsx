@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, CheckCircle2, Save, Send, AlertCircle, ChevronDown } from 'lucide-react';
+import {
+  Plus,
+  Trash2,
+  CheckCircle2,
+  Save,
+  Send,
+  AlertCircle,
+  ChevronDown,
+  Bold,
+  Italic,
+  Code,
+  Image as ImageIcon,
+  Eye,
+  EyeOff,
+} from 'lucide-react';
 import { Quiz, QuizQuestion } from '../../types/game';
 import { validateQuiz } from '../../services/quizStorage';
 import { useTranslation } from '../../i18n/I18nContext';
+import { QuestionMarkdown } from '../common/QuestionMarkdown';
 
 interface ManagerEditorProps {
   initialQuiz?: Quiz | null;
@@ -39,6 +54,37 @@ export const ManagerEditor: React.FC<ManagerEditorProps> = ({
   );
 
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [previewQuestionIndices, setPreviewQuestionIndices] = useState<Set<number>>(new Set());
+
+  const togglePreview = (idx: number) => {
+    setPreviewQuestionIndices((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
+      return next;
+    });
+  };
+
+  const insertMarkdownTag = (
+    qIdx: number,
+    before: string,
+    after: string = '',
+    placeholder: string = ''
+  ) => {
+    const current = questions[qIdx].text || '';
+    const addition = before + placeholder + after;
+    const newText = current ? `${current} ${addition}` : addition;
+    handleQuestionTextChange(qIdx, newText);
+  };
+
+  const insertImageTag = (qIdx: number) => {
+    const current = questions[qIdx].text || '';
+    const imgTag = `\n![Image description](https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600)\n`;
+    handleQuestionTextChange(qIdx, current ? `${current.trimEnd()}${imgTag}` : imgTag.trim());
+  };
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -273,18 +319,100 @@ export const ManagerEditor: React.FC<ManagerEditorProps> = ({
               </div>
             </div>
 
-            {/* Question Text */}
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t('questionPromptLabel')} *
-              </label>
-              <textarea
-                rows={2}
-                placeholder={t('typeQuestionPlaceholder')}
-                value={q.text}
-                onChange={(e) => handleQuestionTextChange(qIdx, e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
-              />
+            {/* Question Text with Markdown Toolbar & Preview */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  {t('questionPromptLabel')} *
+                </label>
+
+                {/* Markdown Quick Toolbar */}
+                <div className="flex items-center space-x-1">
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownTag(qIdx, '**', '**', 'bold')}
+                    title={t('insertBoldTooltip')}
+                    className="p-1 rounded-md text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  >
+                    <Bold className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownTag(qIdx, '*', '*', 'italic')}
+                    title={t('insertItalicTooltip')}
+                    className="p-1 rounded-md text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  >
+                    <Italic className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownTag(qIdx, '`', '`', 'code')}
+                    title={t('insertCodeTooltip')}
+                    className="p-1 rounded-md text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  >
+                    <Code className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertImageTag(qIdx)}
+                    title={t('insertImageTooltip')}
+                    className="p-1 rounded-md text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                  </button>
+
+                  <div className="w-[1px] h-3.5 bg-slate-200 dark:bg-slate-700 mx-1" />
+
+                  <button
+                    type="button"
+                    onClick={() => togglePreview(qIdx)}
+                    className={`flex items-center space-x-1 px-2 py-0.5 rounded-lg text-xs font-semibold border transition ${
+                      previewQuestionIndices.has(qIdx)
+                        ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-600 text-indigo-700 dark:text-indigo-300'
+                        : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    {previewQuestionIndices.has(qIdx) ? (
+                      <>
+                        <EyeOff className="w-3 h-3" />
+                        <span>{t('edit')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Eye className="w-3 h-3" />
+                        <span>{t('preview')}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {previewQuestionIndices.has(qIdx) ? (
+                <div className="w-full bg-slate-50 dark:bg-slate-800/60 border border-indigo-200 dark:border-indigo-900/50 rounded-xl p-3.5 min-h-[72px] flex flex-col justify-center">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-indigo-500 mb-1">
+                    {t('preview')}
+                  </div>
+                  {q.text ? (
+                    <QuestionMarkdown content={q.text} size="compact" align="left" />
+                  ) : (
+                    <span className="text-xs text-slate-400 italic">
+                      {t('previewEmptyPrompt')}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <textarea
+                  rows={2}
+                  placeholder={t('typeQuestionPlaceholder')}
+                  value={q.text}
+                  onChange={(e) => handleQuestionTextChange(qIdx, e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 font-sans"
+                />
+              )}
+
+              <p className="text-[11px] text-slate-400 dark:text-slate-500">
+                {t('markdownHint')}
+              </p>
             </div>
 
             {/* 4 Options */}

@@ -107,6 +107,13 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     addQuestionBtn: '+ Add Question',
     removeQuestionBtn: 'Remove',
     saveQuizBtn: 'Save Quiz to Storage',
+    markdownHint: 'Supports Markdown formatting & images: **bold**, *italic*, `code`, and ![alt](image-url)',
+    preview: 'Preview',
+    previewEmptyPrompt: 'Type question text or insert markdown/images to preview it here.',
+    insertBoldTooltip: 'Insert Bold (**text**)',
+    insertItalicTooltip: 'Insert Italic (*text*)',
+    insertCodeTooltip: 'Insert Code (`code`)',
+    insertImageTooltip: 'Insert Image (![alt](url))',
 
     // Display
     waitingForQuiz: 'Waiting for Quiz Manager...',
@@ -338,6 +345,13 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     addQuestionBtn: '+ Adicionar Pergunta',
     removeQuestionBtn: 'Remover',
     saveQuizBtn: 'Salvar Quiz no Dispositivo',
+    markdownHint: 'Suporta formatação Markdown e imagens: **negrito**, *itálico*, `código` e ![descrição](url-da-imagem)',
+    preview: 'Visualizar',
+    previewEmptyPrompt: 'Digite a pergunta ou insira markdown/imagens para ver a prévia aqui.',
+    insertBoldTooltip: 'Inserir Negrito (**texto**)',
+    insertItalicTooltip: 'Inserir Itálico (*texto*)',
+    insertCodeTooltip: 'Inserir Código (`código`)',
+    insertImageTooltip: 'Inserir Imagem (![descrição](url))',
 
     // Display
     waitingForQuiz: 'Aguardando o Gerenciador...',
@@ -569,6 +583,13 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     addQuestionBtn: '+ Agregar Pregunta',
     removeQuestionBtn: 'Eliminar',
     saveQuizBtn: 'Guardar Quiz en el Dispositivo',
+    markdownHint: 'Soporta formato Markdown e imágenes: **negrita**, *cursiva*, `código` e ![descripción](url-de-la-imagen)',
+    preview: 'Vista previa',
+    previewEmptyPrompt: 'Escribe la pregunta o inserta markdown/imágenes para ver la vista previa aquí.',
+    insertBoldTooltip: 'Insertar Negrita (**texto**)',
+    insertItalicTooltip: 'Insertar Cursiva (*texto*)',
+    insertCodeTooltip: 'Insertar Código (`código`)',
+    insertImageTooltip: 'Insertar Imagen (![descripción](url))',
 
     // Display
     waitingForQuiz: 'Esperando al Administrador...',

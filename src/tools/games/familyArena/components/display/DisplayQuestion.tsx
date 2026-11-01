@@ -3,6 +3,7 @@ import { Clock, Users, CheckCircle2, Infinity as InfinityIcon } from 'lucide-rea
 import { QuizQuestion, Player } from '../../types/game';
 import { useTranslation } from '../../i18n/I18nContext';
 import { AvatarDisplay } from '../common/AvatarDisplay';
+import { QuestionMarkdown } from '../common/QuestionMarkdown';
 
 interface DisplayQuestionProps {
   question: QuizQuestion;
@@ -107,10 +108,8 @@ export const DisplayQuestion: React.FC<DisplayQuestionProps> = ({
       </div>
 
       {/* Question Card */}
-      <div className="w-full bg-white dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-12 mb-8 shadow-2xl text-center flex flex-col justify-center min-h-[180px] transition-colors">
-        <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
-          {question.text}
-        </h2>
+      <div className="w-full bg-white dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 mb-8 shadow-2xl text-center flex flex-col justify-center min-h-[180px] transition-colors">
+        <QuestionMarkdown content={question.text} size="large" />
       </div>
 
       {/* 4 Answer Options Grid */}

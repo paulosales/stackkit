@@ -11,7 +11,7 @@ export const DEFAULT_QUIZZES: Quiz[] = [
     questions: [
       {
         id: 'q1-1',
-        text: 'Which planet is known as the "Red Planet"?',
+        text: 'Which planet is known as the **"Red Planet"**?\n![Mars](https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600&auto=format&fit=crop&q=80)',
         options: ['Venus', 'Mars', 'Jupiter', 'Mercury'],
         correctAnswerIndex: 1,
         timeLimit: 20,
@@ -209,7 +209,7 @@ export const DEFAULT_QUIZZES: Quiz[] = [
     questions: [
       {
         id: 'q-pt-1',
-        text: 'Qual planeta do Sistema Solar é conhecido como o "Planeta Vermelho"?',
+        text: 'Qual planeta do Sistema Solar é conhecido como o **"Planeta Vermelho"**?\n![Marte](https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600&auto=format&fit=crop&q=80)',
         options: ['Vênus', 'Marte', 'Júpiter', 'Mercúrio'],
         correctAnswerIndex: 1,
         timeLimit: 20,
@@ -286,7 +286,7 @@ export const DEFAULT_QUIZZES: Quiz[] = [
     questions: [
       {
         id: 'q-es-1',
-        text: '¿Qué planeta es conocido como el "Planeta Rojo"?',
+        text: '¿Qué planeta es conocido como el **"Planeta Rojo"**?\n![Marte](https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600&auto=format&fit=crop&q=80)',
         options: ['Venus', 'Marte', 'Júpiter', 'Saturno'],
         correctAnswerIndex: 1,
         timeLimit: 20,

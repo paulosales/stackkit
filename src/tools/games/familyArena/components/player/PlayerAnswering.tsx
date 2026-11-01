@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, Clock } from 'lucide-react';
 import { sounds } from '../../services/soundService';
 import { useTranslation } from '../../i18n/I18nContext';
+import { QuestionMarkdown } from '../common/QuestionMarkdown';
 
 interface PlayerAnsweringProps {
   questionIndex: number;
@@ -84,9 +85,7 @@ export const PlayerAnswering: React.FC<PlayerAnsweringProps> = ({
 
       {/* Question prompt brief */}
       <div className="text-center mb-4 px-2">
-        <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white line-clamp-2">
-          {questionText}
-        </h3>
+        <QuestionMarkdown content={questionText} size="small" />
       </div>
 
       {/* Answering State Banner */}

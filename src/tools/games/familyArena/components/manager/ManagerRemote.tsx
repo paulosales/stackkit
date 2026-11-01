@@ -2,6 +2,7 @@ import React from 'react';
 import { Play, FastForward, CheckCircle2, Trophy, RotateCcw, Users, StopCircle } from 'lucide-react';
 import { Quiz, Player } from '../../types/game';
 import { useTranslation } from '../../i18n/I18nContext';
+import { QuestionMarkdown } from '../common/QuestionMarkdown';
 
 interface ManagerRemoteProps {
   quiz: Quiz | null;
@@ -98,9 +99,9 @@ export const ManagerRemote: React.FC<ManagerRemoteProps> = ({
               <span>{t('question')} {questionIndex + 1} {t('of')} {totalQuestions}</span>
               <span>{currentQuestion.timeLimit}s</span>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-white mb-3">
-              {currentQuestion.text}
-            </p>
+            <div className="mb-3">
+              <QuestionMarkdown content={currentQuestion.text} size="compact" align="left" />
+            </div>
             <div className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700">
               <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t('correctAnswerLabel')}: </span>
               <span>{currentQuestion.options[currentQuestion.correctAnswerIndex]}</span>
