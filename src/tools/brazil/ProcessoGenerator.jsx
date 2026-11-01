@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Copy, RefreshCw, Download, Check, ShieldCheck, Scale, Sparkles, Hash, Info, CheckCircle2, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Copy, RefreshCw, Download, Check, ShieldCheck, Scale, Sparkles, Hash, Info, CheckCircle2, AlertCircle } from 'lucide-react';
 import {
   generateNumeroProcesso,
   formatNumeroProcesso,
   validateNumeroProcesso,
-  cleanDigits,
   JUSTICE_SEGMENTS,
   JUSTICE_TRIBUNALS
 } from '../../utils/brazilianAlgorithms';
 
-export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
+export default function ProcessoGenerator({ onCopy }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('generator'); // 'generator' | 'validator'
 
   // Generator Configuration State
@@ -87,7 +88,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
       setTimeout(() => setCopiedBatch(false), 1500);
     }
     if (onCopy) {
-      onCopy(lang === 'pt' ? `Processo ${text} copiado!` : `Lawsuit ${text} copied!`);
+      onCopy(t('tools.processo.toasts.copied', { text }));
     }
   };
 
@@ -122,7 +123,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
     link.download = `processos_cnj_${Date.now()}.txt`;
     link.click();
     URL.revokeObjectURL(url);
-    if (onCopy) onCopy(lang === 'pt' ? 'Arquivo TXT baixado!' : 'TXT file downloaded!');
+    if (onCopy) onCopy(t('tools.common.fileDownloaded'));
   };
 
   // Handle validation input
@@ -157,14 +158,14 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
           onClick={() => setActiveTab('generator')}
         >
           <Sparkles size={14} />
-          <span>{lang === 'pt' ? 'Gerador CNJ' : 'CNJ Generator'}</span>
+          <span>{t('tools.processo.tabs.generator')}</span>
         </button>
         <button
           className={`category-chip ${activeTab === 'validator' ? 'active' : ''}`}
           onClick={() => setActiveTab('validator')}
         >
           <ShieldCheck size={14} />
-          <span>{lang === 'pt' ? 'Validador CNJ' : 'CNJ Validator'}</span>
+          <span>{t('tools.processo.tabs.validator')}</span>
         </button>
       </div>
 
@@ -175,7 +176,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
             <div className="panel-header">
               <div className="panel-title">
                 <Scale size={16} />
-                <span>{lang === 'pt' ? 'Parâmetros do Processo' : 'Process Parameters'}</span>
+                <span>{t('tools.processo.generator.paramsTitle')}</span>
               </div>
             </div>
 
@@ -183,12 +184,12 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               {/* Órgão ou segmento da justiça */}
               <div className="form-group">
                 <label className="form-label">
-                  {lang === 'pt' ? 'Órgão ou Segmento da Justiça (J):' : 'Justice Organ or Segment (J):'}
+                  {t('tools.processo.generator.segmentLabel')}
                 </label>
                 <select value={orgao} onChange={e => setOrgao(Number(e.target.value))}>
                   {JUSTICE_SEGMENTS.map(s => (
                     <option key={s.value} value={s.value}>
-                      {lang === 'pt' ? s.label : s.labelEn}
+                      {t(`tools.processo.segments.${s.value}`, s.label)}
                     </option>
                   ))}
                 </select>
@@ -198,11 +199,11 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               {availableTribunals.length > 0 && (
                 <div className="form-group">
                   <label className="form-label">
-                    {lang === 'pt' ? 'Tribunal Específico (TR):' : 'Specific Court / Tribunal (TR):'}
+                    {t('tools.processo.generator.tribunalLabel')}
                   </label>
                   <select value={tribunal} onChange={e => setTribunal(Number(e.target.value))}>
                     <option value={0}>
-                      {lang === 'pt' ? 'Qualquer Tribunal (Aleatório)' : 'Any Court (Random)'}
+                      {t('tools.processo.generator.anyTribunal')}
                     </option>
                     {availableTribunals.map(t => (
                       <option key={t.value} value={t.value}>
@@ -216,7 +217,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               {/* Ano do ajuizamento */}
               <div className="form-group">
                 <label className="form-label">
-                  {lang === 'pt' ? 'Ano do Ajuizamento (AAAA):' : 'Filing Year (AAAA):'}
+                  {t('tools.processo.generator.yearLabel')}
                 </label>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                   <input
@@ -229,7 +230,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                     style={{ flex: 1, opacity: useCurrentYear ? 0.7 : 1 }}
                   />
                   <label className="form-switch" style={{ width: 'auto', flexShrink: 0 }}>
-                    <span style={{ fontSize: 12 }}>{lang === 'pt' ? 'Ano Atual' : 'Current Year'}</span>
+                    <span style={{ fontSize: 12 }}>{t('tools.processo.generator.currentYear')}</span>
                     <input
                       type="checkbox"
                       checked={useCurrentYear}
@@ -244,9 +245,9 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
 
               {/* Máscara de pontuação */}
               <div className="form-group">
-                <label className="form-label">{lang === 'pt' ? 'Formatação / Máscara' : 'Formatting / Mask'}</label>
+                <label className="form-label">{t('tools.processo.generator.maskLabel')}</label>
                 <label className="form-switch">
-                  <span>{lang === 'pt' ? 'Incluir pontuação unificada CNJ' : 'Include unified CNJ punctuation'}</span>
+                  <span>{t('tools.processo.generator.maskCheckbox')}</span>
                   <input
                     type="checkbox"
                     checked={mask}
@@ -258,8 +259,10 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               {/* Quantidade em lote */}
               <div className="form-group">
                 <label className="form-label">
-                  <span>{lang === 'pt' ? 'Quantidade a gerar' : 'Quantity to generate'}</span>
-                  <span className="badge badge-cyan">{quantity} {quantity === 1 ? 'Processo' : 'Processos'}</span>
+                  <span>{t('tools.processo.generator.quantityLabel')}</span>
+                  <span className="badge badge-cyan">
+                    {quantity} {quantity === 1 ? t('tools.processo.generator.lawsuit') : t('tools.processo.generator.lawsuits')}
+                  </span>
                 </label>
                 <input
                   type="range"
@@ -281,14 +284,14 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                 <button className="btn-primary" onClick={handleGenerate} style={{ justifyContent: 'center' }}>
                   <RefreshCw size={15} />
-                  <span>{lang === 'pt' ? 'Gerar Novo(s) Processo(s)' : 'Generate Lawsuit Number(s)'}</span>
+                  <span>{t('tools.processo.generator.generateBtn')}</span>
                   <kbd style={{ marginLeft: 6, fontSize: 10, opacity: 0.8 }}>G</kbd>
                 </button>
 
                 {quantity > 1 && (
                   <button className="btn-secondary" onClick={handleDownloadBatch} style={{ justifyContent: 'center' }}>
                     <Download size={15} />
-                    <span>{lang === 'pt' ? `Baixar ${quantity} Processos (.txt)` : `Download ${quantity} Lawsuits (.txt)`}</span>
+                    <span>{t('tools.processo.generator.downloadBtn', { count: quantity })}</span>
                   </button>
                 )}
               </div>
@@ -300,12 +303,12 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
             <div className="panel-header">
               <div className="panel-title">
                 <Hash size={16} />
-                <span>{lang === 'pt' ? 'Número do Processo Judicial' : 'Judicial Lawsuit Number'}</span>
+                <span>{t('tools.processo.result.title')}</span>
               </div>
               <div className="panel-actions">
                 <span className="badge badge-emerald">
                   <Check size={11} style={{ marginRight: 4 }} />
-                  {lang === 'pt' ? 'Resolução CNJ 65/2008 (Módulo 97)' : 'CNJ Modulo 97 Valid'}
+                  {t('tools.processo.result.cnjBadge')}
                 </span>
               </div>
             </div>
@@ -329,11 +332,11 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
-                  title={lang === 'pt' ? 'Clique para copiar formatado' : 'Click to copy formatted'}
+                  title={t('tools.processo.result.copyFormattedTooltip')}
                 >
                   <div style={{ overflow: 'hidden' }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', marginBottom: 4 }}>
-                      {lang === 'pt' ? 'Padrão Unificado CNJ (Formatado)' : 'Unified CNJ Format (Masked)'}
+                      {t('tools.processo.result.formattedLabel')}
                     </div>
                     <div style={{ fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', letterSpacing: '0.02em', wordBreak: 'break-all' }}>
                       {formattedDisplay}
@@ -342,7 +345,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
 
                   <button className="btn-secondary" style={{ pointerEvents: 'none', flexShrink: 0, marginLeft: 12 }}>
                     {copiedFormatted ? <Check size={16} color="var(--accent-emerald)" /> : <Copy size={16} />}
-                    <span>{copiedFormatted ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+                    <span>{copiedFormatted ? t('tools.common.copied') : t('tools.common.copy')}</span>
                   </button>
                 </div>
 
@@ -362,11 +365,11 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
-                  title={lang === 'pt' ? 'Clique para copiar sem máscara' : 'Click to copy raw (numbers only)'}
+                  title={t('tools.processo.result.copyRawTooltip')}
                 >
                   <div style={{ overflow: 'hidden' }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 4 }}>
-                      {lang === 'pt' ? 'Apenas Números (20 dígitos)' : 'Numbers Only (20 digits)'}
+                      {t('tools.processo.result.rawLabel')}
                     </div>
                     <div style={{ fontSize: 18, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', letterSpacing: '0.03em', wordBreak: 'break-all' }}>
                       {processoRaw}
@@ -375,7 +378,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
 
                   <button className="btn-secondary" style={{ pointerEvents: 'none', flexShrink: 0, marginLeft: 12 }}>
                     {copiedRaw ? <Check size={16} color="var(--accent-emerald)" /> : <Copy size={16} />}
-                    <span>{copiedRaw ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+                    <span>{copiedRaw ? t('tools.common.copied') : t('tools.common.copy')}</span>
                   </button>
                 </div>
               </div>
@@ -384,31 +387,31 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
               {breakdown && (
                 <div style={{ marginTop: 20 }}>
                   <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8 }}>
-                    {lang === 'pt' ? 'Decomposição dos Segmentos CNJ:' : 'CNJ Segment Breakdown:'}
+                    {t('tools.processo.result.breakdownTitle')}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8 }}>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sequencial (N)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownSeq')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', marginTop: 2 }}>{breakdown.seq}</div>
                     </div>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Dígito (D)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownDv')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)', marginTop: 2 }}>{breakdown.dv}</div>
                     </div>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Ano (A)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownAno')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', marginTop: 2 }}>{breakdown.ano}</div>
                     </div>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Justiça (J)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownJ')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', marginTop: 2 }}>{breakdown.j}</div>
                     </div>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Tribunal (TR)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownTr')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', marginTop: 2 }}>{breakdown.tr}</div>
                     </div>
                     <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Origem (O)</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{t('tools.processo.result.breakdownOrigem')}</div>
                       <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', marginTop: 2 }}>{breakdown.origem}</div>
                     </div>
                   </div>
@@ -420,7 +423,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                 <div style={{ marginTop: 20 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                     <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      {lang === 'pt' ? `Lista em Lote (${batchList.length} Processos):` : `Batch List (${batchList.length} Lawsuits):`}
+                      {t('tools.processo.result.batchListTitle', { count: batchList.length })}
                     </span>
                     <button
                       className="btn-secondary"
@@ -428,7 +431,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                       onClick={() => copyToClipboard(batchList.map(formatNumeroProcesso).join('\n'), 'batch')}
                     >
                       {copiedBatch ? <Check size={13} /> : <Copy size={13} />}
-                      <span>{copiedBatch ? (lang === 'pt' ? 'Tudo Copiado!' : 'All Copied!') : (lang === 'pt' ? 'Copiar Todos' : 'Copy All')}</span>
+                      <span>{copiedBatch ? t('tools.processo.result.allCopied') : t('tools.processo.result.copyAll')}</span>
                     </button>
                   </div>
 
@@ -455,7 +458,7 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                           className="btn-icon"
                           style={{ width: 26, height: 26 }}
                           onClick={() => copyToClipboard(mask ? formatNumeroProcesso(item) : item, mask ? 'formatted' : 'raw')}
-                          title={lang === 'pt' ? 'Copiar este processo' : 'Copy this lawsuit number'}
+                          title={t('tools.processo.result.copyItemTooltip')}
                         >
                           <Copy size={12} />
                         </button>
@@ -475,18 +478,18 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
           <div className="panel-header">
             <div className="panel-title">
               <ShieldCheck size={16} />
-              <span>{lang === 'pt' ? 'Validador e Inspetor de Processo Judicial (CNJ)' : 'Lawsuit Number (CNJ) Validator & Inspector'}</span>
+              <span>{t('tools.processo.validator.title')}</span>
             </div>
           </div>
 
           <div className="panel-body">
             <div className="form-group">
               <label className="form-label">
-                {lang === 'pt' ? 'Digite ou cole o número do processo:' : 'Enter or paste the lawsuit number:'}
+                {t('tools.processo.validator.inputLabel')}
               </label>
               <input
                 type="text"
-                placeholder={lang === 'pt' ? 'Exemplo: 0001234-56.2026.8.26.0100 ou 00012345620268260100' : 'Example: 0001234-56.2026.8.26.0100 or 00012345620268260100'}
+                placeholder={t('tools.processo.validator.placeholder')}
                 value={validateInput}
                 onChange={handleValidateChange}
                 style={{ fontSize: 16, fontFamily: 'var(--font-mono)' }}
@@ -518,8 +521,8 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                     color: validationResult.valid ? 'var(--accent-emerald)' : 'var(--accent-rose)'
                   }}>
                     {validationResult.valid
-                      ? (lang === 'pt' ? 'Número de Processo Judicial Válido!' : 'Valid Lawsuit Number (CNJ)!')
-                      : (lang === 'pt' ? 'Número de Processo Inválido' : 'Invalid Lawsuit Number')
+                      ? t('tools.processo.validator.valid')
+                      : t('tools.processo.validator.invalid')
                     }
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
@@ -529,34 +532,34 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
                   {validationResult.valid && validationResult.details && (
                     <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Número Sequencial:' : 'Sequential:'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.sequential')}</div>
                         <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{validationResult.details.sequence}</div>
                       </div>
 
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Dígito Verificador (Módulo 97):' : 'Check Digit (Modulo 97):'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.checkDigit')}</div>
                         <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>{validationResult.details.dv}</div>
                       </div>
 
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Ano do Ajuizamento:' : 'Filing Year:'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.filingYear')}</div>
                         <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{validationResult.details.ano}</div>
                       </div>
 
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Segmento da Justiça (J):' : 'Justice Segment (J):'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.justiceSegment')}</div>
                         <div style={{ fontSize: 13, fontWeight: 700 }}>
-                          {lang === 'pt' ? validationResult.details.orgaoName : validationResult.details.orgaoNameEn}
+                          {t(`tools.processo.segments.${validationResult.details.orgao}`, validationResult.details.orgaoName)}
                         </div>
                       </div>
 
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Tribunal (TR):' : 'Court / Tribunal (TR):'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.court')}</div>
                         <div style={{ fontSize: 13, fontWeight: 700 }}>{validationResult.details.tribunalName}</div>
                       </div>
 
                       <div style={{ padding: 10, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Foro / Unidade de Origem:' : 'Court Unit of Origin:'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('tools.processo.validator.originUnit')}</div>
                         <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{validationResult.details.origem}</div>
                       </div>
                     </div>
@@ -573,16 +576,13 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Info size={16} />
-            <span>{lang === 'pt' ? 'Padrão Unificado da Numeração Processual (CNJ)' : 'Unified Lawsuit Numbering Standard (CNJ)'}</span>
+            <span>{t('tools.processo.doc.title')}</span>
           </div>
         </div>
 
         <div className="panel-body" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
           <p>
-            {lang === 'pt'
-              ? 'Instituído pela Resolução nº 65/2008 do Conselho Nacional de Justiça (CNJ), o padrão unificado de numeração dos processos no Poder Judiciário possui 20 dígitos estruturados em 6 campos:'
-              : 'Established by Resolution No. 65/2008 of the Brazilian National Justice Council (CNJ), the unified numbering system for judicial lawsuits consists of 20 digits organized into 6 fields:'
-            }
+            {t('tools.processo.doc.desc')}
           </p>
 
           <div style={{
@@ -601,22 +601,22 @@ export default function ProcessoGenerator({ onCopy, lang = 'pt' }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10, marginTop: 12 }}>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>NNNNNNN (7 dígitos):</strong> {lang === 'pt' ? 'Número sequencial do processo no ano.' : 'Sequential lawsuit number within year.'}
+              <strong>{t('tools.processo.doc.fieldNTitle')}</strong> {t('tools.processo.doc.fieldN')}
             </div>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>DD (2 dígitos):</strong> {lang === 'pt' ? 'Dígitos verificadores calculados via Módulo 97.' : 'Check digits calculated via Modulo 97.'}
+              <strong>{t('tools.processo.doc.fieldDTitle')}</strong> {t('tools.processo.doc.fieldD')}
             </div>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>AAAA (4 dígitos):</strong> {lang === 'pt' ? 'Ano em que o processo foi ajuizado.' : 'Year the lawsuit was originally filed.'}
+              <strong>{t('tools.processo.doc.fieldATitle')}</strong> {t('tools.processo.doc.fieldA')}
             </div>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>J (1 dígito):</strong> {lang === 'pt' ? 'Segmento ou ramo do Poder Judiciário (1 a 9).' : 'Branch or segment of Judiciary (1 to 9).'}
+              <strong>{t('tools.processo.doc.fieldJTitle')}</strong> {t('tools.processo.doc.fieldJ')}
             </div>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>TR (2 dígitos):</strong> {lang === 'pt' ? 'Identificador do tribunal ou região judiciária.' : 'Court or judicial regional circuit ID.'}
+              <strong>{t('tools.processo.doc.fieldTRTitle')}</strong> {t('tools.processo.doc.fieldTR')}
             </div>
             <div style={{ padding: 10, borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-subtle)' }}>
-              <strong>OOOO (4 dígitos):</strong> {lang === 'pt' ? 'Foro, vara ou unidade judiciária de origem.' : 'Court branch or judicial unit of origin.'}
+              <strong>{t('tools.processo.doc.fieldOTitle')}</strong> {t('tools.processo.doc.fieldO')}
             </div>
           </div>
         </div>

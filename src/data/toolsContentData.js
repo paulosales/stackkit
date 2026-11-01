@@ -600,8 +600,10 @@ export const toolSpecificContent = {
   'nb-generator': {
     titlePt: 'Gerador e Validador de Número de Benefício do INSS (NB)',
     titleEn: 'INSS Benefit Number Generator & Validator (NB)',
+    titleEs: 'Generador y Validador de Número de Beneficio del INSS (NB)',
     overviewPt: 'O Número de Benefício (NB) é o identificador único composto por 10 dígitos atribuído pela Previdência Social (INSS) aos aposentados e pensionistas no Brasil. O décimo dígito é um dígito verificador calculado a partir dos nove primeiros dígitos com base no algoritmo oficial do Dataprev. Esta ferramenta permite gerar e validar números de benefício para homologação de sistemas previdenciários e bancários.',
     overviewEn: 'The INSS Benefit Number (NB) is a 10-digit identifier assigned by Brazil\'s National Social Security Institute to pension and retirement beneficiaries. The 10th digit is a check digit calculated via the official Dataprev algorithm. StackKit allows QA teams to generate and validate mock benefit numbers for banking compliance testing.',
+    overviewEs: 'El Número de Beneficio (NB) es el identificador único compuesto por 10 dígitos asignado por la Seguridad Social brasileña (INSS) a los jubilados y pensionados. El décimo dígito es un dígito verificador calculado a partir de los primeros nueve dígitos según el algoritmo oficial de Dataprev. Esta herramienta permite generar y validar números de beneficio para pruebas de sistemas de seguridad social y bancarios.',
     howToPt: [
       'Defina se deseja gerar com ou sem máscara (000.000.000-0).',
       'Clique em "Gerar NB" para criar números matematicamente válidos.',
@@ -611,6 +613,11 @@ export const toolSpecificContent = {
       'Choose formatted mask (000.000.000-0) or raw digits.',
       'Click "Generate NB" to produce valid test numbers.',
       'Use the validation tab to verify the mathematical validity of any benefit number.'
+    ],
+    howToEs: [
+      'Defina si desea generar con o sin máscara (000.000.000-0).',
+      'Haga clic en "Generar NB" para crear números matemáticamente válidos.',
+      'Pegue cualquier número existente en la pestaña de validación para verificar su autenticidad matemática.'
     ],
     faqs: [
       {
@@ -625,8 +632,10 @@ export const toolSpecificContent = {
   'processo-generator': {
     titlePt: 'Gerador de Número de Processo Judicial Unificado CNJ (Resolução 65/2008)',
     titleEn: 'CNJ Unified Judicial Lawsuit Number Generator (Resolution 65/2008)',
+    titleEs: 'Generador de Número de Proceso Judicial Unificado CNJ (Resolución 65/2008)',
     overviewPt: 'O Conselho Nacional de Justiça (CNJ) estabeleceu pela Resolução nº 65/2008 a numeração única de processos judiciais em todo o território brasileiro. Composta por 20 dígitos no formato NNNNNNN-DD.AAAA.J.TR.OOOO, a estrutura identifica o número sequencial do processo (NNNNNNN), os dígitos verificadores calculados por Módulo 97 na base 10 (DD), o ano de ajuizamento (AAAA), o segmento da Justiça (J), o tribunal respectivo (TR) e a vara de origem (OOOO).',
     overviewEn: 'Brazil\'s National Council of Justice (CNJ) enacted Resolution 65/2008 establishing a 20-digit standardized lawsuit number format (NNNNNNN-DD.AAAA.J.TR.OOOO). Verification digits (DD) are verified through the Modulo 97 Base 10 algorithm specified in ISO 7064.',
+    overviewEs: 'El Consejo Nacional de Justicia (CNJ) de Brasil estableció mediante la Resolución N.º 65/2008 la numeración unificada de procesos judiciales en todo el territorio brasileño. Con 20 dígitos en el formato NNNNNNN-DD.AAAA.J.TR.OOOO, la estructura identifica el número secuencial (NNNNNNN), los dígitos verificadores calculados por Módulo 97 (DD), el año de radicación (AAAA), el segmento de la Justicia (J), el tribunal respectivo (TR) y el juzgado de origen (OOOO).',
     howToPt: [
       'Selecione o segmento do Judiciário (Justiça Federal, Justiça do Trabalho, Justiça Estadual, STF, STJ, etc.).',
       'Informe o ano de distribuição desejado.',
@@ -636,6 +645,11 @@ export const toolSpecificContent = {
       'Select court segment (Federal, Labor, State Court, High Courts).',
       'Specify judicial filing year.',
       'Generate valid masked lawsuit numbers for LegalTech software QA.'
+    ],
+    howToEs: [
+      'Seleccione el segmento del Poder Judicial (Justicia Federal, Justicia del Trabajo, Justicia Estatal, STF, STJ, etc.).',
+      'Ingrese el año de radicación deseado.',
+      'Genere números válidos con máscara estándar para pruebas de sistemas de gestión jurídica (LegalTech).'
     ],
     faqs: [
       {

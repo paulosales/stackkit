@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Copy, RefreshCw, Download, Check, ShieldCheck, FileBadge, Sparkles, Hash, Info, Layers, CheckCircle2, AlertCircle } from 'lucide-react';
-import { generateNB, formatNB, validateNB, cleanDigits } from '../../utils/brazilianAlgorithms';
+import { useTranslation } from 'react-i18next';
+import { Copy, RefreshCw, Download, Check, ShieldCheck, FileBadge, Sparkles, Hash, Info, CheckCircle2, AlertCircle } from 'lucide-react';
+import { generateNB, formatNB, validateNB } from '../../utils/brazilianAlgorithms';
 
-export default function NbGenerator({ onCopy, lang = 'pt' }) {
+export default function NbGenerator({ onCopy }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('generator'); // 'generator' | 'validator'
 
   // Generator State
@@ -51,7 +53,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
       setTimeout(() => setCopiedBatch(false), 1500);
     }
     if (onCopy) {
-      onCopy(lang === 'pt' ? `NB ${text} copiado!` : `NB ${text} copied!`);
+      onCopy(t('tools.nb.toasts.copied', { text }));
     }
   };
 
@@ -90,7 +92,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
     link.download = `inss_nb_${Date.now()}.txt`;
     link.click();
     URL.revokeObjectURL(url);
-    if (onCopy) onCopy(lang === 'pt' ? 'Arquivo TXT baixado!' : 'TXT file downloaded!');
+    if (onCopy) onCopy(t('tools.common.fileDownloaded'));
   };
 
   // Handle validation
@@ -115,14 +117,14 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
           onClick={() => setActiveTab('generator')}
         >
           <Sparkles size={14} />
-          <span>{lang === 'pt' ? 'Gerador de NB' : 'NB Generator'}</span>
+          <span>{t('tools.nb.tabs.generator')}</span>
         </button>
         <button
           className={`category-chip ${activeTab === 'validator' ? 'active' : ''}`}
           onClick={() => setActiveTab('validator')}
         >
           <ShieldCheck size={14} />
-          <span>{lang === 'pt' ? 'Validador de NB' : 'NB Validator'}</span>
+          <span>{t('tools.nb.tabs.validator')}</span>
         </button>
       </div>
 
@@ -133,14 +135,14 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
             <div className="panel-header">
               <div className="panel-title">
                 <FileBadge size={16} />
-                <span>{lang === 'pt' ? 'Opções do Gerador' : 'Generator Options'}</span>
+                <span>{t('tools.nb.generator.optionsTitle')}</span>
               </div>
             </div>
 
             <div className="panel-body">
               <div className="form-group">
                 <label className="form-label">
-                  <span>{lang === 'pt' ? 'Quantidade em Lote' : 'Batch Quantity'}</span>
+                  <span>{t('tools.nb.generator.batchQuantity')}</span>
                   <span className="badge badge-cyan">{quantity} {quantity === 1 ? 'NB' : 'NBs'}</span>
                 </label>
                 <input
@@ -152,10 +154,10 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                   style={{ width: '100%', accentColor: 'var(--accent-cyan)' }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-muted)' }}>
-                  <span>1 (Individual)</span>
+                  <span>{t('tools.nb.generator.individual')}</span>
                   <span>10</span>
                   <span>25</span>
-                  <span>50 (Lote)</span>
+                  <span>{t('tools.nb.generator.batchHint')}</span>
                 </div>
               </div>
 
@@ -163,14 +165,14 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                 <button className="btn-primary" onClick={handleGenerate} style={{ justifyContent: 'center' }}>
                   <RefreshCw size={15} />
-                  <span>{lang === 'pt' ? 'Gerar Novo(s) NB' : 'Generate New NB'}</span>
+                  <span>{t('tools.nb.generator.generateBtn')}</span>
                   <kbd style={{ marginLeft: 6, fontSize: 10, opacity: 0.8 }}>G</kbd>
                 </button>
 
                 {quantity > 1 && (
                   <button className="btn-secondary" onClick={handleDownloadBatch} style={{ justifyContent: 'center' }}>
                     <Download size={15} />
-                    <span>{lang === 'pt' ? `Baixar ${quantity} NBs (.txt)` : `Download ${quantity} NBs (.txt)`}</span>
+                    <span>{t('tools.nb.generator.downloadBtn', { count: quantity })}</span>
                   </button>
                 )}
               </div>
@@ -186,19 +188,19 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                 color: 'var(--text-secondary)'
               }}>
                 <div style={{ fontWeight: 600, marginBottom: 6, color: 'var(--text-primary)' }}>
-                  ⌨️ {lang === 'pt' ? 'Atalhos Rápidos de Teclado:' : 'Keyboard Shortcuts:'}
+                  ⌨️ {t('tools.nb.shortcuts.title')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 11.5 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{lang === 'pt' ? 'Gerar novo número:' : 'Generate new number:'}</span>
+                    <span>{t('tools.nb.shortcuts.generate')}</span>
                     <kbd>G</kbd>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{lang === 'pt' ? 'Copiar formatado:' : 'Copy formatted:'}</span>
+                    <span>{t('tools.nb.shortcuts.copyFormatted')}</span>
                     <kbd>Alt + C</kbd>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{lang === 'pt' ? 'Copiar sem formatação:' : 'Copy unformatted:'}</span>
+                    <span>{t('tools.nb.shortcuts.copyRaw')}</span>
                     <kbd>Ctrl + C</kbd>
                   </div>
                 </div>
@@ -211,12 +213,12 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
             <div className="panel-header">
               <div className="panel-title">
                 <Hash size={16} />
-                <span>{lang === 'pt' ? 'Número do Benefício Gerado' : 'Generated Benefit Number'}</span>
+                <span>{t('tools.nb.result.title')}</span>
               </div>
               <div className="panel-actions">
                 <span className="badge badge-emerald">
                   <Check size={11} style={{ marginRight: 4 }} />
-                  {lang === 'pt' ? 'Dígito Módulo 11 Válido' : 'Valid Modulo 11'}
+                  {t('tools.nb.result.validModulo11')}
                 </span>
               </div>
             </div>
@@ -240,11 +242,11 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
-                  title={lang === 'pt' ? 'Clique para copiar formatado (Alt+C)' : 'Click to copy formatted (Alt+C)'}
+                  title={t('tools.nb.result.copyFormattedTooltip')}
                 >
                   <div>
                     <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', marginBottom: 4 }}>
-                      {lang === 'pt' ? 'NB Formatado (Com Pontuação)' : 'Formatted NB (With Punctuation)'}
+                      {t('tools.nb.result.formattedLabel')}
                     </div>
                     <div style={{ fontSize: 26, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', letterSpacing: '0.04em' }}>
                       {formattedDisplay}
@@ -253,7 +255,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
 
                   <button className="btn-secondary" style={{ pointerEvents: 'none' }}>
                     {copiedFormatted ? <Check size={16} color="var(--accent-emerald)" /> : <Copy size={16} />}
-                    <span>{copiedFormatted ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+                    <span>{copiedFormatted ? t('tools.common.copied') : t('tools.common.copy')}</span>
                   </button>
                 </div>
 
@@ -273,11 +275,11 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
-                  title={lang === 'pt' ? 'Clique para copiar sem máscara (Ctrl+C)' : 'Click to copy raw (Ctrl+C)'}
+                  title={t('tools.nb.result.copyRawTooltip')}
                 >
                   <div>
                     <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 4 }}>
-                      {lang === 'pt' ? 'NB Não Formatado (Apenas Números)' : 'Unformatted NB (Numbers Only)'}
+                      {t('tools.nb.result.rawLabel')}
                     </div>
                     <div style={{ fontSize: 24, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>
                       {nbRaw}
@@ -286,7 +288,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
 
                   <button className="btn-secondary" style={{ pointerEvents: 'none' }}>
                     {copiedRaw ? <Check size={16} color="var(--accent-emerald)" /> : <Copy size={16} />}
-                    <span>{copiedRaw ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+                    <span>{copiedRaw ? t('tools.common.copied') : t('tools.common.copy')}</span>
                   </button>
                 </div>
               </div>
@@ -296,7 +298,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                 <div style={{ marginTop: 20 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                     <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      {lang === 'pt' ? `Lista em Lote (${batchList.length} NBs):` : `Batch List (${batchList.length} NBs):`}
+                      {t('tools.nb.result.batchListTitle', { count: batchList.length })}
                     </span>
                     <button
                       className="btn-secondary"
@@ -304,7 +306,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                       onClick={() => copyToClipboard(batchList.map(formatNB).join('\n'), 'batch')}
                     >
                       {copiedBatch ? <Check size={13} /> : <Copy size={13} />}
-                      <span>{copiedBatch ? (lang === 'pt' ? 'Tudo Copiado!' : 'All Copied!') : (lang === 'pt' ? 'Copiar Todos' : 'Copy All')}</span>
+                      <span>{copiedBatch ? t('tools.nb.result.allCopied') : t('tools.nb.result.copyAll')}</span>
                     </button>
                   </div>
 
@@ -332,7 +334,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                           className="btn-icon"
                           style={{ width: 26, height: 26 }}
                           onClick={() => copyToClipboard(formatNB(item), 'formatted')}
-                          title={lang === 'pt' ? 'Copiar este NB' : 'Copy this NB'}
+                          title={t('tools.nb.result.copyItemTooltip')}
                         >
                           <Copy size={12} />
                         </button>
@@ -352,16 +354,16 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
           <div className="panel-header">
             <div className="panel-title">
               <ShieldCheck size={16} />
-              <span>{lang === 'pt' ? 'Validador de Número do Benefício (NB)' : 'INSS Benefit Number (NB) Validator'}</span>
+              <span>{t('tools.nb.validator.title')}</span>
             </div>
           </div>
 
           <div className="panel-body">
             <div className="form-group">
-              <label className="form-label">{lang === 'pt' ? 'Digite ou cole o número do benefício:' : 'Enter or paste the benefit number:'}</label>
+              <label className="form-label">{t('tools.nb.validator.inputLabel')}</label>
               <input
                 type="text"
-                placeholder={lang === 'pt' ? 'Exemplo: 123.456.789-0 ou 1234567890' : 'Example: 123.456.789-0 or 1234567890'}
+                placeholder={t('tools.nb.validator.placeholder')}
                 value={validateInput}
                 onChange={handleValidateChange}
                 style={{ fontSize: 16, fontFamily: 'var(--font-mono)' }}
@@ -392,10 +394,7 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                     fontWeight: 700,
                     color: validationResult.valid ? 'var(--accent-emerald)' : 'var(--accent-rose)'
                   }}>
-                    {validationResult.valid
-                      ? (lang === 'pt' ? 'Número do Benefício Válido!' : 'Valid INSS Benefit Number!')
-                      : (lang === 'pt' ? 'Número do Benefício Inválido' : 'Invalid Benefit Number')
-                    }
+                    {validationResult.valid ? t('tools.nb.validator.valid') : t('tools.nb.validator.invalid')}
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
                     {validationResult.message}
@@ -404,15 +403,15 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
                   {validationResult.valid && validationResult.details && (
                     <div style={{ marginTop: 12, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                       <div style={{ fontSize: 12 }}>
-                        <span style={{ color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Sequência Base (9 dígitos):' : 'Base Sequence (9 digits):'} </span>
+                        <span style={{ color: 'var(--text-muted)' }}>{t('tools.nb.validator.baseSequence')} </span>
                         <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{validationResult.details.sequence}</strong>
                       </div>
                       <div style={{ fontSize: 12 }}>
-                        <span style={{ color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Dígito Verificador (DV):' : 'Check Digit (DV):'} </span>
+                        <span style={{ color: 'var(--text-muted)' }}>{t('tools.nb.validator.checkDigit')} </span>
                         <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>{validationResult.details.dv}</strong>
                       </div>
                       <div style={{ fontSize: 12 }}>
-                        <span style={{ color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Formatado Oficial:' : 'Official Format:'} </span>
+                        <span style={{ color: 'var(--text-muted)' }}>{t('tools.nb.validator.officialFormat')} </span>
                         <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-emerald)' }}>{validationResult.details.formatted}</strong>
                       </div>
                     </div>
@@ -429,38 +428,35 @@ export default function NbGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Info size={16} />
-            <span>{lang === 'pt' ? 'Como Funciona o Número do Benefício (NB)?' : 'How does the INSS Benefit Number (NB) work?'}</span>
+            <span>{t('tools.nb.doc.title')}</span>
           </div>
         </div>
 
         <div className="panel-body" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
           <p>
-            {lang === 'pt'
-              ? 'O Número do Benefício (NB) é um identificador único de 10 dígitos atribuído pelo INSS (Instituto Nacional do Seguro Social) a cada benefício previdenciário concedido (como aposentadoria, auxílio-doença, pensão por morte, salário-maternidade ou BPC/LOAS).'
-              : 'The Benefit Number (NB) is a 10-digit unique identifier assigned by the Brazilian Social Security Institute (INSS) to each granted welfare or retirement benefit (such as retirement, disability, pension, or maternity allowance).'
-            }
+            {t('tools.nb.doc.desc')}
           </p>
 
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
             <div style={{ padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)' }}>
               <div style={{ fontWeight: 700, color: 'var(--accent-cyan)', marginBottom: 4 }}>
-                {lang === 'pt' ? 'Estrutura do NB' : 'NB Structure'}
+                {t('tools.nb.doc.structureTitle')}
               </div>
-              <div>{lang === 'pt' ? 'Composto por 9 dígitos sequenciais seguidos de 1 dígito verificador final no formato: 000.000.000-0.' : 'Composed of 9 sequential digits followed by 1 final verification check digit in format: 000.000.000-0.'}</div>
+              <div>{t('tools.nb.doc.structureDesc')}</div>
             </div>
 
             <div style={{ padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)' }}>
               <div style={{ fontWeight: 700, color: 'var(--accent-cyan)', marginBottom: 4 }}>
-                {lang === 'pt' ? 'Cálculo do Dígito (Módulo 11)' : 'Check Digit (Modulo 11)'}
+                {t('tools.nb.doc.calcTitle')}
               </div>
-              <div>{lang === 'pt' ? 'Os primeiros 9 dígitos são multiplicados pelos pesos decrescentes [2, 9, 8, 7, 6, 5, 4, 3, 2]. O resto da divisão por 11 determina o DV.' : 'The first 9 digits are multiplied by weights [2, 9, 8, 7, 6, 5, 4, 3, 2]. The modulo 11 remainder establishes the DV.'}</div>
+              <div>{t('tools.nb.doc.calcDesc')}</div>
             </div>
 
             <div style={{ padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)' }}>
               <div style={{ fontWeight: 700, color: 'var(--accent-cyan)', marginBottom: 4 }}>
-                🔒 {lang === 'pt' ? 'Uso Exclusivo para Testes' : 'For Testing Purposes Only'}
+                {t('tools.nb.doc.testingTitle')}
               </div>
-              <div>{lang === 'pt' ? 'Ferramenta desenvolvida exclusivamente para testes de software, homologação e desenvolvimento. Os dados gerados não possuem vínculo real.' : 'Tool developed exclusively for software testing, quality assurance, and development. Generated numbers hold no real-world entitlement.'}</div>
+              <div>{t('tools.nb.doc.testingDesc')}</div>
             </div>
           </div>
         </div>

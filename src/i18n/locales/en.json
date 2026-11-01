@@ -233,6 +233,145 @@
       "generateBtn": "Generate New RG(s)",
       "generated": "Generated RG",
       "infoDesc": "The generated RG (General Registry) adheres to the standard São Paulo format with a valid calculated check digit."
+    },
+    "nb": {
+      "tabs": {
+        "generator": "NB Generator",
+        "validator": "NB Validator"
+      },
+      "generator": {
+        "optionsTitle": "Generator Options",
+        "batchQuantity": "Batch Quantity",
+        "individual": "1 (Individual)",
+        "batchHint": "50 (Batch)",
+        "generateBtn": "Generate New NB",
+        "downloadBtn": "Download {{count}} NBs (.txt)"
+      },
+      "shortcuts": {
+        "title": "Keyboard Shortcuts:",
+        "generate": "Generate new number:",
+        "copyFormatted": "Copy formatted:",
+        "copyRaw": "Copy unformatted:"
+      },
+      "result": {
+        "title": "Generated Benefit Number",
+        "validModulo11": "Valid Modulo 11",
+        "formattedLabel": "Formatted NB (With Punctuation)",
+        "copyFormattedTooltip": "Click to copy formatted (Alt+C)",
+        "rawLabel": "Unformatted NB (Numbers Only)",
+        "copyRawTooltip": "Click to copy raw (Ctrl+C)",
+        "batchListTitle": "Batch List ({{count}} NBs):",
+        "copyAll": "Copy All",
+        "allCopied": "All Copied!",
+        "copyItemTooltip": "Copy this NB"
+      },
+      "validator": {
+        "title": "INSS Benefit Number (NB) Validator",
+        "inputLabel": "Enter or paste the benefit number:",
+        "placeholder": "Example: 123.456.789-0 or 1234567890",
+        "valid": "Valid INSS Benefit Number!",
+        "invalid": "Invalid Benefit Number",
+        "baseSequence": "Base Sequence (9 digits):",
+        "checkDigit": "Check Digit (DV):",
+        "officialFormat": "Official Format:"
+      },
+      "doc": {
+        "title": "How does the INSS Benefit Number (NB) work?",
+        "desc": "The Benefit Number (NB) is a 10-digit unique identifier assigned by the Brazilian Social Security Institute (INSS) to each granted welfare or retirement benefit (such as retirement, disability, pension, or maternity allowance).",
+        "structureTitle": "NB Structure",
+        "structureDesc": "Composed of 9 sequential digits followed by 1 final verification check digit in format: 000.000.000-0.",
+        "calcTitle": "Check Digit (Modulo 11)",
+        "calcDesc": "The first 9 digits are multiplied by weights [2, 9, 8, 7, 6, 5, 4, 3, 2]. The modulo 11 remainder establishes the DV.",
+        "testingTitle": "🔒 For Testing Purposes Only",
+        "testingDesc": "Tool developed exclusively for software testing, quality assurance, and development. Generated numbers hold no real-world entitlement."
+      },
+      "toasts": {
+        "copied": "NB {{text}} copied!"
+      }
+    },
+    "processo": {
+      "tabs": {
+        "generator": "CNJ Generator",
+        "validator": "CNJ Validator"
+      },
+      "generator": {
+        "paramsTitle": "Process Parameters",
+        "segmentLabel": "Justice Organ or Segment (J):",
+        "tribunalLabel": "Specific Court / Tribunal (TR):",
+        "anyTribunal": "Any Court (Random)",
+        "yearLabel": "Filing Year (AAAA):",
+        "currentYear": "Current Year",
+        "maskLabel": "Formatting / Mask",
+        "maskCheckbox": "Include unified CNJ punctuation",
+        "quantityLabel": "Quantity to generate",
+        "lawsuit": "Lawsuit",
+        "lawsuits": "Lawsuits",
+        "generateBtn": "Generate Lawsuit Number(s)",
+        "downloadBtn": "Download {{count}} Lawsuits (.txt)"
+      },
+      "result": {
+        "title": "Judicial Lawsuit Number",
+        "cnjBadge": "CNJ Modulo 97 Valid",
+        "formattedLabel": "Unified CNJ Format (Masked)",
+        "copyFormattedTooltip": "Click to copy formatted",
+        "rawLabel": "Numbers Only (20 digits)",
+        "copyRawTooltip": "Click to copy raw (numbers only)",
+        "breakdownTitle": "CNJ Segment Breakdown:",
+        "breakdownSeq": "Sequential (N)",
+        "breakdownDv": "Digit (D)",
+        "breakdownAno": "Year (A)",
+        "breakdownJ": "Justice (J)",
+        "breakdownTr": "Court (TR)",
+        "breakdownOrigem": "Origin (O)",
+        "batchListTitle": "Batch List ({{count}} Lawsuits):",
+        "copyAll": "Copy All",
+        "allCopied": "All Copied!",
+        "copyItemTooltip": "Copy this lawsuit number"
+      },
+      "validator": {
+        "title": "Lawsuit Number (CNJ) Validator & Inspector",
+        "inputLabel": "Enter or paste the lawsuit number:",
+        "placeholder": "Example: 0001234-56.2026.8.26.0100 or 00012345620268260100",
+        "valid": "Valid Lawsuit Number (CNJ)!",
+        "invalid": "Invalid Lawsuit Number",
+        "sequential": "Sequential:",
+        "checkDigit": "Check Digit (Modulo 97):",
+        "filingYear": "Filing Year:",
+        "justiceSegment": "Justice Segment (J):",
+        "court": "Court / Tribunal (TR):",
+        "originUnit": "Court Unit of Origin:"
+      },
+      "doc": {
+        "title": "Unified Lawsuit Numbering Standard (CNJ)",
+        "desc": "Established by Resolution No. 65/2008 of the Brazilian National Justice Council (CNJ), the unified numbering system for judicial lawsuits consists of 20 digits organized into 6 fields:",
+        "fieldN": "Sequential lawsuit number within year.",
+        "fieldNTitle": "NNNNNNN (7 digits):",
+        "fieldD": "Check digits calculated via Modulo 97.",
+        "fieldDTitle": "DD (2 digits):",
+        "fieldA": "Year the lawsuit was originally filed.",
+        "fieldATitle": "AAAA (4 digits):",
+        "fieldJ": "Branch or segment of Judiciary (1 to 9).",
+        "fieldJTitle": "J (1 digit):",
+        "fieldTR": "Court or judicial regional circuit ID.",
+        "fieldTRTitle": "TR (2 digits):",
+        "fieldO": "Court branch or judicial unit of origin.",
+        "fieldOTitle": "OOOO (4 digits):"
+      },
+      "segments": {
+        "0": "Any Segment (Random)",
+        "1": "1 - STF (Supreme Federal Court)",
+        "2": "2 - CNJ (National Justice Council)",
+        "3": "3 - STJ (Superior Court of Justice)",
+        "4": "4 - Federal Justice (TRF)",
+        "5": "5 - Labor Justice (TRT)",
+        "6": "6 - Electoral Justice (TRE)",
+        "7": "7 - Military Justice of the Union",
+        "8": "8 - State Justice & DF (TJ)",
+        "9": "9 - State Military Justice (TJM)"
+      },
+      "toasts": {
+        "copied": "Lawsuit {{text}} copied!"
+      }
     }
   },
   "myIp": {

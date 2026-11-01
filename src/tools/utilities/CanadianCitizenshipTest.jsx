@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   GraduationCap,
   Award,
@@ -39,10 +40,23 @@ import { citizenshipTranslations } from './citizenship/citizenshipTranslations';
 import './CanadianCitizenshipTest.css';
 
 export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast }) {
-  // Allow user to select EN, PT or FR, defaulting to app language
-  const [currentLang, setCurrentLang] = useState(
-    appLang === 'pt' ? 'pt' : (appLang === 'fr' ? 'fr' : 'en')
-  );
+  const { i18n } = useTranslation();
+  const activeLang = i18n.language || appLang;
+
+  const getResolvedLang = (l) => {
+    if (l === 'pt') return 'pt';
+    if (l === 'es') return 'es';
+    if (l === 'fr') return 'fr';
+    return 'en';
+  };
+
+  // Allow user to select EN, PT, ES or FR, defaulting to app language
+  const [currentLang, setCurrentLang] = useState(() => getResolvedLang(activeLang));
+
+  // Sync when active language changes in StackKit
+  useEffect(() => {
+    setCurrentLang(getResolvedLang(activeLang));
+  }, [activeLang]);
 
   const t = citizenshipTranslations[currentLang] || citizenshipTranslations.en;
 
@@ -204,7 +218,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
     setUserProgress(updated);
     if (onToast) {
       const isSaved = updated.savedQuestionIds.includes(questionId);
-      onToast(isSaved ? 'Question saved to bookmarks' : 'Question removed from bookmarks');
+      onToast(isSaved ? t.savedBookmarkToast : t.removedBookmarkToast);
     }
   };
 
@@ -231,7 +245,8 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
 
     setView('practice_list');
     if (onToast) {
-      onToast(`Test completed! Score: ${score}/${questions.length} (${Math.round((score / questions.length) * 100)}%)`);
+      const pct = Math.round((score / questions.length) * 100);
+      onToast(t.testCompletedToast.replace('{{score}}', score).replace('{{total}}', questions.length).replace('{{pct}}', pct));
     }
   };
 
@@ -369,7 +384,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
       </div>
 
       <div className="cct-lang-selector">
-        {['en', 'pt', 'fr'].map(l => (
+        {['en', 'pt', 'es', 'fr'].map(l => (
           <button
             key={l}
             className={`cct-lang-btn ${currentLang === l ? 'active' : ''}`}
@@ -415,7 +430,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
           </button>
           <span className="cct-badge-pill">
             <Clock size={13} />
-            <span>45 min limit · 20 questions · 75% pass mark</span>
+            <span>{t.testSpecs}</span>
           </span>
         </div>
       </div>
@@ -453,8 +468,8 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             <h3>{t.readinessScore}</h3>
             <p>
               {readinessStats.completedCount === 0
-                ? 'Start practicing tests to measure your official test readiness'
-                : `${readinessStats.passedCount} of 30 tests passed with 75%+ score`}
+                ? t.startPracticingHint
+                : t.testsPassedSummary.replace('{{count}}', readinessStats.passedCount)}
             </p>
           </div>
         </div>
@@ -487,7 +502,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <h3 className="cct-card-title">{t.practice}</h3>
               <p className="cct-card-desc">{t.practiceDesc}</p>
               <div className="cct-card-meta">
-                {readinessStats.completedCount}/30 completed · {readinessStats.passedCount} passed
+                {t.practiceMeta.replace('{{completed}}', readinessStats.completedCount).replace('{{passed}}', readinessStats.passedCount)}
               </div>
             </div>
           </div>
@@ -504,7 +519,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <h3 className="cct-card-title">{t.simulation}</h3>
               <p className="cct-card-desc">{t.simulationDesc}</p>
               <div className="cct-card-meta">
-                {userProgress.simulationHistory.length} attempts recorded
+                {t.attemptsCount.replace('{{count}}', userProgress.simulationHistory.length)}
               </div>
             </div>
           </div>
@@ -521,7 +536,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <h3 className="cct-card-title">{t.review}</h3>
               <p className="cct-card-desc">{t.reviewDesc}</p>
               <div className="cct-card-meta">
-                {userProgress.mistakeQuestionIds.length} mistakes · {userProgress.savedQuestionIds.length} saved
+                {t.reviewMeta.replace('{{mistakes}}', userProgress.mistakeQuestionIds.length).replace('{{saved}}', userProgress.savedQuestionIds.length)}
               </div>
             </div>
           </div>
@@ -538,7 +553,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <h3 className="cct-card-title">{t.study}</h3>
               <p className="cct-card-desc">{t.studyDesc}</p>
               <div className="cct-card-meta">
-                {allTopics.length} Discover Canada chapters
+                {t.chaptersMeta.replace('{{count}}', allTopics.length)}
               </div>
             </div>
           </div>
@@ -562,7 +577,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               {t.practice}
             </h2>
             <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)' }}>
-              Completed: <strong>{readinessStats.completedCount}/30</strong> · Avg Score: <strong>{readinessStats.avgScore}%</strong>
+              {t.completedLabel} <strong>{readinessStats.completedCount}/30</strong> · {t.avgScoreLabel} <strong>{readinessStats.avgScore}%</strong>
             </p>
           </div>
 
@@ -604,7 +619,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   key={test.id}
                   className={`cct-leaf-item ${statusClass}`}
                   onClick={() => handleStartPracticeTest(test.testNumber)}
-                  title={`Practice Test ${test.testNumber}: ${result ? `${result.score}/20 (${result.passed ? 'Passed' : 'Needs Practice'})` : 'Not started'}`}
+                  title={`${t.practiceTest} ${test.testNumber}: ${result ? `${result.score}/20 (${result.passed ? t.passed : t.needsPractice})` : t.notStarted}`}
                 >
                   {result?.passed ? <Check size={12} strokeWidth={3} /> : test.testNumber}
                 </div>
@@ -612,7 +627,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             })}
           </div>
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-            Green = Passed (15+/20) · Amber = In Progress · Gray = Not Started
+            {t.leafLegend}
           </span>
         </div>
 
@@ -633,11 +648,11 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                     {test.testNumber}
                   </div>
                   <div className="cct-test-meta">
-                    <h4>{test.title}</h4>
+                    <h4>{t.practiceTest} {test.testNumber}</h4>
                     <p>
                       {result ? (
                         <span style={{ color: result.passed ? '#10b981' : '#f59e0b', fontWeight: 600 }}>
-                          Best: {result.bestScore}/20 ({Math.round((result.bestScore / 20) * 100)}%)
+                          {t.bestScoreLabel} {result.bestScore}/20 ({Math.round((result.bestScore / 20) * 100)}%)
                         </span>
                       ) : (
                         <span>20 {t.questions} · {t.notStarted}</span>
@@ -664,9 +679,9 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
     if (!currentQuestion) {
       return (
         <div className="cct-wrapper" style={{ textAlign: 'center', padding: 40 }}>
-          <p>No questions available in this session.</p>
+          <p>{t.noQuestionsInSession}</p>
           <button className="btn-primary" onClick={() => setView('hub')}>
-            Return to Hub
+            {t.returnToHub}
           </button>
         </div>
       );
@@ -708,7 +723,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             <button
               className="cct-quiz-counter-btn"
               onClick={() => setShowMatrix(true)}
-              title="View all questions"
+              title={t.viewAllQuestions}
             >
               <span>{t.question} {currentIndex + 1} {t.of} {questions.length}</span>
               <Grid size={14} />
@@ -730,7 +745,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   className={`cct-segment ${segClass}`}
                   onClick={() => setCurrentIndex(idx)}
                   style={{ cursor: 'pointer' }}
-                  title={`Question ${idx + 1}`}
+                  title={`${t.question} ${idx + 1}`}
                 />
               );
             })}
@@ -839,7 +854,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               </button>
 
               <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>
-                Score: {currentLiveScore.correct} / {currentLiveScore.answered}
+                {t.score}: {currentLiveScore.correct} / {currentLiveScore.answered}
               </div>
 
               {isLast ? (
@@ -966,14 +981,14 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               </div>
             </div>
             <div className="cct-gov-app-meta">
-              <span>Application no.: <strong>M2222222222</strong></span>
-              <span>UCI: <strong>1234567890</strong></span>
+              <span>{t.appNumber} <strong>M2222222222</strong></span>
+              <span>{t.uciNumber} <strong>1234567890</strong></span>
             </div>
           </div>
 
           {/* Test Title with Red Accent Line */}
           <div className="cct-gov-title-section">
-            <h1 className="cct-gov-main-title">Online citizenship test</h1>
+            <h1 className="cct-gov-main-title">{t.onlineTestTitle}</h1>
             <div className="cct-gov-red-line" />
           </div>
 
@@ -982,7 +997,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             {/* Left Column: Question, Radio Options, Review Later & Actions */}
             <div className="cct-gov-question-col">
               <div className="cct-gov-q-counter">
-                Question {currentIndex + 1} of {questions.length}
+                {t.question} {currentIndex + 1} {t.of} {questions.length}
               </div>
 
               <div className="cct-gov-q-prompt">
@@ -1013,7 +1028,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   checked={isCurrentFlagged}
                   onChange={() => handleToggleFlag(currentQuestion.id)}
                 />
-                <span>I want to review this answer later.</span>
+                <span>{t.reviewLater}</span>
               </label>
 
               {/* Navigation Action Buttons */}
@@ -1023,14 +1038,14 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
                   disabled={currentIndex === 0}
                 >
-                  Previous question
+                  {t.prevQuestion}
                 </button>
                 <button
                   className="cct-gov-btn-nav"
                   onClick={() => setCurrentIndex(i => Math.min(questions.length - 1, i + 1))}
                   disabled={currentIndex === questions.length - 1}
                 >
-                  Next question
+                  {t.nextQuestion}
                 </button>
               </div>
 
@@ -1046,7 +1061,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                     }
                   }}
                 >
-                  Confirm submission
+                  {t.confirmSubmission}
                 </button>
               </div>
 
@@ -1054,7 +1069,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <div style={{ marginTop: 22 }}>
                 <button
                   onClick={() => {
-                    if (window.confirm('Are you sure you want to exit the exam simulation? Your progress will be lost.')) {
+                    if (window.confirm(t.exitSimConfirm)) {
                       setView('hub');
                     }
                   }}
@@ -1068,7 +1083,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                     padding: 0
                   }}
                 >
-                  ← Exit test simulation
+                  {t.exitSimBtn}
                 </button>
               </div>
             </div>
@@ -1076,10 +1091,10 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             {/* Right Sidebar: Timer, 5x4 Grid Palette & Official Legend */}
             <div className="cct-gov-sidebar">
               <div className={`cct-gov-timer-box ${isUrgent ? 'urgent' : ''}`}>
-                Time left {formatTime(countdownSeconds)}
+                {t.timeLeft} {formatTime(countdownSeconds)}
               </div>
 
-              <h3 className="cct-gov-sidebar-title">Questions</h3>
+              <h3 className="cct-gov-sidebar-title">{t.questions}</h3>
 
               <div className="cct-gov-grid-palette">
                 {questions.map((q, idx) => {
@@ -1097,7 +1112,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                       key={q.id}
                       className={`cct-gov-q-btn ${statusClass}`}
                       onClick={() => setCurrentIndex(idx)}
-                      title={`Question ${idx + 1}`}
+                      title={`${t.question} ${idx + 1}`}
                     >
                       {idx + 1}
                     </button>
@@ -1109,15 +1124,15 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               <div className="cct-gov-legend">
                 <div className="cct-gov-legend-item">
                   <span className="cct-gov-legend-color yellow" />
-                  <span>To be reviewed</span>
+                  <span>{t.toBeReviewed}</span>
                 </div>
                 <div className="cct-gov-legend-item">
                   <span className="cct-gov-legend-color gray" />
-                  <span>Not answered</span>
+                  <span>{t.notAnswered}</span>
                 </div>
                 <div className="cct-gov-legend-item">
                   <span className="cct-gov-legend-color blue" />
-                  <span>Answered</span>
+                  <span>{t.answered}</span>
                 </div>
               </div>
             </div>
@@ -1133,7 +1148,10 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                 <h3 style={{ margin: 0, fontSize: 18 }}>{t.confirmSubmitTitle}</h3>
               </div>
               <p style={{ margin: 0, fontSize: 14, color: 'var(--text-secondary)' }}>
-                You have answered {answeredCount} out of {questions.length} questions. {questions.length - answeredCount} question(s) will be marked incorrect if you submit now.
+                {t.simUnansweredWarning
+                  .replace('{{answered}}', answeredCount)
+                  .replace('{{total}}', questions.length)
+                  .replace('{{remaining}}', questions.length - answeredCount)}
               </p>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 10 }}>
                 <button className="btn-secondary" onClick={() => setConfirmSubmitOpen(false)}>
@@ -1172,14 +1190,14 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
               </div>
             </div>
             <div className="cct-gov-app-meta">
-              <span>Application no.: <strong>M2222222222</strong></span>
-              <span>UCI: <strong>1234567890</strong></span>
+              <span>{t.appNumber} <strong>M2222222222</strong></span>
+              <span>{t.uciNumber} <strong>1234567890</strong></span>
             </div>
           </div>
 
           {/* Test Title with Red Accent Line */}
           <div className="cct-gov-title-section">
-            <h1 className="cct-gov-main-title">Online citizenship test results</h1>
+            <h1 className="cct-gov-main-title">{t.onlineTestResultsTitle}</h1>
             <div className="cct-gov-red-line" />
           </div>
 
@@ -1188,12 +1206,10 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             <div className={`cct-gov-result-banner ${passed ? 'passed' : 'failed'}`}>
               <div>
                 <h2 style={{ margin: '0 0 6px', fontSize: 24, fontWeight: 800 }}>
-                  {passed ? 'You passed the mock citizenship test!' : 'You did not pass this attempt.'}
+                  {passed ? t.simPassedTitle : t.simFailedTitle}
                 </h2>
                 <p style={{ margin: 0, fontSize: 14 }}>
-                  {passed
-                    ? 'Congratulations! You achieved the required 15 or more correct answers.'
-                    : 'You need at least 15 out of 20 correct answers (75%) to pass the official citizenship test.'}
+                  {passed ? t.simPassedDesc : t.simFailedDesc}
                 </p>
               </div>
             </div>
@@ -1201,21 +1217,21 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             {/* Score summary row */}
             <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'center', borderBottom: '1px solid #e4e6eb', paddingBottom: 20 }}>
               <div>
-                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>Final Score</div>
+                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>{t.finalScore}</div>
                 <div className="cct-gov-score-hero" style={{ color: passed ? '#059669' : '#dc2626' }}>
                   {score} / {total}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>Percentage</div>
+                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>{t.percentage}</div>
                 <div style={{ fontSize: 28, fontWeight: 800, color: '#18181b' }}>{percentage}%</div>
               </div>
               <div>
-                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>Time Used</div>
+                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>{t.timeUsed}</div>
                 <div style={{ fontSize: 28, fontWeight: 800, color: '#18181b' }}>{formatTime(timeSpentSeconds)}</div>
               </div>
               <div>
-                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>Passing Criteria</div>
+                <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 600 }}>{t.passingCriteria}</div>
                 <div style={{ fontSize: 15, fontWeight: 700, color: '#18181b' }}>15 / 20 (75%)</div>
               </div>
             </div>
@@ -1223,7 +1239,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             {/* Breakdown by Discover Canada Topic */}
             <div>
               <h3 style={{ margin: '0 0 14px', fontSize: 17, fontWeight: 700, color: '#18181b' }}>
-                Performance by Discover Canada Topic:
+                {t.perfByTopic}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {Object.entries(topicStats).map(([topic, stats]) => {
@@ -1252,7 +1268,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                 style={{ width: 'auto', padding: '10px 24px' }}
                 onClick={handleStartSimulation}
               >
-                Retake official simulation
+                {t.retakeSimulation}
               </button>
               {userProgress.mistakeQuestionIds.length > 0 && (
                 <button
@@ -1260,7 +1276,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   style={{ width: 'auto', minWidth: 'auto', padding: '10px 20px' }}
                   onClick={handleStartMistakesQuiz}
                 >
-                  Review mistakes ({userProgress.mistakeQuestionIds.length})
+                  {t.reviewMistakesBtn.replace('{{count}}', userProgress.mistakeQuestionIds.length)}
                 </button>
               )}
               <button
@@ -1268,14 +1284,14 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                 style={{ width: 'auto', minWidth: 'auto', padding: '10px 20px' }}
                 onClick={() => setView('hub')}
               >
-                Return to test center
+                {t.returnToTestCenter}
               </button>
             </div>
 
             {/* Detailed Question Review List */}
             <div style={{ marginTop: 12 }}>
               <h3 style={{ margin: '0 0 14px', fontSize: 17, fontWeight: 700, color: '#18181b' }}>
-                Detailed Question Breakdown:
+                {t.detailedBreakdown}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {simQuestions.map((q, qIdx) => {
@@ -1285,28 +1301,28 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                     <div key={q.id} className="cct-gov-review-item">
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontSize: 12, fontWeight: 700, color: '#6b7280' }}>
-                          Question {qIdx + 1} · {q.cleanTopic}
+                          {t.question} {qIdx + 1} · {q.cleanTopic}
                         </span>
                         <span style={{
                           fontSize: 13,
                           fontWeight: 700,
                           color: isQCorrect ? '#059669' : '#dc2626'
                         }}>
-                          {isQCorrect ? '✓ Correct' : '✗ Incorrect'}
+                          {isQCorrect ? t.correctTag : t.incorrectTag}
                         </span>
                       </div>
                       <div style={{ fontSize: 15, fontWeight: 700, color: '#18181b' }}>
                         {q.question}
                       </div>
                       <div style={{ fontSize: 13 }}>
-                        <span style={{ color: '#4b5563' }}>Your answer: </span>
+                        <span style={{ color: '#4b5563' }}>{t.yourAnswer} </span>
                         <strong style={{ color: isQCorrect ? '#059669' : '#dc2626' }}>
-                          {userAns || '(No answer provided)'}
+                          {userAns || t.noAnswerProvided}
                         </strong>
                       </div>
                       {!isQCorrect && (
                         <div style={{ fontSize: 13 }}>
-                          <span style={{ color: '#4b5563' }}>Correct answer: </span>
+                          <span style={{ color: '#4b5563' }}>{t.correctAnswerIs} </span>
                           <strong style={{ color: '#059669' }}>{q.correct}</strong>
                         </div>
                       )}
@@ -1339,7 +1355,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                 {t.review}
               </h2>
               <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)' }}>
-                {userProgress.mistakeQuestionIds.length} mistakes recorded · {userProgress.savedQuestionIds.length} questions saved
+                {t.reviewMeta.replace('{{mistakes}}', userProgress.mistakeQuestionIds.length).replace('{{saved}}', userProgress.savedQuestionIds.length)}
               </p>
             </div>
 
@@ -1402,7 +1418,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                           const updated = removeMistakeQuestion(q.id);
                           setUserProgress(updated);
                         }}
-                        title="Remove from mistakes"
+                        title={t.removeFromMistakes}
                       >
                         <X size={15} />
                       </button>
@@ -1437,7 +1453,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                       <button
                         className="btn-icon"
                         onClick={() => handleToggleBookmark(q.id)}
-                        title="Remove from saved"
+                        title={t.removeFromSaved}
                       >
                         <X size={15} />
                       </button>
@@ -1471,7 +1487,7 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
             {t.study}
           </h2>
           <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)' }}>
-            Study and practice all official Discover Canada chapters individually.
+            {t.studySubtitle}
           </p>
         </div>
 
@@ -1607,24 +1623,24 @@ export default function CanadianCitizenshipTest({ lang: appLang = 'en', onToast 
                   <li>{t.fact3}</li>
                   <li>{t.fact4}</li>
                 </ul>
-                <h3>Official Study Guide</h3>
+                <h3>{t.officialStudyGuide}</h3>
                 <p>
-                  All questions on the test are based on the official study guide <strong>Discover Canada: The Rights and Responsibilities of Citizenship</strong> published by IRCC.
+                  {t.officialStudyGuideDesc}
                 </p>
               </>
             ) : (
               <>
-                <h3>Who needs to take the Canadian Citizenship Test?</h3>
+                <h3>{t.faqQ1}</h3>
                 <p>
-                  Applicants between the ages of 18 and 54 on the date they sign their application must take the test.
+                  {t.faqA1}
                 </p>
-                <h3>What happens if I fail the test?</h3>
+                <h3>{t.faqQ2}</h3>
                 <p>
-                  If you do not pass on your first attempt, IRCC will usually schedule a retest. If you do not pass the second time, you may be invited to a hearing with a citizenship official.
+                  {t.faqA2}
                 </p>
-                <h3>How many questions are in this practice database?</h3>
+                <h3>{t.faqQ3}</h3>
                 <p>
-                  StackKit DevStudio includes all 30 tests with 600 verified questions matching the format and curriculum of the official IRCC exam.
+                  {t.faqA3}
                 </p>
               </>
             )}

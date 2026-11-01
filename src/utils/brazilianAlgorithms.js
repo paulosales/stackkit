@@ -600,16 +600,16 @@ export function validateNB(nb) {
 // -------------------------------------------------------------
 
 export const JUSTICE_SEGMENTS = [
-  { value: 0, label: 'Qualquer Segmento (Aleatório)', labelEn: 'Any Segment (Random)' },
-  { value: 1, label: '1 - STF (Supremo Tribunal Federal)', labelEn: '1 - STF (Supreme Federal Court)' },
-  { value: 2, label: '2 - CNJ (Conselho Nacional de Justiça)', labelEn: '2 - CNJ (National Justice Council)' },
-  { value: 3, label: '3 - STJ (Superior Tribunal de Justiça)', labelEn: '3 - STJ (Superior Court of Justice)' },
-  { value: 4, label: '4 - Justiça Federal (TRF)', labelEn: '4 - Federal Justice (TRF)' },
-  { value: 5, label: '5 - Justiça do Trabalho (TRT)', labelEn: '5 - Labor Justice (TRT)' },
-  { value: 6, label: '6 - Justiça Eleitoral (TRE)', labelEn: '6 - Electoral Justice (TRE)' },
-  { value: 7, label: '7 - Justiça Militar da União (CJM)', labelEn: '7 - Military Justice of the Union' },
-  { value: 8, label: '8 - Justiça dos Estados e DF (TJ)', labelEn: '8 - State Justice & DF (TJ)' },
-  { value: 9, label: '9 - Justiça Militar Estadual (TJM)', labelEn: '9 - State Military Justice (TJM)' }
+  { value: 0, label: 'Qualquer Segmento (Aleatório)', labelEn: 'Any Segment (Random)', labelEs: 'Cualquier Segmento (Aleatorio)' },
+  { value: 1, label: '1 - STF (Supremo Tribunal Federal)', labelEn: '1 - STF (Supreme Federal Court)', labelEs: '1 - STF (Supremo Tribunal Federal)' },
+  { value: 2, label: '2 - CNJ (Conselho Nacional de Justiça)', labelEn: '2 - CNJ (National Justice Council)', labelEs: '2 - CNJ (Consejo Nacional de Justicia)' },
+  { value: 3, label: '3 - STJ (Superior Tribunal de Justiça)', labelEn: '3 - STJ (Superior Court of Justice)', labelEs: '3 - STJ (Superior Tribunal de Justicia)' },
+  { value: 4, label: '4 - Justiça Federal (TRF)', labelEn: '4 - Federal Justice (TRF)', labelEs: '4 - Justicia Federal (TRF)' },
+  { value: 5, label: '5 - Justiça do Trabalho (TRT)', labelEn: '5 - Labor Justice (TRT)', labelEs: '5 - Justicia del Trabajo (TRT)' },
+  { value: 6, label: '6 - Justiça Eleitoral (TRE)', labelEn: '6 - Electoral Justice (TRE)', labelEs: '6 - Justicia Electoral (TRE)' },
+  { value: 7, label: '7 - Justiça Militar da União (CJM)', labelEn: '7 - Military Justice of the Union', labelEs: '7 - Justicia Militar de la Unión' },
+  { value: 8, label: '8 - Justiça dos Estados e DF (TJ)', labelEn: '8 - State Justice & DF (TJ)', labelEs: '8 - Justicia de los Estados y DF (TJ)' },
+  { value: 9, label: '9 - Justiça Militar Estadual (TJM)', labelEn: '9 - State Military Justice (TJM)', labelEs: '9 - Justicia Militar Estatal (TJM)' }
 ];
 
 export const JUSTICE_TRIBUNALS = {
@@ -828,6 +828,7 @@ export function validateNumeroProcesso(val) {
       orgao,
       orgaoName: segmentObj ? segmentObj.label : `Órgão ${orgao}`,
       orgaoNameEn: segmentObj ? segmentObj.labelEn : `Organ ${orgao}`,
+      orgaoNameEs: segmentObj ? (segmentObj.labelEs || segmentObj.label) : `Órgano ${orgao}`,
       tribunal: padZero(tribunal, 2),
       tribunalName: tribunalObj ? tribunalObj.label : `Tribunal ${tribunal}`,
       origem: padZero(origem, 4),

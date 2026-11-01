@@ -233,6 +233,145 @@
       "generateBtn": "Generar Nuevo(s) RG(s)",
       "generated": "RG Generado",
       "infoDesc": "El RG generado sigue el formato estándar del estado de São Paulo con dígito verificador calculado."
+    },
+    "nb": {
+      "tabs": {
+        "generator": "Generador de NB",
+        "validator": "Validador de NB"
+      },
+      "generator": {
+        "optionsTitle": "Opciones del Generador",
+        "batchQuantity": "Cantidad en Lote",
+        "individual": "1 (Individual)",
+        "batchHint": "50 (Lote)",
+        "generateBtn": "Generar Nuevo(s) NB",
+        "downloadBtn": "Descargar {{count}} NBs (.txt)"
+      },
+      "shortcuts": {
+        "title": "Atajos Rápidos de Teclado:",
+        "generate": "Generar nuevo número:",
+        "copyFormatted": "Copiar con formato:",
+        "copyRaw": "Copiar sin formato:"
+      },
+      "result": {
+        "title": "Número de Beneficio Generado",
+        "validModulo11": "Dígito Módulo 11 Válido",
+        "formattedLabel": "NB Formateado (Con Puntuación)",
+        "copyFormattedTooltip": "Clic para copiar con formato (Alt+C)",
+        "rawLabel": "NB No Formateado (Solo Números)",
+        "copyRawTooltip": "Clic para copiar sin máscara (Ctrl+C)",
+        "batchListTitle": "Lista en Lote ({{count}} NBs):",
+        "copyAll": "Copiar Todos",
+        "allCopied": "¡Todo Copiado!",
+        "copyItemTooltip": "Copiar este NB"
+      },
+      "validator": {
+        "title": "Validador de Número de Beneficio (NB)",
+        "inputLabel": "Ingrese o pegue el número de beneficio:",
+        "placeholder": "Ejemplo: 123.456.789-0 o 1234567890",
+        "valid": "¡Número de Beneficio Válido!",
+        "invalid": "Número de Beneficio Inválido",
+        "baseSequence": "Secuencia Base (9 dígitos):",
+        "checkDigit": "Dígito Verificador (DV):",
+        "officialFormat": "Formateado Oficial:"
+      },
+      "doc": {
+        "title": "¿Cómo Funciona el Número de Beneficio (NB)?",
+        "desc": "El Número de Beneficio (NB) es un identificador único de 10 dígitos asignado por el INSS (Instituto Nacional del Seguro Social de Brasil) a cada beneficio de seguridad social concedido (como jubilación, auxilio por incapacidad, pensión por fallecimiento o subsidio por maternidad).",
+        "structureTitle": "Estructura del NB",
+        "structureDesc": "Compuesto por 9 dígitos secuenciales seguidos de 1 dígito verificador final en el formato: 000.000.000-0.",
+        "calcTitle": "Cálculo del Dígito (Módulo 11)",
+        "calcDesc": "Los primeros 9 dígitos se multiplican por los pesos decrecientes [2, 9, 8, 7, 6, 5, 4, 3, 2]. El resto de la división por 11 determina el DV.",
+        "testingTitle": "🔒 Uso Exclusivo para Pruebas",
+        "testingDesc": "Herramienta desarrollada exclusivamente para pruebas de software, homologación y desarrollo. Los datos generados no poseen vínculo real."
+      },
+      "toasts": {
+        "copied": "¡NB {{text}} copiado!"
+      }
+    },
+    "processo": {
+      "tabs": {
+        "generator": "Generador CNJ",
+        "validator": "Validador CNJ"
+      },
+      "generator": {
+        "paramsTitle": "Parámetros del Proceso",
+        "segmentLabel": "Órgano o Segmento de la Justicia (J):",
+        "tribunalLabel": "Tribunal Específico (TR):",
+        "anyTribunal": "Cualquier Tribunal (Aleatorio)",
+        "yearLabel": "Año de Radicación (AAAA):",
+        "currentYear": "Año Actual",
+        "maskLabel": "Formateo / Máscara",
+        "maskCheckbox": "Incluir puntuación unificada CNJ",
+        "quantityLabel": "Cantidad a generar",
+        "lawsuit": "Proceso",
+        "lawsuits": "Procesos",
+        "generateBtn": "Generar Nuevo(s) Proceso(s)",
+        "downloadBtn": "Descargar {{count}} Procesos (.txt)"
+      },
+      "result": {
+        "title": "Número de Proceso Judicial",
+        "cnjBadge": "Resolución CNJ 65/2008 (Módulo 97)",
+        "formattedLabel": "Estándar Unificado CNJ (Formateado)",
+        "copyFormattedTooltip": "Clic para copiar con formato",
+        "rawLabel": "Solo Números (20 dígitos)",
+        "copyRawTooltip": "Clic para copiar sin máscara",
+        "breakdownTitle": "Descomposición de Segmentos CNJ:",
+        "breakdownSeq": "Secuencial (N)",
+        "breakdownDv": "Dígito (D)",
+        "breakdownAno": "Año (A)",
+        "breakdownJ": "Justicia (J)",
+        "breakdownTr": "Tribunal (TR)",
+        "breakdownOrigem": "Origen (O)",
+        "batchListTitle": "Lista en Lote ({{count}} Procesos):",
+        "copyAll": "Copiar Todos",
+        "allCopied": "¡Todo Copiado!",
+        "copyItemTooltip": "Copiar este proceso"
+      },
+      "validator": {
+        "title": "Validador e Inspector de Proceso Judicial (CNJ)",
+        "inputLabel": "Ingrese o pegue el número de proceso:",
+        "placeholder": "Ejemplo: 0001234-56.2026.8.26.0100 o 00012345620268260100",
+        "valid": "¡Número de Proceso Judicial Válido!",
+        "invalid": "Número de Proceso Inválido",
+        "sequential": "Número Secuencial:",
+        "checkDigit": "Dígito Verificador (Módulo 97):",
+        "filingYear": "Año de Radicación:",
+        "justiceSegment": "Segmento de la Justicia (J):",
+        "court": "Tribunal (TR):",
+        "originUnit": "Sede / Unidad de Origen:"
+      },
+      "doc": {
+        "title": "Estándar Unificado de Numeración Procesal (CNJ)",
+        "desc": "Instituido por la Resolución N.º 65/2008 del Consejo Nacional de Justicia (CNJ), el estándar unificado de numeración de procesos en el Poder Judicial brasileño cuenta con 20 dígitos organizados en 6 campos:",
+        "fieldN": "Número secuencial del proceso en el año.",
+        "fieldNTitle": "NNNNNNN (7 dígitos):",
+        "fieldD": "Dígitos verificadores calculados mediante Módulo 97.",
+        "fieldDTitle": "DD (2 dígitos):",
+        "fieldA": "Año en que se radicó el proceso.",
+        "fieldATitle": "AAAA (4 dígitos):",
+        "fieldJ": "Segmento o rama del Poder Judicial (1 a 9).",
+        "fieldJTitle": "J (1 dígito):",
+        "fieldTR": "Identificador del tribunal o región judicial.",
+        "fieldTRTitle": "TR (2 dígitos):",
+        "fieldO": "Sede, juzgado o unidad judicial de origen.",
+        "fieldOTitle": "OOOO (4 dígitos):"
+      },
+      "segments": {
+        "0": "Cualquier Segmento (Aleatorio)",
+        "1": "1 - STF (Supremo Tribunal Federal)",
+        "2": "2 - CNJ (Consejo Nacional de Justicia)",
+        "3": "3 - STJ (Superior Tribunal de Justicia)",
+        "4": "4 - Federal Justice (TRF)",
+        "5": "5 - Justicia del Trabajo (TRT)",
+        "6": "6 - Justicia Electoral (TRE)",
+        "7": "7 - Justicia Militar de la Unión",
+        "8": "8 - Justicia de los Estados y DF (TJ)",
+        "9": "9 - Justicia Militar Estatal (TJM)"
+      },
+      "toasts": {
+        "copied": "¡Proceso {{text}} copiado!"
+      }
     }
   },
   "myIp": {
