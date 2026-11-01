@@ -168,7 +168,7 @@ export default function ToolLayout({
   };
 
   const renderToolComponent = () => {
-    const props = { key: resetKey, onCopy: onToast, lang: currentLang };
+    const props = { onCopy: onToast, lang: currentLang };
 
     switch (tool.id) {
       // Brazil
@@ -413,7 +413,7 @@ export default function ToolLayout({
 
       {/* Tool Content Body with Suspense for on-demand lazy loading */}
       <div className="tool-content">
-        <Suspense fallback={<ToolSkeletonLoader />}>
+        <Suspense key={resetKey} fallback={<ToolSkeletonLoader />}>
           {renderToolComponent()}
         </Suspense>
       </div>
