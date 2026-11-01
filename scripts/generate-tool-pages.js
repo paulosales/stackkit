@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { tools } from '../src/data/toolsData.js';
+import { tools, categories } from '../src/data/toolsData.js';
 import { getToolEditorialContent } from '../src/data/toolsContentData.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -30,7 +30,7 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
-const languages = ['en', 'pt'];
+const languages = ['en', 'pt', 'es'];
 let generatedCount = 0;
 
 // Helper to inject meta tags and alternates into template
@@ -40,6 +40,7 @@ function buildHtmlForPage({
   canonicalUrl,
   alternateEnUrl,
   alternatePtUrl,
+  alternateEsUrl,
   title,
   description,
   keywords,
@@ -76,6 +77,7 @@ function buildHtmlForPage({
   <link rel="canonical" href="${canonicalUrl}" />
   <link rel="alternate" hreflang="en" href="${alternateEnUrl}" />
   <link rel="alternate" hreflang="pt" href="${alternatePtUrl}" />
+  <link rel="alternate" hreflang="es" href="${alternateEsUrl}" />
   <link rel="alternate" hreflang="x-default" href="${alternateEnUrl}" />`;
 
   html = html.replace(/<link rel="canonical"\s+href=".*?"\s*\/?>/s, alternateTags.trim());
@@ -144,6 +146,7 @@ function buildHtmlForPage({
   }
 
   // 9. Inject language and initial tool ID preloader script
+  html = html.replace(/\s*<script>window\.__INITIAL_.*?<\/script>/g, '');
   const scriptContent = initialToolId
     ? `window.__INITIAL_TOOL_ID__ = ${JSON.stringify(initialToolId)}; window.__INITIAL_LANG__ = ${JSON.stringify(lang)};`
     : `window.__INITIAL_LANG__ = ${JSON.stringify(lang)};`;
@@ -153,32 +156,42 @@ function buildHtmlForPage({
 
   // 10. Replace root body with pre-rendered content
   if (prerenderedBodyHtml) {
-    html = html.replace('<div id="root"></div>', prerenderedBodyHtml);
+    if (html.includes('<div id="root"></div>')) {
+      html = html.replace('<div id="root"></div>', prerenderedBodyHtml);
+    } else {
+      html = html.replace(/<div id="root">[\s\S]*?<\/body>/, `${prerenderedBodyHtml}\n</body>`);
+    }
   }
 
   return html;
 }
 
-// 1. Generate pages for all tools across both languages
+// 1. Generate pages for all tools across all languages
 for (const tool of tools) {
   for (const lang of languages) {
     const isPt = lang === 'pt';
+    const isEs = lang === 'es';
     const toolUrl = `https://stackkit.com.br/${lang}/${tool.id}`;
     const canonicalUrl = toolUrl;
     const alternateEnUrl = `https://stackkit.com.br/en/${tool.id}`;
     const alternatePtUrl = `https://stackkit.com.br/pt/${tool.id}`;
+    const alternateEsUrl = `https://stackkit.com.br/es/${tool.id}`;
 
     const title = isPt
       ? `${tool.name} — StackKit DevStudio`
+      : isEs
+      ? `${tool.nameEs || tool.nameEn || tool.name} — StackKit DevStudio`
       : `${tool.nameEn || tool.name} — StackKit DevStudio`;
 
     const metaDesc = isPt
       ? `${tool.description}. Ferramenta online gratuita, segura e 100% client-side.`
+      : isEs
+      ? `${tool.descriptionEs || tool.descriptionEn || tool.description}. Herramienta online gratuita, segura y 100% client-side.`
       : `${tool.descriptionEn || tool.description}. Free, secure, client-side online developer tool.`;
 
     const keywords = [...(tool.tags || []), tool.id, 'developer tools', 'stackkit', 'client-side tools'].join(', ');
     const ogImageUrl = `https://stackkit.com.br/og/${lang}/${tool.id}.png`;
-    const ogLocale = isPt ? 'pt_BR' : 'en_US';
+    const ogLocale = isPt ? 'pt_BR' : isEs ? 'es_ES' : 'en_US';
 
     const editorial = getToolEditorialContent(tool, lang);
 
@@ -190,7 +203,7 @@ for (const tool of tools) {
       'applicationCategory': 'DeveloperApplication',
       'operatingSystem': 'All',
       'description': metaDesc,
-      'inLanguage': isPt ? 'pt-BR' : 'en-US',
+      'inLanguage': isPt ? 'pt-BR' : isEs ? 'es-ES' : 'en-US',
       'offers': {
         '@type': 'Offer',
         'price': '0',
@@ -218,23 +231,29 @@ for (const tool of tools) {
       jsonLdBlocks.push(`<script type="application/ld+json">\n${JSON.stringify(faqJsonLd, null, 2)}\n  </script>`);
     }
 
-    const headingTitle = isPt ? tool.name : (tool.nameEn || tool.name);
-    const subDesc = isPt ? tool.description : (tool.descriptionEn || tool.description);
-    const howToTitle = isPt ? 'Como Utilizar: Passo a Passo' : 'How to Use: Step-by-Step';
-    const privacyTitle = isPt ? 'Privacidade e Execução Segura no Navegador' : 'Privacy & Secure Browser Execution';
+    const headingTitle = isPt ? tool.name : isEs ? (tool.nameEs || tool.nameEn || tool.name) : (tool.nameEn || tool.name);
+    const subDesc = isPt ? tool.description : isEs ? (tool.descriptionEs || tool.descriptionEn || tool.description) : (tool.descriptionEn || tool.description);
+    const howToTitle = isPt ? 'Como Utilizar: Passo a Passo' : isEs ? 'Cómo Utilizar: Paso a Paso' : 'How to Use: Step-by-Step';
+    const privacyTitle = isPt ? 'Privacidade e Execução Segura no Navegador' : isEs ? 'Privacidad y Ejecución Segura en el Navegador' : 'Privacy & Secure Browser Execution';
     const privacyBody = isPt
       ? 'O StackKit DevStudio executa todas as rotinas, cálculos de dígitos verificadores e formatações 100% no seu navegador (client-side). Seus dados e parâmetros nunca são enviados a servidores remotos.'
+      : isEs
+      ? 'StackKit DevStudio ejecuta todas las rutinas, cálculos y transformaciones 100% en su navegador (client-side). Sus datos y parámetros nunca se transmiten a servidores remotos.'
       : 'StackKit DevStudio executes all algorithms, checksum calculations, and transformations 100% inside your local browser JavaScript engine. Your data and inputs are never transmitted to remote servers.';
-    const faqHeading = isPt ? 'Perguntas Frequentes (FAQ)' : 'Frequently Asked Questions (FAQ)';
-    const footerText = isPt ? '© 2026 StackKit DevStudio · Ferramentas Gratuitas para Desenvolvedores' : '© 2026 StackKit DevStudio · Free Client-Side Developer Tools';
-    const privacyLinkText = isPt ? 'Política de Privacidade' : 'Privacy Policy';
-    const termsLinkText = isPt ? 'Termos de Uso' : 'Terms of Service';
-    const aboutLinkText = isPt ? 'Sobre Nós' : 'About Us';
+    const faqHeading = isPt ? 'Perguntas Frequentes (FAQ)' : isEs ? 'Preguntas Frecuentes (FAQ)' : 'Frequently Asked Questions (FAQ)';
+    const footerText = isPt ? '© 2026 StackKit DevStudio · Ferramentas Gratuitas para Desenvolvedores' : isEs ? '© 2026 StackKit DevStudio · Herramientas Gratuitas para Desarrolladores' : '© 2026 StackKit DevStudio · Free Client-Side Developer Tools';
+    const privacyLinkText = isPt ? 'Política de Privacidade' : isEs ? 'Política de Privacidad' : 'Privacy Policy';
+    const termsLinkText = isPt ? 'Termos de Uso' : isEs ? 'Términos de Servicio' : 'Terms of Service';
+    const aboutLinkText = isPt ? 'Sobre Nós' : isEs ? 'Sobre Nosotros' : 'About Us';
+
+    const categoryObj = categories.find(c => c.id === tool.categoryId);
+    const categoryName = isPt ? categoryObj?.name : isEs ? (categoryObj?.nameEs || categoryObj?.name) : (categoryObj?.nameEn || categoryObj?.name);
 
     const prerenderedBody = `
   <div id="root">
     <div style="max-width: 960px; margin: 40px auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e2e8f0; background: #0f172a; border-radius: 12px; line-height: 1.6;">
       <header style="margin-bottom: 24px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+        ${categoryName ? `<div style="font-size: 13px; color: #38bdf8; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">${escapeHtml(categoryName)}</div>` : ''}
         <h1 style="font-size: 26px; font-weight: 800; color: #38bdf8; margin: 0 0 8px 0;">${escapeHtml(headingTitle)}</h1>
         <p style="font-size: 15px; color: #94a3b8; margin: 0;">${escapeHtml(subDesc)}</p>
       </header>
@@ -278,6 +297,7 @@ for (const tool of tools) {
       canonicalUrl,
       alternateEnUrl,
       alternatePtUrl,
+      alternateEsUrl,
       title,
       description: metaDesc,
       keywords,
@@ -333,22 +353,28 @@ function generateCompliancePage({
   contentHtml
 }) {
   const isPt = lang === 'pt';
+  const isEs = lang === 'es';
   const url = `https://stackkit.com.br/${lang}/${slug}`;
   const canonicalUrl = url;
   const alternateEnUrl = `https://stackkit.com.br/en/${slug}`;
   const alternatePtUrl = `https://stackkit.com.br/pt/${slug}`;
+  const alternateEsUrl = `https://stackkit.com.br/es/${slug}`;
   const ogImageUrl = `https://stackkit.com.br/og/${lang}/${slug}.png`;
-  const ogLocale = isPt ? 'pt_BR' : 'en_US';
+  const ogLocale = isPt ? 'pt_BR' : isEs ? 'es_ES' : 'en_US';
 
   const subHeader = isPt
     ? 'StackKit DevStudio · Transparência, Privacidade e Padrões Abertos'
+    : isEs
+    ? 'StackKit DevStudio · Transparencia, Privacidad y Estándares Abiertos'
     : 'StackKit DevStudio · Transparency, Privacy & Open Standards';
   const footerContact = isPt
     ? '© 2026 StackKit DevStudio · contato@stackkit.com.br'
-    : '© 2026 StackKit DevStudio · contato@stackkit.com.br';
-  const privacyText = isPt ? 'Política de Privacidade' : 'Privacy Policy';
-  const termsText = isPt ? 'Termos de Uso' : 'Terms of Service';
-  const aboutText = isPt ? 'Sobre Nós' : 'About Us';
+    : isEs
+    ? '© 2026 StackKit DevStudio · contacto@stackkit.com.br'
+    : '© 2026 StackKit DevStudio · contact@stackkit.com.br';
+  const privacyText = isPt ? 'Política de Privacidade' : isEs ? 'Política de Privacidad' : 'Privacy Policy';
+  const termsText = isPt ? 'Termos de Uso' : isEs ? 'Términos de Servicio' : 'Terms of Service';
+  const aboutText = isPt ? 'Sobre Nós' : isEs ? 'Sobre Nosotros' : 'About Us';
 
   const prerenderedBody = `
   <div id="root">
@@ -377,6 +403,7 @@ function generateCompliancePage({
     canonicalUrl,
     alternateEnUrl,
     alternatePtUrl,
+    alternateEsUrl,
     title,
     description,
     keywords: 'privacy, terms, about, stackkit, developer tools',
@@ -589,25 +616,121 @@ generateCompliancePage({
     </section>
   `
 });
+generateCompliancePage({
+  lang: 'es',
+  slug: 'privacy-policy',
+  aliases: ['privacidad'],
+  title: 'Política de Privacidad | StackKit DevStudio',
+  description: 'Política de Privacidad de StackKit DevStudio: arquitectura 100% client-side, sin almacenamiento en servidores y conformidad total con Google AdSense, GDPR y LGPD.',
+  h1: 'Política de Privacidad y Protección de Datos',
+  contentHtml: `
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">1. Procesamiento 100% Client-Side y Cero Almacenamiento</h2>
+      <p>En StackKit DevStudio (https://stackkit.com.br), toda la ejecución de herramientas ocurre exclusivamente en el navegador del usuario. Tokens JWT, código fuente, payloads JSON, contraseñas generadas o documentos nunca se transmiten a servidores remotos ni se almacenan en bases de datos.</p>
+    </section>
 
-// 3. Generate pre-rendered homepages for EN, PT, and root
+    <section style="background: rgba(56, 189, 248, 0.08); border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 4px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">2. Publicidad y Cookies de Google AdSense</h2>
+      <p>StackKit muestra anuncios a través de Google AdSense para financiar el mantenimiento de la infraestructura y garantizar el acceso libre y gratuito.</p>
+      <ul style="padding-left: 20px; margin-top: 8px;">
+        <li>Proveedores externos, incluido Google, utilizan cookies para mostrar anuncios basados en las visitas anteriores del usuario a este o a otros sitios web.</li>
+        <li>El uso de cookies publicitarias permite a Google y a sus socios mostrar anuncios basados en las visitas de los usuarios a sus sitios y/o a otros sitios de Internet.</li>
+        <li>Los usuarios pueden inhabilitar la publicidad personalizada en la Configuración de anuncios de Google: <a href="https://adssettings.google.com/" target="_blank" rel="noopener" style="color: #38bdf8;">https://adssettings.google.com/</a>.</li>
+        <li>Alternativamente, puede desactivar el uso de cookies para publicidad personalizada visitando <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener" style="color: #38bdf8;">www.aboutads.info/choices/</a>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">3. Archivos de Registro y LocalStorage</h2>
+      <p>Utilizamos registros de servidor estándar (dirección IP, navegador, marca de tiempo) únicamente para diagnóstico de red y mitigación de ciberataques. El LocalStorage del navegador almacena exclusivamente preferencias de interfaz (tema oscuro/claro, idioma y favoritos).</p>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">4. Derechos del Usuario (LGPD y GDPR)</h2>
+      <p>En cumplimiento con la LGPD y el GDPR, garantizamos el derecho a la transparencia y revocación del consentimiento publicitario. Contacto: contacto@stackkit.com.br.</p>
+    </section>
+  `
+});
+
+generateCompliancePage({
+  lang: 'es',
+  slug: 'terms-of-service',
+  aliases: ['terminos', 'terminos-de-servicio'],
+  title: 'Términos de Servicio y Uso | StackKit DevStudio',
+  description: 'Términos de uso y directrices para desarrolladores y analistas de QA en StackKit DevStudio.',
+  h1: 'Términos de Servicio y Condiciones de Uso',
+  contentHtml: `
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">1. Propósito y Uso Permitido</h2>
+      <p>StackKit DevStudio proporciona herramientas de desarrollo, formateo y cálculo matemático exclusivamente para fines educativos, pruebas de software, control de calidad (QA) y optimización de productividad técnica.</p>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">2. Datos de Prueba y Ausencia de Validez Legal</h2>
+      <p>Todos los documentos numéricos, identificadores fiscales y códigos generados son muestras ficticias calculadas según algoritmos matemáticos públicos. No poseen validez fiscal ni jurídica real y no deben utilizarse para transacciones fraudulentas.</p>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">3. Disponibilidad y Responsabilidad</h2>
+      <p>El servicio se ofrece "tal cual" (as-is), sin garantías explícitas o implícitas de disponibilidad ininterrumpida. Toda la ejecución ocurre en el navegador del usuario bajo su exclusiva responsabilidad.</p>
+    </section>
+  `
+});
+
+generateCompliancePage({
+  lang: 'es',
+  slug: 'about',
+  aliases: ['sobre-nosotros'],
+  title: 'Sobre StackKit DevStudio | Herramientas Gratuitas para Desarrolladores',
+  description: 'Conozca StackKit DevStudio: estación all-in-one de herramientas client-side para desarrolladores, alto rendimiento y privacidad garantizada.',
+  h1: 'Sobre StackKit DevStudio',
+  contentHtml: `
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">Nuestra Misión</h2>
+      <p>StackKit DevStudio fue desarrollado para ofrecer la experiencia más rápida, completa y elegante para ingenieros de software, estudiantes y equipos globales. Eliminamos la fricción de herramientas inseguras garantizando procesamiento 100% en el cliente y estándares abiertos.</p>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">Pilares Técnicos</h2>
+      <ul style="padding-left: 20px;">
+        <li><strong>Zero Server Storage:</strong> Seguridad absoluta mediante la API nativa Web Crypto del navegador.</li>
+        <li><strong>Rendimiento Instantáneo:</strong> Desarrollado con tecnología moderna en React y Vite.</li>
+        <li><strong>Estándares Globales:</strong> Cumplimiento total de RFC 7519, RFC 8259, RFC 4648 y algoritmos matemáticos abiertos.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 style="font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">Contacto</h2>
+      <p>Dudas, sugerencias o colaboraciones: <a href="mailto:contato@stackkit.com.br" style="color: #38bdf8;">contato@stackkit.com.br</a>.</p>
+    </section>
+  `
+});
+
+// 3. Generate pre-rendered homepages for EN, PT, ES, and root
 function buildCatalogPrerenderedBody(lang) {
   const isPt = lang === 'pt';
+  const isEs = lang === 'es';
   const heading = isPt
     ? 'StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores'
+    : isEs
+    ? 'StackKit DevStudio — Más de 40 Herramientas Gratuitas para Desarrolladores'
     : 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette';
   const intro = isPt
     ? 'Estúdio all-in-one de ferramentas e utilitários técnicos para desenvolvedores, equipes de QA e engenharia de software. Processamento 100% privado no cliente (client-side), sem gravação de dados em servidores remotos.'
+    : isEs
+    ? 'Estación all-in-one de herramientas y utilidades técnicas para desarrolladores, equipos de QA e ingeniería de software. Procesamiento 100% privado en el cliente (client-side), sin almacenamiento de datos en servidores remotos.'
     : 'All-in-one developer workstation featuring 40+ free client-side utilities: World Time Buddy meeting scheduler, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders, and more. 100% private client-side execution.';
-  const featuredTitle = isPt ? 'Ferramentas em Destaque' : 'Featured Developer Tools';
-  const securityTitle = isPt ? 'Segurança Absoluta: Arquitetura Zero Server Storage' : 'Absolute Privacy: Zero Server Storage Architecture';
+  const featuredTitle = isPt ? 'Ferramentas em Destaque' : isEs ? 'Herramientas Destacadas' : 'Featured Developer Tools';
+  const securityTitle = isPt ? 'Segurança Absoluta: Arquitetura Zero Server Storage' : isEs ? 'Seguridad Absoluta: Arquitectura Zero Server Storage' : 'Absolute Privacy: Zero Server Storage Architecture';
   const securityBody = isPt
     ? 'Diferente de utilitários convencionais, o StackKit executa toda a computação localmente via Web Cryptography API e motor JavaScript do seu navegador. Seus tokens JWT, chaves de autenticação, payloads JSON, senhas geradas e dados de teste nunca trafegam pela rede ou são gravados em servidores remotos.'
+    : isEs
+    ? 'A diferencia de las utilidades convencionales, StackKit ejecuta todo el procesamiento localmente mediante Web Cryptography API y el motor JavaScript de su navegador. Sus tokens JWT, claves de autenticación, payloads JSON, contraseñas generadas y datos de prueba nunca viajan por la red ni se guardan en servidores remotos.'
     : 'Unlike conventional utilities, StackKit executes all computing locally via Web Cryptography API and your browser JavaScript engine. Your JWT tokens, API keys, JSON payloads, generated passwords, and test data never traverse the network or persist on remote servers.';
-  const footerText = isPt ? '© 2026 StackKit DevStudio · Ferramentas Gratuitas e Seguras para Desenvolvedores' : '© 2026 StackKit DevStudio · Free & Secure Developer Utilities';
-  const privLink = isPt ? 'Política de Privacidade' : 'Privacy Policy';
-  const termsLink = isPt ? 'Termos de Uso' : 'Terms of Service';
-  const aboutLink = isPt ? 'Sobre Nós' : 'About Us';
+  const footerText = isPt ? '© 2026 StackKit DevStudio · Ferramentas Gratuitas e Seguras para Desenvolvedores' : isEs ? '© 2026 StackKit DevStudio · Herramientas Gratuitas y Seguras para Desarrolladores' : '© 2026 StackKit DevStudio · Free & Secure Developer Utilities';
+  const privLink = isPt ? 'Política de Privacidade' : isEs ? 'Política de Privacidad' : 'Privacy Policy';
+  const termsLink = isPt ? 'Termos de Uso' : isEs ? 'Términos de Servicio' : 'Terms of Service';
+  const aboutLink = isPt ? 'Sobre Nós' : isEs ? 'Sobre Nosotros' : 'About Us';
 
   return `
   <div id="root">
@@ -623,9 +746,9 @@ function buildCatalogPrerenderedBody(lang) {
           ${tools.slice(0, 24).map(t => `
           <div style="padding: 16px; background: #1e293b; border: 1px solid #334155; border-radius: 8px;">
             <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 6px 0;">
-              <a href="https://stackkit.com.br/${lang}/${t.id}" style="color: #38bdf8; text-decoration: none;">${escapeHtml(isPt ? t.name : (t.nameEn || t.name))}</a>
+              <a href="https://stackkit.com.br/${lang}/${t.id}" style="color: #38bdf8; text-decoration: none;">${escapeHtml(isPt ? t.name : isEs ? (t.nameEs || t.nameEn || t.name) : (t.nameEn || t.name))}</a>
             </h3>
-            <p style="font-size: 12.5px; color: #94a3b8; margin: 0; line-height: 1.5;">${escapeHtml(isPt ? t.description : (t.descriptionEn || t.description))}</p>
+            <p style="font-size: 12.5px; color: #94a3b8; margin: 0; line-height: 1.5;">${escapeHtml(isPt ? t.description : isEs ? (t.descriptionEs || t.descriptionEn || t.description) : (t.descriptionEn || t.description))}</p>
           </div>`).join('\n          ')}
         </div>
       </section>
@@ -656,6 +779,7 @@ const enHomeHtml = buildHtmlForPage({
   canonicalUrl: 'https://stackkit.com.br/en',
   alternateEnUrl: 'https://stackkit.com.br/en',
   alternatePtUrl: 'https://stackkit.com.br/pt',
+  alternateEsUrl: 'https://stackkit.com.br/es',
   title: 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator',
   description: 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.',
   keywords: 'developer tools, world time buddy, color palette generator, coolors, qr code, json formatter, jwt inspector, base64 encoder',
@@ -675,6 +799,7 @@ const ptHomeHtml = buildHtmlForPage({
   canonicalUrl: 'https://stackkit.com.br/pt',
   alternateEnUrl: 'https://stackkit.com.br/en',
   alternatePtUrl: 'https://stackkit.com.br/pt',
+  alternateEsUrl: 'https://stackkit.com.br/es',
   title: 'StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores',
   description: 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.',
   keywords: 'ferramentas desenvolvedor, gerador de cpf, gerador de cnpj, validador cpf, world time buddy, gerador de qr code, formatador json, jwt, base64',
@@ -685,6 +810,26 @@ const ptHomeHtml = buildHtmlForPage({
 const ptHomeDir = path.resolve(distDir, 'pt');
 if (!fs.existsSync(ptHomeDir)) fs.mkdirSync(ptHomeDir, { recursive: true });
 fs.writeFileSync(path.resolve(ptHomeDir, 'index.html'), ptHomeHtml, 'utf-8');
+generatedCount++;
+
+// Generate dist/es/index.html
+const esHomeHtml = buildHtmlForPage({
+  lang: 'es',
+  url: 'https://stackkit.com.br/es',
+  canonicalUrl: 'https://stackkit.com.br/es',
+  alternateEnUrl: 'https://stackkit.com.br/en',
+  alternatePtUrl: 'https://stackkit.com.br/pt',
+  alternateEsUrl: 'https://stackkit.com.br/es',
+  title: 'StackKit DevStudio — Más de 40 Herramientas Gratuitas para Desarrolladores',
+  description: 'Estación all-in-one para desarrolladores con más de 40 utilidades client-side gratuitas: World Time Buddy, generador de paleta Coolors, generador de QR Code, formateadores JSON/SQL y codificadores Base64/JWT.',
+  keywords: 'herramientas desarrollador, world time buddy, generador de paleta de colores, coolors, codigo qr, formateador json, jwt inspector, base64',
+  ogImageUrl: 'https://stackkit.com.br/og/es/default.png',
+  ogLocale: 'es_ES',
+  prerenderedBodyHtml: buildCatalogPrerenderedBody('es')
+});
+const esHomeDir = path.resolve(distDir, 'es');
+if (!fs.existsSync(esHomeDir)) fs.mkdirSync(esHomeDir, { recursive: true });
+fs.writeFileSync(path.resolve(esHomeDir, 'index.html'), esHomeHtml, 'utf-8');
 generatedCount++;
 
 // Update root dist/index.html
@@ -703,6 +848,7 @@ sitemapEntries.push(`  <url>
     <loc>https://stackkit.com.br/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://stackkit.com.br/es" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en" />
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
@@ -714,6 +860,7 @@ for (const lang of languages) {
     <loc>https://stackkit.com.br/${lang}</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://stackkit.com.br/es" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en" />
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
@@ -728,6 +875,7 @@ for (const slug of complianceRoutes) {
     <loc>https://stackkit.com.br/${lang}/${slug}</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/${slug}" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/${slug}" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://stackkit.com.br/es/${slug}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/${slug}" />
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
@@ -743,6 +891,7 @@ for (const tool of tools) {
     <loc>https://stackkit.com.br/${lang}/${tool.id}</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://stackkit.com.br/en/${tool.id}" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://stackkit.com.br/pt/${tool.id}" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://stackkit.com.br/es/${tool.id}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://stackkit.com.br/en/${tool.id}" />
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "generate:og": "node scripts/generate-og-banners.js",
     "build": "node scripts/generate-og-banners.js && vite build && node scripts/generate-tool-pages.js",
     "lint": "oxlint",
@@ -15,11 +15,15 @@
     "canvas-confetti": "^1.9.4",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.14.0",
+    "i18next": "^26.6.0",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.59.0",
+    "peerjs": "^1.5.5",
     "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-i18next": "^17.1.10"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

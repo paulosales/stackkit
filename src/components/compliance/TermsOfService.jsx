@@ -1,8 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileText, CheckCircle2, ArrowLeft, AlertTriangle, Scale, Code } from 'lucide-react';
 
 export default function TermsOfService({ onGoBack, lang = 'pt' }) {
-  const isPt = lang === 'pt';
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
+  const isPt = currentLang === 'pt';
+  const isEs = currentLang === 'es';
 
   return (
     <div className="compliance-page-container" style={{
@@ -19,7 +23,7 @@ export default function TermsOfService({ onGoBack, lang = 'pt' }) {
           style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px' }}
         >
           <ArrowLeft size={16} />
-          <span>{isPt ? 'Voltar' : 'Back'}</span>
+          <span>{t('compliance.back')}</span>
         </button>
       </div>
 
@@ -41,10 +45,10 @@ export default function TermsOfService({ onGoBack, lang = 'pt' }) {
           marginBottom: 12
         }}>
           <Scale size={14} />
-          <span>{isPt ? 'Termos Legais' : 'Legal Terms'}</span>
+          <span>{t('compliance.legalTerms')}</span>
         </div>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, letterSpacing: '-0.02em' }}>
-          {isPt ? 'Termos de Uso e Serviço' : 'Terms of Service'}
+          {t('compliance.termsOfServiceTitle')}
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
           {isPt ? 'Última atualização: 19 de Outubro de 2026 · Versão 2.1' : 'Last updated: October 19, 2026 · Version 2.1'}

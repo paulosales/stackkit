@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Copy, RefreshCw, Download, Check, Settings, Sparkles } from 'lucide-react';
 import { generateCPF } from '../../utils/brazilianAlgorithms';
 
 export default function CpfGenerator({ onCopy, lang = 'pt' }) {
+  const { t } = useTranslation();
   const [cpf, setCpf] = useState('');
   const [mask, setMask] = useState(true);
   const [stateDigit, setStateDigit] = useState('');
@@ -47,7 +49,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
-    if (onCopy) onCopy(lang === 'pt' ? 'CPF copiado!' : 'CPF copied!');
+    if (onCopy) onCopy(t('tools.cpf.copied'));
   };
 
   const handleDownload = () => {
@@ -59,7 +61,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
     link.download = `cpfs_${Date.now()}.txt`;
     link.click();
     URL.revokeObjectURL(url);
-    if (onCopy) onCopy(lang === 'pt' ? 'Arquivo baixado!' : 'File downloaded!');
+    if (onCopy) onCopy(t('tools.common.fileDownloaded'));
   };
 
   return (
@@ -69,15 +71,15 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Settings size={16} />
-            <span>{lang === 'pt' ? 'Opções de Geração' : 'Generation Options'}</span>
+            <span>{t('tools.common.generationOptions')}</span>
           </div>
         </div>
 
         <div className="panel-body">
           <div className="form-group">
-            <label className="form-label">{lang === 'pt' ? 'Máscara de pontuação' : 'Punctuation mask'}</label>
+            <label className="form-label">{t('tools.cpf.punctuationMask')}</label>
             <label className="form-switch">
-              <span>{lang === 'pt' ? 'Formatar com pontos e traço (000.000.000-00)' : 'Format with punctuation (000.000.000-00)'}</span>
+              <span>{t('tools.cpf.formatMaskDesc')}</span>
               <input
                 type="checkbox"
                 checked={mask}
@@ -87,7 +89,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">{lang === 'pt' ? 'Estado de Origem (Região Fiscal)' : 'Origin Fiscal State'}</label>
+            <label className="form-label">{t('tools.cpf.originState')}</label>
             <select
               value={stateDigit}
               onChange={e => setStateDigit(e.target.value)}
@@ -100,7 +102,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
 
           <div className="form-group">
             <label className="form-label">
-              <span>{lang === 'pt' ? 'Quantidade a gerar' : 'Quantity to generate'}</span>
+              <span>{t('tools.common.quantityToGenerate')}</span>
               <span className="badge badge-cyan">{quantity} {quantity === 1 ? 'CPF' : 'CPFs'}</span>
             </label>
             <input
@@ -121,7 +123,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
 
           <button className="btn-primary" onClick={handleGenerate} style={{ marginTop: 8 }}>
             <RefreshCw size={16} />
-            <span>{lang === 'pt' ? 'Gerar Novo(s) CPF(s)' : 'Generate New CPF(s)'}</span>
+            <span>{t('tools.cpf.generateBtn')}</span>
           </button>
         </div>
       </div>
@@ -131,14 +133,14 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Sparkles size={16} />
-            <span>{lang === 'pt' ? 'Resultado' : 'Output'}</span>
+            <span>{t('tools.common.result')}</span>
           </div>
           <div className="panel-actions">
             <button className="btn-secondary" onClick={() => handleCopy(quantity > 1 ? batchList.join('\n') : cpf)}>
               {copied ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
-              <span>{copied ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+              <span>{copied ? t('tools.common.copied') : t('tools.common.copy')}</span>
             </button>
-            <button className="btn-icon" onClick={handleDownload} title={lang === 'pt' ? 'Baixar como TXT' : 'Download TXT'}>
+            <button className="btn-icon" onClick={handleDownload} title={t('tools.common.downloadTxt')}>
               <Download size={15} />
             </button>
           </div>
@@ -152,7 +154,7 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
                 <button
                   className="btn-icon"
                   onClick={() => handleCopy(cpf)}
-                  title="Copiar"
+                  title={t('tools.common.copy')}
                 >
                   {copied ? <Check size={16} color="#10b981" /> : <Copy size={16} />}
                 </button>
@@ -168,17 +170,15 @@ export default function CpfGenerator({ onCopy, lang = 'pt' }) {
                 lineHeight: 1.6
               }}>
                 <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>
-                  ℹ️ {lang === 'pt' ? 'Informação sobre o CPF gerado:' : 'Generated CPF details:'}
+                  ℹ️ {t('tools.cpf.infoTitle')}
                 </div>
-                {lang === 'pt'
-                  ? 'Os CPFs gerados por esta ferramenta são matematicamente válidos de acordo com o algoritmo de módulo 11 da Receita Federal do Brasil, próprios para testes de software em ambiente de desenvolvimento.'
-                  : 'CPFs generated by this tool are mathematically valid according to the Brazilian Federal Revenue module 11 algorithm, strictly intended for software development testing.'}
+                {t('tools.cpf.infoDesc')}
               </div>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                {batchList.length} {lang === 'pt' ? 'CPFs gerados em lote:' : 'CPFs generated in batch:'}
+                {batchList.length} {t('tools.cpf.batchGenerated')}
               </div>
               <textarea
                 readOnly

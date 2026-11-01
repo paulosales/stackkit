@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Copy, RefreshCw, Check, FileText } from 'lucide-react';
 import { generateCPF, generateCNPJ, generateRG } from '../../utils/brazilianAlgorithms';
 
 export default function DocumentGenerator({ onCopy, lang = 'pt' }) {
+  const { t } = useTranslation();
   const [mask, setMask] = useState(true);
   const [isAlphanumeric, setIsAlphanumeric] = useState(false);
   const [docs, setDocs] = useState({ cpf: '', cnpj: '', rg: '' });
@@ -40,7 +42,7 @@ export default function DocumentGenerator({ onCopy, lang = 'pt' }) {
       <div className="panel-header">
         <div className="panel-title">
           <FileText size={16} />
-          <span>{lang === 'pt' ? 'Gerador Unificado de Documentos' : 'Unified Document Generator'}</span>
+          <span>{t('tools.documentGen.title')}</span>
         </div>
         <div className="panel-actions">
           <button className="btn-secondary" onClick={copyAll}>

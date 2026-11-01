@@ -30,6 +30,53 @@
   width: var(--sidebar-collapsed-width);
 }
 
+.app-sidebar.collapsed .sidebar-header {
+  justify-content: center;
+  padding: 0 8px;
+}
+
+.app-sidebar.collapsed .brand-container,
+.app-sidebar.collapsed .brand-logo-icon {
+  display: none !important;
+}
+
+.app-sidebar.collapsed .sidebar-search-box {
+  padding: 10px 8px 4px;
+}
+
+.app-sidebar.collapsed .sidebar-search-btn {
+  padding: 8px;
+  justify-content: center;
+}
+
+.app-sidebar.collapsed .sidebar-search-btn-left {
+  justify-content: center;
+  width: 100%;
+}
+
+.app-sidebar.collapsed .sidebar-nav {
+  padding: 8px 6px;
+}
+
+.app-sidebar.collapsed .sidebar-menu-item {
+  justify-content: center;
+  padding: 9px 0;
+}
+
+.app-sidebar.collapsed .sidebar-footer,
+.sidebar-footer.collapsed {
+  flex-direction: column;
+  padding: 12px 8px;
+  gap: 10px;
+}
+
+.app-sidebar.collapsed .sidebar-footer .header-control-btn,
+.sidebar-footer.collapsed .header-control-btn {
+  width: 100%;
+  padding: 8px 0;
+  justify-content: center;
+}
+
 .sidebar-header {
   height: var(--header-height);
   padding: 0 18px;
@@ -1151,7 +1198,7 @@
 .coolors-dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  right: -170px;
   width: 280px;
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-strong);

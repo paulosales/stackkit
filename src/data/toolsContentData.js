@@ -105,6 +105,32 @@ export const categoryGuides = {
         aEn: 'Yes. The simulator accurately reproduces the 600 official Discover Canada study questions with a 45-minute timer and the authentic IRCC exam layout.'
       }
     ]
+  },
+  games: {
+    titlePt: 'Guia de Jogos Multiplayer e Quiz em Tempo Real',
+    titleEn: 'Guide to Real-Time Multiplayer Games & Trivia Arenas',
+    titleEs: 'Guía de Juegos Multijugador y Trivia en Tiempo Real',
+    introPt: 'Jogos multiplayer peer-to-peer permitem diversão coletiva para famílias e amigos sem servidores centrais, utilizando WebRTC para sincronização instantânea entre a tela principal (TV) e os celulares dos participantes.',
+    introEn: 'Peer-to-peer multiplayer party games enable instant group fun without backend servers, leveraging WebRTC data channels for real-time synchronization between the big screen TV and mobile buzzers.',
+    introEs: 'Los juegos multijugador peer-to-peer permiten diversión en grupo sin servidores centrales, aprovechando canales WebRTC para sincronización instantánea entre la pantalla principal (TV) y los teléfonos móviles.',
+    commonFaq: [
+      {
+        qPt: 'Como funciona a conexão sem servidores no Family Arena?',
+        qEn: 'How does serverless peer-to-peer connection work in Family Arena?',
+        qEs: '¿Cómo funciona la conexión sin servidores en Family Arena?',
+        aPt: 'Os dispositivos se conectam diretamente entre si usando tecnologia WebRTC ponto-a-ponto. Nenhum dado de jogo, resposta ou pergunta passa por servidores centrais.',
+        aEn: 'Devices connect directly to each other using peer-to-peer WebRTC technology. No gameplay data, answers, or custom questions touch central servers.',
+        aEs: 'Los dispositivos se conectan directamente entre sí mediante tecnología WebRTC punto a punto. Ningún dato de juego, respuesta o pregunta pasa por servidores centrales.'
+      },
+      {
+        qPt: 'Quantos jogadores podem participar simultaneamente?',
+        qEn: 'How many players can join a game session simultaneously?',
+        qEs: '¿Cuántos jugadores pueden unirse simultáneamente a una partida?',
+        aPt: 'Recomenda-se de 2 a 16 jogadores para máxima estabilidade da malha peer-to-peer em redes Wi-Fi locais ou conexões residenciais.',
+        aEn: 'Between 2 and 16 players are recommended for optimal mesh stability across local Wi-Fi or broadband connections.',
+        aEs: 'Se recomienda de 2 a 16 jugadores para una estabilidad óptima de la red peer-to-peer en conexiones locales o domésticas.'
+      }
+    ]
   }
 };
 
@@ -267,6 +293,47 @@ export const toolSpecificContent = {
     ]
   },
 
+  'family-arena': {
+    titlePt: 'Family Arena - Jogo de Quiz Multiplayer Peer-to-Peer em Tempo Real',
+    titleEn: 'Family Arena - Real-Time Peer-to-Peer Multiplayer Trivia Game',
+    overviewPt: 'Family Arena é um jogo de quiz interativo e multiplayer em tempo real projetado para noites de jogos em família, salas de aula e reuniões entre amigos. Utilizando a tecnologia WebRTC DataChannels, a comunicação ocorre diretamente entre os dispositivos (peer-to-peer), sem necessidade de banco de dados ou servidores intermediários. Conecte uma tela principal (TV, monitor ou notebook) no modo Display, crie ou selecione quizzes pelo modo Quiz Manager, e permita que todos os participantes respondam pelo celular em tempo real apenas escaneando um QR Code.',
+    overviewEn: 'Family Arena is an interactive real-time multiplayer quiz game crafted for family game nights, classrooms, and social gatherings. Leveraging pure WebRTC DataChannels, gameplay streams directly peer-to-peer between devices with zero backend servers or database overhead. Display questions and live podiums on a big TV screen (Display mode), control rounds and questions from your device (Manager mode), and invite contestants to join as Players instantly via QR code scan.',
+    howToPt: [
+      'Abra o Family Arena na tela principal (TV ou computador) ou escolha "Quiz Manager" para criar ou selecionar pacotes de perguntas.',
+      'No modo Display, um QR Code exclusivo da sala será gerado na tela.',
+      'Os participantes escaneiam o QR Code com a câmera do celular (ou digitam o código da sala de 5 caracteres) para entrar como Jogador.',
+      'O Manager inicia a rodada: as perguntas, temporizadores de contagem regressiva e opções de resposta aparecem na TV e celulares simultaneamente.',
+      'Ao final de cada pergunta e no término da partida, veja o placar de líderes e o pódio animado com confetes!'
+    ],
+    howToEn: [
+      'Open Family Arena on the primary host screen (TV, monitor, or laptop) or start in "Quiz Manager" to organize questions.',
+      'In Display mode, a unique room code and QR Code appear instantly on screen.',
+      'Contestants scan the QR code with their mobile phone camera (or enter the 5-character code) to join as Players.',
+      'The Quiz Manager launches the game: questions, countdown timers, and answer buttons sync instantly between the TV and phones.',
+      'Celebrate winners on the live leaderboard and interactive confetti podium at the end of each round!'
+    ],
+    faqs: [
+      {
+        qPt: 'O Family Arena precisa de conexão com a nuvem ou servidor backend?',
+        qEn: 'Does Family Arena require a cloud backend or database server?',
+        aPt: 'Não! O Family Arena opera 100% no navegador utilizando WebRTC DataChannels direto entre os dispositivos (Display, Manager e Jogadores). Apenas servidores públicos STUN/TURN são usados para a descoberta inicial da conexão na rede.',
+        aEn: 'No! Family Arena operates 100% client-side in the browser using WebRTC DataChannels directly between devices (Display, Manager, and Players). Public STUN/TURN servers are only utilized for initial NAT traversal.'
+      },
+      {
+        qPt: 'Quantos jogadores podem participar de uma partida?',
+        qEn: 'How many players can join a game session?',
+        aPt: 'Suporta dezenas de jogadores simultâneos conectados à mesma tela de exibição via celular, tablet ou computador.',
+        aEn: 'It supports dozens of simultaneous contestants connected to the main display screen from smartphones, tablets, or laptops.'
+      },
+      {
+        qPt: 'Posso criar minhas próprias perguntas e quizzes personalizados?',
+        qEn: 'Can I create my own custom quizzes and questions?',
+        aPt: 'Sim! No modo Quiz Manager você pode criar, editar, duplicar, exportar e importar quizzes em formato JSON com imagens e tempos personalizados por pergunta.',
+        aEn: 'Yes! In Quiz Manager mode you can create, customize, duplicate, export, and import quizzes in JSON format with custom time limits and images.'
+      }
+    ]
+  },
+
   'world-time-buddy': {
     titlePt: 'World Time Buddy & Conversor de Fuso Horário para Reuniões Globais',
     titleEn: 'World Time Buddy & Global Meeting Time Zone Converter',
@@ -295,8 +362,10 @@ export const toolSpecificContent = {
   'color-palette-generator': {
     titlePt: 'Gerador de Paleta de Cores Coolors com Contraste WCAG',
     titleEn: 'Coolors-Style Color Palette Generator with WCAG Contrast',
+    titleEs: 'Generador de Paleta de Colores Coolors con Contraste WCAG',
     overviewPt: 'Criar esquemas de cores acessíveis e esteticamente balanceados é fundamental para interfaces digitais. Inspirado no Coolors, este gerador permite criar paletas harmônicas pressionando a barra de espaço, travar cores favoritas, ajustar saturação e luminosidade, e verificar o contraste WCAG 2.1 para conformidade de acessibilidade.',
     overviewEn: 'Crafting accessible, harmonious color schemes is vital for modern UI/UX design. Inspired by Coolors, this palette generator creates balanced color harmonies at the press of the Spacebar, with color locking, brightness/saturation sliders, and real-time WCAG 2.1 contrast ratio calculations.',
+    overviewEs: 'Crear esquemas de colores accesibles y estéticamente equilibrados es fundamental para interfaces digitales. Inspirado en Coolors, este generador permite crear paletas armónicas presionando la barra espaciadora, bloquear colores favoritos, ajustar sombras y verificar el contraste WCAG 2.1 para accesibilidad.',
     howToPt: [
       'Pressione a barra de espaço para gerar uma nova combinação de cores instantaneamente.',
       'Clique no ícone de cadeado para travar as cores que deseja manter.',
@@ -309,12 +378,20 @@ export const toolSpecificContent = {
       'Adjust hue, saturation, and luminance, or export as CSS variables, HEX, or SVG.',
       'Inspect WCAG accessibility contrast scores to guarantee legible text.'
     ],
+    howToEs: [
+      'Presione la barra espaciadora para generar una nueva combinación de colores al instante.',
+      'Haga clic en el icono de candado para bloquear los colores que desea conservar.',
+      'Ajuste matiz, saturación y brillo o exporte en variables CSS, HEX o SVG.',
+      'Compruebe la puntuación de contraste WCAG para garantizar una lectura cómoda.'
+    ],
     faqs: [
       {
         qPt: 'O que significa conformidade de contraste WCAG AA e AAA?',
         qEn: 'What do WCAG AA and AAA contrast ratings mean?',
+        qEs: '¿Qué significa el cumplimiento de contraste WCAG AA y AAA?',
         aPt: 'O padrão WCAG 2.1 define que textos normais devem ter taxa de contraste de pelo menos 4.5:1 (nível AA) e 7:1 (nível AAA) contra o fundo para garantir legibilidade para pessoas com baixa visão ou daltonismo.',
-        aEn: 'WCAG 2.1 guidelines mandate a minimum 4.5:1 contrast ratio for body text (AA) and 7:1 for enhanced accessibility (AAA) to ensure legibility for visually impaired users.'
+        aEn: 'WCAG 2.1 guidelines mandate a minimum 4.5:1 contrast ratio for body text (AA) and 7:1 for enhanced accessibility (AAA) to ensure legibility for visually impaired users.',
+        aEs: 'La norma WCAG 2.1 establece que los textos normales deben tener una relación de contraste mínima de 4.5:1 (nivel AA) y 7:1 (nivel AAA) contra el fondo para garantizar la legibilidad.'
       }
     ]
   },
@@ -632,30 +709,45 @@ export function getToolEditorialContent(tool, lang = 'pt') {
   const specific = toolSpecificContent[tool.id];
   const cat = categoryGuides[tool.categoryId] || categoryGuides['utilities'];
   const isPt = lang === 'pt';
+  const isEs = lang === 'es';
+
+  const toolName = isPt ? tool.name : isEs ? (tool.nameEs || tool.nameEn || tool.name) : (tool.nameEn || tool.name);
+  const toolDesc = isPt ? tool.description : isEs ? (tool.descriptionEs || tool.descriptionEn || tool.description) : (tool.descriptionEn || tool.description);
 
   const title = specific
-    ? (isPt ? specific.titlePt : specific.titleEn)
+    ? (isPt ? specific.titlePt : isEs ? (specific.titleEs || specific.titleEn) : specific.titleEn)
     : (isPt
-        ? `Guia Completo: Como Usar ${tool.name}`
-        : `Complete Guide: How to Use ${tool.nameEn || tool.name}`);
+        ? `Guia Completo: Como Usar ${toolName}`
+        : isEs
+        ? `Guía Completa: Cómo Usar ${toolName}`
+        : `Complete Guide: How to Use ${toolName}`);
 
   const overview = specific
-    ? (isPt ? specific.overviewPt : specific.overviewEn)
+    ? (isPt ? specific.overviewPt : isEs ? (specific.overviewEs || specific.overviewEn) : specific.overviewEn)
     : (isPt
-        ? `${tool.name} é uma ferramenta profissional desenvolvida pela StackKit para acelerar rotinas de desenvolvimento e análise técnica. ${tool.description}. Executa cálculos e transformações com máxima eficiência, garantindo conformidade com padrões da indústria e segurança absoluta por meio de processamento 100% no cliente.`
-        : `${tool.nameEn || tool.name} is a professional developer utility engineered by StackKit to accelerate technical workflows. ${tool.descriptionEn || tool.description}. Designed for optimal performance, strict standards compliance, and client-side data privacy.`);
+        ? `${toolName} é uma ferramenta profissional desenvolvida pela StackKit para acelerar rotinas de desenvolvimento e análise técnica. ${toolDesc}. Executa cálculos e transformações com máxima eficiência, garantindo conformidade com padrões da indústria e segurança absoluta por meio de processamento 100% no cliente.`
+        : isEs
+        ? `${toolName} es una herramienta profesional desarrollada por StackKit para acelerar rutinas de desarrollo y análisis técnico. ${toolDesc}. Ejecuta cálculos y transformaciones con máxima eficiencia, garantizando cumplimiento de estándares de la industria y seguridad absoluta mediante procesamiento 100% en el cliente.`
+        : `${toolName} is a professional developer utility engineered by StackKit to accelerate technical workflows. ${toolDesc}. Designed for optimal performance, strict standards compliance, and client-side data privacy.`);
 
   const howTo = specific
-    ? (isPt ? specific.howToPt : specific.howToEn)
+    ? (isPt ? specific.howToPt : isEs ? (specific.howToEs || specific.howToEn) : specific.howToEn)
     : (isPt
         ? [
-            `Acesse a ferramenta ${tool.name} diretamente no StackKit DevStudio.`,
+            `Acesse a ferramenta ${toolName} diretamente no StackKit DevStudio.`,
             'Configure os parâmetros de entrada conforme as necessidades do seu projeto ou teste.',
             'Visualize o resultado gerado ou formatado instantaneamente na área de trabalho.',
             'Copie a saída com um único clique para o seu ambiente de desenvolvimento ou documentação.'
           ]
+        : isEs
+        ? [
+            `Abra la herramienta ${toolName} directamente en StackKit DevStudio.`,
+            'Configure los parámetros de entrada según las necesidades de su proyecto o prueba.',
+            'Vea el resultado generado o formateado al instante en el área de trabajo.',
+            'Copie la salida con un solo clic a su entorno de desarrollo o documentación.'
+          ]
         : [
-            `Launch the ${tool.nameEn || tool.name} utility directly in StackKit DevStudio.`,
+            `Launch the ${toolName} utility directly in StackKit DevStudio.`,
             'Adjust input options or parameters to suit your project specifications.',
             'Inspect formatted or computed output updated in real-time in the workspace.',
             'Copy the resulting output to your clipboard with one click for unit tests or documentation.'
@@ -663,22 +755,26 @@ export function getToolEditorialContent(tool, lang = 'pt') {
 
   const rawFaqs = specific ? specific.faqs : cat.commonFaq;
   const faqs = rawFaqs.map(f => ({
-    q: isPt ? f.qPt : f.qEn,
-    a: isPt ? f.aPt : f.aEn
+    q: isPt ? f.qPt : isEs ? (f.qEs || f.qEn || f.qPt) : f.qEn,
+    a: isPt ? f.aPt : isEs ? (f.aEs || f.aEn || f.aPt) : f.aEn
   }));
 
   // Append privacy & client-side security FAQ if not already present
   faqs.push({
     q: isPt
       ? 'Meus dados e parâmetros digitados são armazenados ou enviados para servidores?'
+      : isEs
+      ? '¿Se almacenan o envían mis datos o parámetros a servidores remotos?'
       : 'Are my inputs and data stored or transmitted to remote servers?',
     a: isPt
       ? 'Não. O StackKit DevStudio foi construído com arquitetura Zero Server Storage. Toda a lógica de computação, validação e formatação é executada estritamente no motor JavaScript do seu navegador. Seus dados nunca deixam seu computador.'
+      : isEs
+      ? 'No. StackKit DevStudio fue construido con arquitectura Zero Server Storage. Toda la lógica de computación, validación y formateo se ejecuta estrictamente en el motor JavaScript de su navegador. Sus datos nunca salen de su computadora.'
       : 'No. StackKit DevStudio is built with Zero Server Storage architecture. All computations, validation routines, and transformations execute exclusively in your local browser JavaScript engine. Your data never leaves your machine.'
   });
 
-  const categoryTitle = isPt ? cat.titlePt : cat.titleEn;
-  const categoryIntro = isPt ? cat.introPt : cat.introEn;
+  const categoryTitle = isPt ? cat.titlePt : isEs ? (cat.titleEs || cat.titleEn) : cat.titleEn;
+  const categoryIntro = isPt ? cat.introPt : isEs ? (cat.introEs || cat.introEn) : cat.introEn;
 
   return {
     title,

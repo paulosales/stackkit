@@ -1,0 +1,273 @@
+{
+  "sidebar": {
+    "expand": "Expandir Menu",
+    "collapse": "Recolher Menu",
+    "search": "Buscar...",
+    "allTools": "Todas as Ferramentas",
+    "catalog": "Catálogo Geral",
+    "favorites": "Favoritos",
+    "categories": "Categorias",
+    "theme": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "switchToLight": "Mudar para tema claro",
+      "switchToDark": "Mudar para tema escuro"
+    },
+    "lang": {
+      "switchToPt": "Mudar para Português",
+      "switchToEn": "Switch to English",
+      "switchToEs": "Mudar para Espanhol",
+      "switchTo_pt": "Mudar para Português (PT)",
+      "switchTo_en": "Mudar para Inglês (EN)",
+      "switchTo_es": "Mudar para Espanhol (ES)"
+    }
+  },
+  "header": {
+    "home": "Início",
+    "catalog": "Catálogo",
+    "search": "Buscar ferramenta (⌘K)",
+    "randomTool": "Ferramenta aleatória",
+    "about": "Sobre o StackKit",
+    "menu": "Menu"
+  },
+  "tabs": {
+    "catalog": "Catálogo",
+    "closeTab": "Fechar aba",
+    "pinFavorite": "Adicionar aos favoritos",
+    "unpinFavorite": "Remover dos favoritos"
+  },
+  "command": {
+    "placeholder": "Digite para buscar uma ferramenta...",
+    "allTools": "Todas as Ferramentas",
+    "noResults": "Nenhuma ferramenta encontrada para",
+    "navigate": "Navegar",
+    "open": "Abrir",
+    "close": "Fechar"
+  },
+  "tool": {
+    "addToFavorites": "Adicionar aos favoritos",
+    "removeFromFavorites": "Remover dos favoritos",
+    "share": "Compartilhar ferramenta",
+    "shareSuccess": "Link copiado para a área de transferência!",
+    "selectToolPrompt": "Selecione uma ferramenta no catálogo para iniciar o estúdio.",
+    "exploreCatalog": "Explorar Catálogo",
+    "notFound": "Ferramenta em desenvolvimento ou não encontrada",
+    "backToCatalog": "Voltar ao Catálogo",
+    "guide": "Guia de Uso & Documentação Técnica",
+    "howTo": "Como Utilizar",
+    "faq": "Perguntas Frequentes (FAQ)",
+    "specs": "Especificações Técnicas",
+    "resetState": "Limpar / Recarregar estado"
+  },
+  "toasts": {
+    "favoriteAdded": "Adicionado aos favoritos ⭐",
+    "favoriteRemoved": "Removido dos favoritos",
+    "randomTool": "Ferramenta aleatória: {{toolName}}"
+  },
+  "catalog": {
+    "badge": "Estúdio de Engenharia de Software",
+    "heroTitle": "Ferramentas Rápidas, Precisas e Privadas no Navegador",
+    "heroSubtitle": "Mais de 40 utilitários para engenheiros de software, QA e times de produto. Processamento 100% local no cliente, sem armazenamento em servidores.",
+    "searchPlaceholder": "O que você precisa hoje? (Ex: CPF, JSON, Base64, Fuso Horário, Paleta...)",
+    "popularTitle": "Mais Populares da Semana",
+    "openStudio": "Abrir estúdio",
+    "zeroStorageTitle": "Privacidade Garantida",
+    "zeroStorageDesc": "Seus dados sensíveis (JWT, CPF, tokens) nunca saem do seu navegador. Toda a computação é feita localmente pela Web Crypto API.",
+    "performanceTitle": "Performance Instantânea",
+    "performanceDesc": "Construído em React 19 e Vite para carregamento ultrarrápido, sem latência de rede em operações e formatações.",
+    "designedForDevsTitle": "Desenvolvido para Devs",
+    "designedForDevsDesc": "Atalhos rápidos de teclado (⌘K), histórico de abas abertas, temas claro/escuro e exportações em PNG, SVG e TXT.",
+    "docsTitle": "Documentação & Especificações",
+    "docsP1": "O StackKit DevStudio é uma suíte completa de ferramentas de alta performance projetada para desenvolvedores de software, engenheiros de DevOps e equipes de controle de qualidade (QA).",
+    "docsP2": "Cada ferramenta é rigorosamente desenvolvida para executar cálculos matemáticos, transformações e validações de dados diretamente na engine JavaScript do seu navegador.",
+    "openStandardsTitle": "Padrões Abertos e RFCs",
+    "openStandardsDesc": "Conformidade total com especificações como RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64) e normas de órgãos públicos brasileiros como Receita Federal e CNJ.",
+    "securityTitle": "Segurança e LGPD/GDPR",
+    "securityDesc": "Arquitetura Zero Server Storage: nenhum dado digitado ou gerado é transmitido ou gravado em servidores. Conformidade com as diretrizes do Google AdSense, GDPR e LGPD.",
+    "footerCopyright": "© 2026 StackKit DevStudio · Ferramentas Gratuitas e Seguras para Desenvolvedores",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Uso",
+    "aboutUs": "Sobre Nós"
+  },
+  "about": {
+    "title": "Sobre o StackKit DevStudio",
+    "version": "Versão 2.1.0 · React 19 & Vite",
+    "close": "Fechar",
+    "gotIt": "Entendido",
+    "missionTitle": "Nossa Missão",
+    "missionText": "O StackKit DevStudio foi desenvolvido para fornecer aos engenheiros de software, estudantes e analistas de QA uma estação de trabalho moderna, rápida e confiável. Eliminamos a necessidade de navegar por sites inseguros cheios de anúncios invasivos, entregando uma interface coesa com mais de 40 utilitários essenciais.",
+    "securityTitle": "Segurança e Arquitetura Zero Server Storage",
+    "securityText": "Diferente de outros utilitários online que enviam suas chaves, payloads e senhas para servidores desconhecidos, o StackKit executa 100% de suas funções no lado do cliente (client-side) utilizando a API nativa Web Cryptography do seu próprio navegador. Seus dados nunca saem da sua máquina.",
+    "standardsTitle": "Padrões Técnicos e Fiscais",
+    "standardsText": "Todas as ferramentas são desenvolvidas em conformidade rigorosa com normas abertas: RFC 7519 para JWT, RFC 8259 para JSON, RFC 4648 para Base64, e os algoritmos oficiais vigentes de validação e geração fiscal (Receita Federal para CPF/CNPJ alfanumérico e Resolução 65/2008 do CNJ para processos judiciais)."
+  },
+  "categories": {
+    "all": "Todas",
+    "brazil": "Brasil",
+    "generators": "Geradores",
+    "formatters": "Formatadores",
+    "converters": "Conversores",
+    "encoders": "Encode / Decode",
+    "network": "Rede & Tempo",
+    "utilities": "Utilidades",
+    "games": "Jogos"
+  },
+  "compliance": {
+    "back": "Voltar",
+    "aboutProject": "Sobre o Projeto",
+    "aboutTitle": "Sobre o StackKit DevStudio",
+    "securityPrivacy": "Segurança & Privacidade",
+    "privacyPolicyTitle": "Política de Privacidade",
+    "legalTerms": "Termos Legais",
+    "termsOfServiceTitle": "Termos de Uso e Serviço"
+  },
+  "seo": {
+    "privacyPolicy": {
+      "title": "Política de Privacidade | StackKit DevStudio",
+      "desc": "Política de privacidade do StackKit DevStudio: arquitetura 100% client-side, sem armazenamento de dados em servidores, e conformidade estrita com LGPD, GDPR e Google AdSense."
+    },
+    "termsOfService": {
+      "title": "Termos de Serviço e Uso | StackKit DevStudio",
+      "desc": "Termos de uso e diretrizes para desenvolvedores e testes de software no StackKit DevStudio."
+    },
+    "about": {
+      "title": "Sobre o StackKit DevStudio | Ferramentas Gratuitas para Desenvolvedores",
+      "desc": "Conheça o StackKit DevStudio: missão, arquitetura client-side de alta performance e compromisso com privacidade para desenvolvedores."
+    },
+    "defaultTitle": "StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores",
+    "defaultDesc": "Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.",
+    "toolTitleSuffix": "Ferramenta Online Gratuita",
+    "toolDescSuffix": "Ferramenta gratuita, segura e client-side com resultados instantâneos."
+  },
+  "tools": {
+    "validator": {
+      "title": "Validador de CPF e CNPJ"
+    },
+    "documentGen": {
+      "title": "Gerador Unificado de Documentos"
+    },
+    "common": {
+      "generationOptions": "Opções de Geração",
+      "formatting": "Formatação",
+      "quantityToGenerate": "Quantidade a gerar",
+      "result": "Resultado",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "downloadTxt": "Baixar como TXT",
+      "fileDownloaded": "Arquivo baixado!"
+    },
+    "cpf": {
+      "copied": "CPF copiado!",
+      "punctuationMask": "Máscara de pontuação",
+      "formatMaskDesc": "Formatar com pontos e traço (000.000.000-00)",
+      "originState": "Estado de Origem (Região Fiscal)",
+      "generateBtn": "Gerar Novo(s) CPF(s)",
+      "infoTitle": "Informação sobre o CPF gerado:",
+      "infoDesc": "Os CPFs gerados por esta ferramenta são matematicamente válidos de acordo com o algoritmo de módulo 11 da Receita Federal do Brasil, próprios para testes de software em ambiente de desenvolvimento.",
+      "batchGenerated": "CPFs gerados em lote:"
+    },
+    "cnpj": {
+      "copied": "CNPJ copiado!",
+      "settings": "Configurações de CNPJ",
+      "standard": "Padrão do CNPJ",
+      "alphanumeric": "CNPJ Alfanumérico (Novo Padrão RFB)",
+      "alphanumericDesc": "Primeiros 12 dígitos contêm letras e números",
+      "formatMaskDesc": "Incluir pontuação (00.000.000/0001-00)",
+      "generateBtn": "Gerar Novo(s) CNPJ(s)",
+      "generated": "CNPJ Gerado"
+    },
+    "rg": {
+      "copied": "RG copiado!",
+      "settings": "Opções de RG",
+      "formatMaskDesc": "Incluir pontuação (00.000.000-0)",
+      "generateBtn": "Gerar Novo(s) RG(s)",
+      "generated": "RG Gerado",
+      "infoDesc": "O RG (Registro Geral) gerado segue o formato padrão do estado de São Paulo com dígito verificador calculado."
+    }
+  },
+  "myIp": {
+    "title": "Informações de Rede e Meu IP Público",
+    "refresh": "Atualizar IP",
+    "publicIpLabel": "Seu Endereço de IP Público:",
+    "fetching": "Consultando...",
+    "copyIp": "Copiar Meu IP",
+    "ipCopied": "IP Copiado!",
+    "ipCopiedToast": "Endereço IP copiado!",
+    "envDetails": "Detalhes do Navegador e Ambiente Local:",
+    "timezone": "Fuso Horário (Timezone):",
+    "systemLang": "Idioma do Sistema:",
+    "resolution": "Resolução da Tela:",
+    "secureRequest": "Requisição direta e segura via HTTPS",
+    "privacyPreserved": "Privacidade preservada"
+  },
+  "palette": {
+    "shareTitle": "Paleta de Cores — StackKit DevStudio",
+    "shareText": "Confira esta paleta de cores gerada no StackKit DevStudio:",
+    "shareTooltip": "Compartilhar link desta paleta",
+    "shareSuccess": "Link da paleta copiado para a área de transferência!",
+    "shareError": "Não foi possível copiar o link",
+    "pressSpacebar": "Pressione a barra de espaço para gerar",
+    "generatePalette": "Gerar Paleta",
+    "space": "Espaço",
+    "undo": "Desfazer (Ctrl + Z)",
+    "redo": "Refazer (Ctrl + Y)",
+    "harmonyMethod": "Método de harmonia de cores",
+    "blindnessSimulator": "Simulador de Daltonismo",
+    "addColorTitle": "Adicionar coluna de cor (máx 10)",
+    "color": "Cor",
+    "export": "Exportar",
+    "explore": "Explorar",
+    "featuredPalettes": "Paletas em Destaque",
+    "insertColorBetween": "Inserir cor entre estas duas",
+    "removeColorTitle": "Remover cor (mínimo 2)",
+    "moveLeft": "Mover para a esquerda",
+    "moveRight": "Mover para a direita",
+    "viewShades": "Ver tons e sombras (Shades)",
+    "shadesOf": "Tons de {{name}}",
+    "pickColor": "Escolher cor exata",
+    "lockedTitle": "Cor travada (não mudará ao gerar)",
+    "lockTitle": "Travar cor",
+    "clickToCopyHex": "Clique para copiar o HEX",
+    "lockedBadge": "TRAVADO",
+    "contrastRatioTooltip": "Contraste com preto: {{black}}:1 | com branco: {{white}}:1",
+    "contrastBlackShort": "P: {{ratio}}:1",
+    "contrastWhiteShort": "B: {{ratio}}:1",
+    "tipSpace": "Gerar novas cores",
+    "tipUndo": "Desfazer",
+    "tipRedo": "Refazer",
+    "tipLock": "Trave cores favoritas para compor harmonias",
+    "colorsCount": "{{current}} de {{max}} cores",
+    "modalExportTitle": "Exportar Paleta de Cores",
+    "tabSvg": "Imagem SVG",
+    "tabPng": "Imagem PNG",
+    "copied": "Copiado!",
+    "copyCss": "Copiar CSS",
+    "copyTailwind": "Copiar Tailwind",
+    "copyJson": "Copiar JSON",
+    "svgDesc": "Baixe a paleta em formato vetorial SVG, ideal para Figma, Illustrator ou inclusão direta no código.",
+    "downloadSvgBtn": "Baixar Arquivo SVG (.svg)",
+    "pngDesc": "Gere e baixe uma imagem de alta resolução (1200x630px) com as cores e nomes, perfeita para apresentações e redes sociais.",
+    "downloadPngBtn": "Baixar Imagem PNG (.png)",
+    "minColorsError": "A paleta precisa ter no mínimo 2 cores!",
+    "maxColorsError": "Limite máximo de 10 cores atingido!",
+    "presetLoaded": "Paleta \"{{name}}\" carregada!",
+    "colorCopied": "Cor {{hex}} copiada com sucesso!",
+    "svgExportSuccess": "Paleta exportada como SVG!",
+    "pngExportSuccess": "Paleta baixada em alta resolução (PNG)!",
+    "codeCopiedSuccess": "Código copiado para a área de transferência!",
+    "harmonyRandom": "Harmonia: Aleatória / Vibrante",
+    "harmonyAnalogous": "Harmonia: Análoga",
+    "harmonyMonochromatic": "Harmonia: Monocromática",
+    "harmonyTriadic": "Harmonia: Tríade",
+    "harmonyComplementary": "Harmonia: Complementar",
+    "harmonySplitComplementary": "Harmonia: Dividido Complementar",
+    "harmonyPastel": "Estilo: Pastel Suave",
+    "harmonyNeon": "Estilo: Cyberpunk / Neon",
+    "harmonyVintage": "Estilo: Vintage / Muted",
+    "visionNormal": "Visão Normal",
+    "protanopia": "Protanopia (Sem Vermelho)",
+    "deuteranopia": "Deuteranopia (Sem Verde)",
+    "tritanopia": "Tritanopia (Sem Azul)",
+    "achromatopsia": "Acromatopsia (Escala de Cinza)"
+  }
+}

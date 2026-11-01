@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Copy, RefreshCw, Download, Check, Settings, Sparkles } from 'lucide-react';
 import { generateCNPJ } from '../../utils/brazilianAlgorithms';
 
 export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
+  const { t } = useTranslation();
   const [cnpj, setCnpj] = useState('');
   const [mask, setMask] = useState(true);
   const [isAlphanumeric, setIsAlphanumeric] = useState(false);
@@ -33,7 +35,7 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
-    if (onCopy) onCopy(lang === 'pt' ? 'CNPJ copiado!' : 'CNPJ copied!');
+    if (onCopy) onCopy(t('tools.cnpj.copied'));
   };
 
   const handleDownload = () => {
@@ -45,7 +47,7 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
     link.download = `cnpjs_${Date.now()}.txt`;
     link.click();
     URL.revokeObjectURL(url);
-    if (onCopy) onCopy(lang === 'pt' ? 'Arquivo baixado!' : 'File downloaded!');
+    if (onCopy) onCopy(t('tools.common.fileDownloaded'));
   };
 
   return (
@@ -55,20 +57,20 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Settings size={16} />
-            <span>{lang === 'pt' ? 'Configurações de CNPJ' : 'CNPJ Settings'}</span>
+            <span>{t('tools.cnpj.settings')}</span>
           </div>
         </div>
 
         <div className="panel-body">
           <div className="form-group">
-            <label className="form-label">{lang === 'pt' ? 'Padrão do CNPJ' : 'CNPJ Standard'}</label>
+            <label className="form-label">{t('tools.cnpj.standard')}</label>
             <label className="form-switch">
               <div>
                 <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                  {lang === 'pt' ? 'CNPJ Alfanumérico (Novo Padrão RFB)' : 'Alphanumeric CNPJ (New RFB Standard)'}
+                  {t('tools.cnpj.alphanumeric')}
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                  {lang === 'pt' ? 'Primeiros 12 dígitos contêm letras e números' : 'First 12 digits include letters and numbers'}
+                  {t('tools.cnpj.alphanumericDesc')}
                 </div>
               </div>
               <input
@@ -80,9 +82,9 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">{lang === 'pt' ? 'Formatação' : 'Formatting'}</label>
+            <label className="form-label">{t('tools.common.formatting')}</label>
             <label className="form-switch">
-              <span>{lang === 'pt' ? 'Incluir pontuação (00.000.000/0001-00)' : 'Include punctuation (00.000.000/0001-00)'}</span>
+              <span>{t('tools.cnpj.formatMaskDesc')}</span>
               <input
                 type="checkbox"
                 checked={mask}
@@ -93,7 +95,7 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
 
           <div className="form-group">
             <label className="form-label">
-              <span>{lang === 'pt' ? 'Quantidade a gerar' : 'Quantity to generate'}</span>
+              <span>{t('tools.common.quantityToGenerate')}</span>
               <span className="badge badge-purple">{quantity} {quantity === 1 ? 'CNPJ' : 'CNPJs'}</span>
             </label>
             <input
@@ -108,7 +110,7 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
 
           <button className="btn-primary" onClick={handleGenerate} style={{ marginTop: 8 }}>
             <RefreshCw size={16} />
-            <span>{lang === 'pt' ? 'Gerar Novo(s) CNPJ(s)' : 'Generate New CNPJ(s)'}</span>
+            <span>{t('tools.cnpj.generateBtn')}</span>
           </button>
         </div>
       </div>
@@ -118,14 +120,14 @@ export default function CnpjGenerator({ onCopy, lang = 'pt' }) {
         <div className="panel-header">
           <div className="panel-title">
             <Sparkles size={16} />
-            <span>{lang === 'pt' ? 'CNPJ Gerado' : 'Generated CNPJ'}</span>
+            <span>{t('tools.cnpj.generated')}</span>
           </div>
           <div className="panel-actions">
             <button className="btn-secondary" onClick={() => handleCopy(quantity > 1 ? batchList.join('\n') : cnpj)}>
               {copied ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
-              <span>{copied ? (lang === 'pt' ? 'Copiado!' : 'Copied!') : (lang === 'pt' ? 'Copiar' : 'Copy')}</span>
+              <span>{copied ? t('tools.common.copied') : t('tools.common.copy')}</span>
             </button>
-            <button className="btn-icon" onClick={handleDownload} title={lang === 'pt' ? 'Baixar TXT' : 'Download TXT'}>
+            <button className="btn-icon" onClick={handleDownload} title={t('tools.common.downloadTxt')}>
               <Download size={15} />
             </button>
           </div>

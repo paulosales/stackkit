@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { tools, categories, findToolByIdOrAlias } from './data/toolsData';
+import { useTranslation } from 'react-i18next';
+import { tools, categories, findToolByIdOrAlias, getToolName, getToolDescription, getCategoryName } from './data/toolsData';
 import Sidebar from './components/Sidebar';
 import AppHeader from './components/AppHeader';
 import ToolTabs from './components/ToolTabs';
@@ -24,7 +25,7 @@ export function parseUrlPath(pathname = '', hash = '') {
   let detectedLang = null;
   let remainingSlug = '';
 
-  if (parts.length > 0 && (parts[0] === 'en' || parts[0] === 'pt')) {
+  if (parts.length > 0 && (parts[0] === 'en' || parts[0] === 'pt' || parts[0] === 'es')) {
     detectedLang = parts[0];
     remainingSlug = parts.slice(1).join('/');
   } else {
@@ -41,14 +42,14 @@ function getInitialLanguage() {
     if (detectedLang) {
       return detectedLang;
     }
-    if (window.__INITIAL_LANG__ === 'pt' || window.__INITIAL_LANG__ === 'en') {
+    if (window.__INITIAL_LANG__ === 'pt' || window.__INITIAL_LANG__ === 'en' || window.__INITIAL_LANG__ === 'es') {
       return window.__INITIAL_LANG__;
     }
   }
 
   try {
     const userSelected = localStorage.getItem('stackkit_user_lang');
-    if (userSelected === 'pt' || userSelected === 'en') {
+    if (userSelected === 'pt' || userSelected === 'en' || userSelected === 'es') {
       return userSelected;
     }
   } catch {
@@ -65,6 +66,7 @@ function getInitialLanguage() {
       if (!langTag) continue;
       const clean = langTag.toLowerCase();
       if (clean.startsWith('pt')) return 'pt';
+      if (clean.startsWith('es')) return 'es';
       if (clean.startsWith('en')) return 'en';
     }
   } catch {
@@ -86,6 +88,7 @@ const DEFAULT_FAVORITES = [
 ];
 
 export default function App() {
+  const { t, i18n } = useTranslation();
   const [activeToolId, setActiveToolId] = useState(null);
   const [compliancePage, setCompliancePage] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -140,7 +143,7 @@ export default function App() {
 
   // Explicit user language toggle handler
   const handleToggleLang = () => {
-    const nextLang = lang === 'pt' ? 'en' : 'pt';
+    const nextLang = lang === 'pt' ? 'en' : lang === 'en' ? 'es' : 'pt';
     setLang(nextLang);
     try {
       localStorage.setItem('stackkit_user_lang', nextLang);
@@ -173,10 +176,13 @@ export default function App() {
     localStorage.setItem('stackkit_theme', theme);
   }, [theme]);
 
-  // Sync lang to document html tag
+  // Sync lang to document html tag and i18next
   useEffect(() => {
     document.documentElement.lang = lang;
-  }, [lang]);
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, i18n]);
 
   // React to browser language change if user hasn't explicitly overridden it
   useEffect(() => {
@@ -230,6 +236,7 @@ export default function App() {
     const updateAlternateLinks = (slugPath = '') => {
       const enUrl = `https://stackkit.com.br/en${slugPath ? `/${slugPath}` : ''}`;
       const ptUrl = `https://stackkit.com.br/pt${slugPath ? `/${slugPath}` : ''}`;
+      const esUrl = `https://stackkit.com.br/es${slugPath ? `/${slugPath}` : ''}`;
 
       let enLink = document.querySelector('link[rel="alternate"][hreflang="en"]');
       if (!enLink) {
@@ -249,6 +256,15 @@ export default function App() {
       }
       ptLink.setAttribute('href', ptUrl);
 
+      let esLink = document.querySelector('link[rel="alternate"][hreflang="es"]');
+      if (!esLink) {
+        esLink = document.createElement('link');
+        esLink.setAttribute('rel', 'alternate');
+        esLink.setAttribute('hreflang', 'es');
+        document.head.appendChild(esLink);
+      }
+      esLink.setAttribute('href', esUrl);
+
       let defLink = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
       if (!defLink) {
         defLink = document.createElement('link');
@@ -259,16 +275,12 @@ export default function App() {
       defLink.setAttribute('href', enUrl);
     };
 
-    const ogLocale = lang === 'pt' ? 'pt_BR' : 'en_US';
+    const ogLocale = lang === 'pt' ? 'pt_BR' : lang === 'es' ? 'es_ES' : 'en_US';
 
     if (compliancePage) {
       if (compliancePage === 'privacy-policy') {
-        const title = lang === 'pt'
-          ? 'Política de Privacidade | StackKit DevStudio'
-          : 'Privacy Policy | StackKit DevStudio';
-        const desc = lang === 'pt'
-          ? 'Política de privacidade do StackKit DevStudio: arquitetura 100% client-side, sem armazenamento de dados em servidores, e conformidade estrita com LGPD, GDPR e Google AdSense.'
-          : 'StackKit DevStudio Privacy Policy: 100% client-side architecture, zero server data storage, and strict compliance with LGPD, GDPR, and Google AdSense.';
+        const title = t('seo.privacyPolicy.title');
+        const desc = t('seo.privacyPolicy.desc');
         const url = `https://stackkit.com.br/${lang}/privacy-policy`;
         const ogImage = `https://stackkit.com.br/og/${lang}/privacy-policy.png`;
 
@@ -285,12 +297,8 @@ export default function App() {
         updateMetaTag('meta[name="twitter:title"]', 'content', title);
         updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'terms-of-service') {
-        const title = lang === 'pt'
-          ? 'Termos de Serviço e Uso | StackKit DevStudio'
-          : 'Terms of Service | StackKit DevStudio';
-        const desc = lang === 'pt'
-          ? 'Termos de uso e diretrizes para desenvolvedores e testes de software no StackKit DevStudio.'
-          : 'Terms of service and software testing guidelines for StackKit DevStudio users.';
+        const title = t('seo.termsOfService.title');
+        const desc = t('seo.termsOfService.desc');
         const url = `https://stackkit.com.br/${lang}/terms-of-service`;
         const ogImage = `https://stackkit.com.br/og/${lang}/terms-of-service.png`;
 
@@ -307,12 +315,8 @@ export default function App() {
         updateMetaTag('meta[name="twitter:title"]', 'content', title);
         updateMetaTag('meta[name="twitter:description"]', 'content', desc);
       } else if (compliancePage === 'about') {
-        const title = lang === 'pt'
-          ? 'Sobre o StackKit DevStudio | Ferramentas Gratuitas para Desenvolvedores'
-          : 'About StackKit DevStudio | Free Developer Tools & Workstation';
-        const desc = lang === 'pt'
-          ? 'Conheça o StackKit DevStudio: missão, arquitetura client-side de alta performance e compromisso com privacidade para desenvolvedores.'
-          : 'Learn about StackKit DevStudio: mission, high-performance client-side architecture, and developer privacy standards.';
+        const title = t('seo.about.title');
+        const desc = t('seo.about.desc');
         const url = `https://stackkit.com.br/${lang}/about`;
         const ogImage = `https://stackkit.com.br/og/${lang}/about.png`;
 
@@ -332,10 +336,10 @@ export default function App() {
     } else if (activeToolId) {
       const tool = tools.find(t => t.id === activeToolId);
       if (tool) {
-        const titleName = lang === 'pt' ? tool.name : (tool.nameEn || tool.name);
-        const desc = lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description);
-        const fullTitle = `${titleName} — ${lang === 'pt' ? 'Ferramenta Online Gratuita' : 'Free Online Developer Tool'} | StackKit DevStudio`;
-        const fullDesc = `${desc}. ${lang === 'pt' ? 'Ferramenta gratuita, segura e client-side com resultados instantâneos.' : 'Free, private, client-side tool with instant results.'}`;
+        const titleName = getToolName(tool, lang);
+        const desc = getToolDescription(tool, lang);
+        const fullTitle = `${titleName} — ${t('seo.toolTitleSuffix')} | StackKit DevStudio`;
+        const fullDesc = `${desc}. ${t('seo.toolDescSuffix')}`;
         const canonicalUrl = `https://stackkit.com.br/${lang}/${tool.id}`;
         const toolOgImage = `https://stackkit.com.br/og/${lang}/${tool.id}.png`;
 
@@ -353,12 +357,8 @@ export default function App() {
         updateMetaTag('meta[name="twitter:description"]', 'content', fullDesc);
       }
     } else {
-      const defaultTitle = lang === 'pt'
-        ? 'StackKit DevStudio — Mais de 40 Ferramentas Gratuitas para Desenvolvedores'
-        : 'StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator';
-      const defaultDesc = lang === 'pt'
-        ? 'Estúdio all-in-one para desenvolvedores com mais de 40 utilitários client-side gratuitos: World Time Buddy, gerador de paleta de cores Coolors, gerador de QR Code, formatadores JSON/SQL e codificadores Base64/JWT.'
-        : 'All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.';
+      const defaultTitle = t('seo.defaultTitle');
+      const defaultDesc = t('seo.defaultDesc');
       const homeUrl = `https://stackkit.com.br/${lang}`;
       const defaultOgImage = `https://stackkit.com.br/og/${lang}/default.png`;
 
@@ -529,18 +529,20 @@ export default function App() {
 
   const toggleFavorite = (rawToolId) => {
     const canonicalId = findToolByIdOrAlias(rawToolId)?.id || rawToolId;
-    setFavorites(prev => {
-      const isFav = prev.includes(canonicalId);
-      const next = isFav ? prev.filter(id => id !== canonicalId) : [...prev, canonicalId];
-      addToast(isFav ? 'Removido dos favoritos' : 'Adicionado aos favoritos ⭐');
-      return next;
-    });
+    const isFav = favorites.includes(canonicalId);
+    setFavorites(prev => (isFav ? prev.filter(id => id !== canonicalId) : [...prev, canonicalId]));
+    if (isFav) {
+      addToast(t('toasts.favoriteRemoved'));
+    } else {
+      addToast(t('toasts.favoriteAdded'));
+    }
   };
 
   const openRandomTool = () => {
     const rand = tools[Math.floor(Math.random() * tools.length)];
     openTool(rand.id);
-    addToast(`Ferramenta aleatória: ${rand.name}`);
+    const toolName = getToolName(rand, lang);
+    addToast(t('toasts.randomTool', { toolName }));
   };
 
   const navigateToCompliance = (pageSlug) => {
@@ -683,45 +685,33 @@ export default function App() {
                 <div>
                   <h3 style={{ fontSize: 18, fontWeight: 800 }}>StackKit DevStudio</h3>
                   <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                    {lang === 'pt' ? 'Versão 2.1.0 · React 19 & Vite' : 'Version 2.1.0 · React 19 & Vite'}
+                    {t('about.version')}
                   </div>
                 </div>
               </div>
-              <button className="btn-icon" onClick={() => setAboutOpen(false)} aria-label={lang === 'pt' ? 'Fechar' : 'Close'}>
+              <button className="btn-icon" onClick={() => setAboutOpen(false)} aria-label={t('about.close')}>
                 <X size={18} />
               </button>
             </div>
 
             <div style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 12 }}>
               <p>
-                {lang === 'pt' ? (
-                  <>O <strong>StackKit DevStudio</strong> foi desenvolvido para oferecer a experiência mais rápida, completa e elegante para desenvolvedores e equipes globais.</>
-                ) : (
-                  <><strong>StackKit DevStudio</strong> was engineered to provide the fastest, most comprehensive, and elegant experience for developers and global teams.</>
-                )}
+                {t('about.missionText')}
               </p>
               <p>
-                {lang === 'pt' ? (
-                  <>Apresenta 40 ferramentas essenciais, incluindo gerador de paleta de cores (estilo Coolors), conversor de fuso horário mundial (World Time Buddy), geradores de QR Code/senhas/hashes, formatadores e codificadores, com execução 100% no seu navegador.</>
-                ) : (
-                  <>Features 40 essential developer utilities including a color palette generator (Coolors style), world time converter (World Time Buddy), QR Code / password / hash generators, formatters, and encoders — running 100% client-side in your browser.</>
-                )}
+                {t('about.standardsText')}
               </p>
               <div style={{
                 padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--bg-input)',
                 border: '1px solid var(--border-subtle)', fontSize: 12
               }}>
-                {lang === 'pt' ? (
-                  <>🔒 <strong>100% Client-Side & Privado:</strong> Seus dados, textos e códigos nunca saem do seu computador.</>
-                ) : (
-                  <>🔒 <strong>100% Client-Side & Private:</strong> Your data, text, and code never leave your browser.</>
-                )}
+                🔒 <strong>{t('catalog.zeroStorageTitle')}:</strong> {t('catalog.zeroStorageDesc')}
               </div>
             </div>
 
             <div style={{ marginTop: 20, textAlign: 'right' }}>
               <button className="btn-primary" onClick={() => setAboutOpen(false)}>
-                {lang === 'pt' ? 'Entendido' : 'Got it'}
+                {t('about.gotIt')}
               </button>
             </div>
           </div>

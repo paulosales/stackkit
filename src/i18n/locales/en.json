@@ -1,0 +1,273 @@
+{
+  "sidebar": {
+    "expand": "Expand Sidebar",
+    "collapse": "Collapse Sidebar",
+    "search": "Search...",
+    "allTools": "All Tools",
+    "catalog": "Tool Catalog",
+    "favorites": "Favorites",
+    "categories": "Categories",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "switchToLight": "Switch to light theme",
+      "switchToDark": "Switch to dark theme"
+    },
+    "lang": {
+      "switchToPt": "Mudar para Português",
+      "switchToEn": "Switch to English",
+      "switchToEs": "Mudar para Espanhol",
+      "switchTo_pt": "Switch to Portuguese (PT)",
+      "switchTo_en": "Switch to English (EN)",
+      "switchTo_es": "Switch to Spanish (ES)"
+    }
+  },
+  "header": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "search": "Search tools (⌘K)",
+    "randomTool": "Random tool",
+    "about": "About StackKit",
+    "menu": "Menu"
+  },
+  "tabs": {
+    "catalog": "Catalog",
+    "closeTab": "Close tab",
+    "pinFavorite": "Add to favorites",
+    "unpinFavorite": "Remove from favorites"
+  },
+  "command": {
+    "placeholder": "Type to search any developer tool...",
+    "allTools": "All Tools",
+    "noResults": "No tools found matching",
+    "navigate": "Navigate",
+    "open": "Open",
+    "close": "Close"
+  },
+  "tool": {
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "share": "Share tool",
+    "shareSuccess": "Link copied to clipboard!",
+    "selectToolPrompt": "Select a tool from the catalog to launch the studio workspace.",
+    "exploreCatalog": "Explore Catalog",
+    "notFound": "Tool under development or not found",
+    "backToCatalog": "Back to Catalog",
+    "guide": "Usage Guide & Technical Docs",
+    "howTo": "How to Use",
+    "faq": "Frequently Asked Questions (FAQ)",
+    "specs": "Technical Specifications",
+    "resetState": "Clear / Reset state"
+  },
+  "toasts": {
+    "favoriteAdded": "Added to favorites ⭐",
+    "favoriteRemoved": "Removed from favorites",
+    "randomTool": "Random tool: {{toolName}}"
+  },
+  "catalog": {
+    "badge": "Software Engineering Studio",
+    "heroTitle": "Fast, Precise & Private In-Browser Utilities",
+    "heroSubtitle": "Over 40 essential developer utilities for software engineers, DevOps, and QA teams. 100% client-side computation with zero server data storage.",
+    "searchPlaceholder": "What do you need today? (e.g. CPF, JSON, Base64, Timezone, Palette...)",
+    "popularTitle": "Trending Developer Utilities",
+    "openStudio": "Open studio",
+    "zeroStorageTitle": "Zero Server Storage",
+    "zeroStorageDesc": "Your sensitive payloads (JWT, tokens, secrets) never leave your browser. All computation executes locally via the Web Crypto API.",
+    "performanceTitle": "Instant Performance",
+    "performanceDesc": "Engineered with React 19 & Vite for sub-millisecond execution and zero network latency for data processing.",
+    "designedForDevsTitle": "Crafted for Engineers",
+    "designedForDevsDesc": "Equipped with command palette navigation (⌘K), workspace tab history, light/dark themes, and quick exports.",
+    "docsTitle": "Engineering & Technical Documentation",
+    "docsP1": "StackKit DevStudio is a high-performance workstation engineered for developers, QA testers, and infrastructure engineers.",
+    "docsP2": "Each utility is designed to execute data transformations and mathematical algorithms entirely client-side without remote dependencies.",
+    "openStandardsTitle": "Open Standards & RFCs",
+    "openStandardsDesc": "Full conformance with established specifications including RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64), and official regulatory standards.",
+    "securityTitle": "Privacy & Security",
+    "securityDesc": "Zero Server Storage architecture: no user input is ever transmitted or logged remotely. Full compliance with Google AdSense, GDPR, and LGPD policies.",
+    "footerCopyright": "© 2026 StackKit DevStudio · Free & Secure Developer Utilities",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "aboutUs": "About Us"
+  },
+  "about": {
+    "title": "About StackKit DevStudio",
+    "version": "Version 2.1.0 · React 19 & Vite",
+    "close": "Close",
+    "gotIt": "Got it",
+    "missionTitle": "Our Mission",
+    "missionText": "StackKit DevStudio was built to provide software engineers, QA analysts, and students with a modern, fast, and secure developer workstation. We replace cluttered, insecure online utilities with a unified interface housing 40+ client-side tools.",
+    "securityTitle": "Zero Server Storage Architecture",
+    "securityText": "Unlike conventional online utilities that send your data, JSON payloads, and tokens to remote backend servers, StackKit executes 100% of its functions in your local browser using the native Web Cryptography API. Your data never leaves your device.",
+    "standardsTitle": "Technical & Regulatory Standards",
+    "standardsText": "All utilities adhere strictly to published specifications: RFC 7519 for JWT, RFC 8259 for JSON, RFC 4648 for Base64, and official regulatory algorithms including Receita Federal fiscal standards and CNJ Resolution 65/2008 for lawsuit identifiers."
+  },
+  "categories": {
+    "all": "All",
+    "brazil": "Brazil",
+    "generators": "Generators",
+    "formatters": "Formatters",
+    "converters": "Converters",
+    "encoders": "Encode / Decode",
+    "network": "Network & Time",
+    "utilities": "Utilities",
+    "games": "Games"
+  },
+  "compliance": {
+    "back": "Back",
+    "aboutProject": "About the Project",
+    "aboutTitle": "About StackKit DevStudio",
+    "securityPrivacy": "Security & Privacy",
+    "privacyPolicyTitle": "Privacy Policy",
+    "legalTerms": "Legal Terms",
+    "termsOfServiceTitle": "Terms of Service"
+  },
+  "seo": {
+    "privacyPolicy": {
+      "title": "Privacy Policy | StackKit DevStudio",
+      "desc": "StackKit DevStudio Privacy Policy: 100% client-side architecture, zero server data storage, and strict compliance with LGPD, GDPR, and Google AdSense."
+    },
+    "termsOfService": {
+      "title": "Terms of Service | StackKit DevStudio",
+      "desc": "Terms of service and software testing guidelines for StackKit DevStudio users."
+    },
+    "about": {
+      "title": "About StackKit DevStudio | Free Developer Tools & Workstation",
+      "desc": "Learn about StackKit DevStudio: mission, high-performance client-side architecture, and developer privacy standards."
+    },
+    "defaultTitle": "StackKit DevStudio — 40+ Free Developer Tools, World Clock & Color Palette Generator",
+    "defaultDesc": "All-in-one developer workstation with 40+ free client-side utilities: World Time Buddy, Coolors palette generator, QR Code generator, JSON/SQL formatters, Base64/JWT encoders.",
+    "toolTitleSuffix": "Free Online Developer Tool",
+    "toolDescSuffix": "Free, private, client-side tool with instant results."
+  },
+  "tools": {
+    "validator": {
+      "title": "CPF & CNPJ Validator"
+    },
+    "documentGen": {
+      "title": "Unified Document Generator"
+    },
+    "common": {
+      "generationOptions": "Generation Options",
+      "formatting": "Formatting",
+      "quantityToGenerate": "Quantity to generate",
+      "result": "Output",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "downloadTxt": "Download TXT",
+      "fileDownloaded": "File downloaded!"
+    },
+    "cpf": {
+      "copied": "CPF copied!",
+      "punctuationMask": "Punctuation mask",
+      "formatMaskDesc": "Format with punctuation (000.000.000-00)",
+      "originState": "Origin Fiscal State",
+      "generateBtn": "Generate New CPF(s)",
+      "infoTitle": "Generated CPF details:",
+      "infoDesc": "CPFs generated by this tool are mathematically valid according to the Brazilian Federal Revenue module 11 algorithm, strictly intended for software development testing.",
+      "batchGenerated": "CPFs generated in batch:"
+    },
+    "cnpj": {
+      "copied": "CNPJ copied!",
+      "settings": "CNPJ Settings",
+      "standard": "CNPJ Standard",
+      "alphanumeric": "Alphanumeric CNPJ (New RFB Standard)",
+      "alphanumericDesc": "First 12 digits include letters and numbers",
+      "formatMaskDesc": "Include punctuation (00.000.000/0001-00)",
+      "generateBtn": "Generate New CNPJ(s)",
+      "generated": "Generated CNPJ"
+    },
+    "rg": {
+      "copied": "RG copied!",
+      "settings": "RG Options",
+      "formatMaskDesc": "Include punctuation (00.000.000-0)",
+      "generateBtn": "Generate New RG(s)",
+      "generated": "Generated RG",
+      "infoDesc": "The generated RG (General Registry) adheres to the standard São Paulo format with a valid calculated check digit."
+    }
+  },
+  "myIp": {
+    "title": "Network Info & What is My Public IP",
+    "refresh": "Refresh IP",
+    "publicIpLabel": "Your Public IP Address:",
+    "fetching": "Fetching...",
+    "copyIp": "Copy My IP",
+    "ipCopied": "IP Copied!",
+    "ipCopiedToast": "IP address copied!",
+    "envDetails": "Browser & Local Environment Details:",
+    "timezone": "Timezone:",
+    "systemLang": "System Language:",
+    "resolution": "Screen Resolution:",
+    "secureRequest": "Secure direct HTTPS request",
+    "privacyPreserved": "Privacy preserved"
+  },
+  "palette": {
+    "shareTitle": "Color Palette — StackKit DevStudio",
+    "shareText": "Check out this color palette:",
+    "shareTooltip": "Share link to this palette",
+    "shareSuccess": "Palette link copied to clipboard!",
+    "shareError": "Could not copy link",
+    "pressSpacebar": "Press spacebar to generate",
+    "generatePalette": "Generate Palette",
+    "space": "Space",
+    "undo": "Undo (Ctrl + Z)",
+    "redo": "Redo (Ctrl + Y)",
+    "harmonyMethod": "Color harmony method",
+    "blindnessSimulator": "Color blindness simulator",
+    "addColorTitle": "Add color column (max 10)",
+    "color": "Color",
+    "export": "Export",
+    "explore": "Explore",
+    "featuredPalettes": "Featured Palettes",
+    "insertColorBetween": "Insert color between these two",
+    "removeColorTitle": "Remove color (minimum 2)",
+    "moveLeft": "Move left",
+    "moveRight": "Move right",
+    "viewShades": "View shades and tints",
+    "shadesOf": "Shades of {{name}}",
+    "pickColor": "Pick exact color",
+    "lockedTitle": "Color locked (will not change when generating)",
+    "lockTitle": "Lock color",
+    "clickToCopyHex": "Click to copy HEX",
+    "lockedBadge": "LOCKED",
+    "contrastRatioTooltip": "Contrast with black: {{black}}:1 | with white: {{white}}:1",
+    "contrastBlackShort": "B: {{ratio}}:1",
+    "contrastWhiteShort": "W: {{ratio}}:1",
+    "tipSpace": "Generate new colors",
+    "tipUndo": "Undo",
+    "tipRedo": "Redo",
+    "tipLock": "Lock favorite colors to compose harmonies",
+    "colorsCount": "{{current}} of {{max}} colors",
+    "modalExportTitle": "Export Color Palette",
+    "tabSvg": "SVG Image",
+    "tabPng": "PNG Image",
+    "copied": "Copied!",
+    "copyCss": "Copy CSS",
+    "copyTailwind": "Copy Tailwind",
+    "copyJson": "Copy JSON",
+    "svgDesc": "Download the palette in SVG vector format, ideal for Figma, Illustrator, or direct embedding in code.",
+    "downloadSvgBtn": "Download SVG File (.svg)",
+    "pngDesc": "Generate and download a high-resolution image (1200x630px) with colors and names, perfect for presentations and social media.",
+    "downloadPngBtn": "Download PNG Image (.png)",
+    "minColorsError": "The palette must have at least 2 colors!",
+    "maxColorsError": "Maximum limit of 10 colors reached!",
+    "presetLoaded": "Palette \"{{name}}\" loaded!",
+    "colorCopied": "Color {{hex}} copied to clipboard!",
+    "svgExportSuccess": "Palette exported as SVG!",
+    "pngExportSuccess": "Palette downloaded in high resolution (PNG)!",
+    "codeCopiedSuccess": "Code copied to clipboard!",
+    "harmonyRandom": "Harmony: Random / Vibrant",
+    "harmonyAnalogous": "Harmony: Analogous",
+    "harmonyMonochromatic": "Harmony: Monochromatic",
+    "harmonyTriadic": "Harmony: Triadic",
+    "harmonyComplementary": "Harmony: Complementary",
+    "harmonySplitComplementary": "Harmony: Split Complementary",
+    "harmonyPastel": "Style: Soft Pastel",
+    "harmonyNeon": "Style: Cyberpunk / Neon",
+    "harmonyVintage": "Style: Vintage / Muted",
+    "visionNormal": "Normal Vision",
+    "protanopia": "Protanopia (Red-blind)",
+    "deuteranopia": "Deuteranopia (Green-blind)",
+    "tritanopia": "Tritanopia (Blue-blind)",
+    "achromatopsia": "Achromatopsia (Grayscale)"
+  }
+}

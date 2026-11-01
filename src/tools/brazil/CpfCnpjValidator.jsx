@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BadgeCheck, CheckCircle2, XCircle, Copy, Check, ListFilter } from 'lucide-react';
 import { validateCPF, validateCNPJ, cleanDigits, cleanDocument } from '../../utils/brazilianAlgorithms';
 
 export default function CpfCnpjValidator({ onCopy, lang = 'pt' }) {
+  const { t } = useTranslation();
   const [singleInput, setSingleInput] = useState('');
   const [batchInput, setBatchInput] = useState('');
   const [mode, setMode] = useState('single'); // 'single' or 'batch'
@@ -56,7 +58,7 @@ export default function CpfCnpjValidator({ onCopy, lang = 'pt' }) {
       <div className="panel-header">
         <div className="panel-title">
           <BadgeCheck size={16} />
-          <span>{lang === 'pt' ? 'Validador de CPF e CNPJ' : 'CPF & CNPJ Validator'}</span>
+          <span>{t('tools.validator.title')}</span>
         </div>
         <div className="panel-actions">
           <div style={{ display: 'flex', gap: 4 }}>

@@ -1,9 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Menu, Search, Dices, Star, Share2, Sparkles,
   ExternalLink, Info
 } from 'lucide-react';
-import { tools, categories } from '../data/toolsData';
+import { tools, categories, getToolName, getCategoryName } from '../data/toolsData';
 
 export default function AppHeader({
   activeToolId,
@@ -16,13 +17,18 @@ export default function AppHeader({
   onShowAbout,
   lang = 'pt'
 }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
   const activeTool = tools.find(t => t.id === activeToolId);
   const category = activeTool ? categories.find(c => c.id === activeTool.categoryId) : categories.find(c => c.id === activeCategory);
+
+  const categoryName = category ? t(`categories.${category.id}`, { defaultValue: getCategoryName(category, currentLang) }) : '';
+  const toolName = activeTool ? getToolName(activeTool, currentLang) : '';
 
   return (
     <header className="app-header">
       <div className="header-left">
-        <button className="btn-icon mobile-only" onClick={onToggleMobile} aria-label="Abrir menu">
+        <button className="btn-icon mobile-only" onClick={onToggleMobile} aria-label={t('header.menu')}>
           <Menu size={18} />
         </button>
 
@@ -36,14 +42,14 @@ export default function AppHeader({
                 style={{ cursor: 'pointer' }}
                 onClick={() => onSelectCategory(category.id)}
               >
-                {lang === 'pt' ? category.name : category.nameEn}
+                {categoryName}
               </span>
               {activeTool && <span className="breadcrumb-sep">/</span>}
             </>
           ) : (
             <>
               <span onClick={onGoHome} style={{ cursor: 'pointer' }}>
-                {lang === 'pt' ? 'Catálogo' : 'Catalog'}
+                {t('header.catalog')}
               </span>
               {activeTool && <span className="breadcrumb-sep">/</span>}
             </>
@@ -51,7 +57,7 @@ export default function AppHeader({
 
           {activeTool && (
             <span className="breadcrumb-current">
-              {lang === 'pt' ? activeTool.name : (activeTool.nameEn || activeTool.name)}
+              {toolName}
             </span>
           )}
         </div>
@@ -62,20 +68,20 @@ export default function AppHeader({
         <button
           className="header-control-btn"
           onClick={onRandomTool}
-          title={lang === 'pt' ? 'Abrir ferramenta aleatória' : 'Open random tool'}
+          title={t('header.randomTool')}
         >
           <Dices size={15} />
-          <span className="desktop-only">{lang === 'pt' ? 'Aleatória' : 'Random'}</span>
+          <span className="desktop-only">{t('header.randomTool')}</span>
         </button>
 
         {/* Command Palette Trigger */}
         <button
           className="header-control-btn"
           onClick={onOpenCommandPalette}
-          title={lang === 'pt' ? 'Buscar ferramenta (Ctrl+K)' : 'Search tools (Ctrl+K)'}
+          title={t('header.search')}
         >
           <Search size={15} />
-          <span className="desktop-only">{lang === 'pt' ? 'Buscar' : 'Search'}</span>
+          <span className="desktop-only">{t('command.open')}</span>
           <kbd className="desktop-only">Ctrl K</kbd>
         </button>
 
@@ -83,8 +89,8 @@ export default function AppHeader({
         <button
           className="btn-icon"
           onClick={onShowAbout}
-          title={lang === 'pt' ? 'Sobre o StackKit' : 'About StackKit'}
-          aria-label={lang === 'pt' ? 'Sobre o StackKit' : 'About StackKit'}
+          title={t('header.about')}
+          aria-label={t('header.about')}
         >
           <Info size={18} />
         </button>

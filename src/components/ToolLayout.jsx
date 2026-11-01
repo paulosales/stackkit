@@ -1,6 +1,7 @@
 import React, { useState, Suspense, lazy } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Star, Share2, ArrowLeft, RefreshCw, Layers, Loader2, BookOpen, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
-import { tools, categories, findToolByIdOrAlias } from '../data/toolsData';
+import { tools, categories, findToolByIdOrAlias, getToolName, getToolDescription, getCategoryName } from '../data/toolsData';
 import { getToolEditorialContent } from '../data/toolsContentData';
 import DynamicIcon from './DynamicIcon';
 
@@ -63,6 +64,7 @@ const CronExplainer = lazy(() => import('../tools/utilities/CronExplainer'));
 const MarkdownPreview = lazy(() => import('../tools/utilities/MarkdownPreview'));
 const CharacterCounter = lazy(() => import('../tools/utilities/CharacterCounter'));
 const CanadianCitizenshipTest = lazy(() => import('../tools/utilities/CanadianCitizenshipTest'));
+const FamilyArena = lazy(() => import('../tools/games/FamilyArena'));
 
 // Sleek loading skeleton for lazy-loaded tools
 function ToolSkeletonLoader() {
@@ -92,21 +94,22 @@ export default function ToolLayout({
   onSelectTool,
   onNavigateCompliance
 }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
   const tool = findToolByIdOrAlias(toolId);
   const [resetKey, setResetKey] = useState(0);
 
-  const editorial = getToolEditorialContent(tool, lang);
+  const editorial = getToolEditorialContent(tool, currentLang);
   const relatedTools = tool
     ? tools.filter(t => t.id !== tool.id && t.categoryId === tool.categoryId).slice(0, 4)
     : [];
 
-
   if (!tool) {
     return (
       <div style={{ padding: 40, textAlign: 'center' }}>
-        <h2>Ferramenta não encontrada</h2>
+        <h2>{t('tool.notFound')}</h2>
         <button className="btn-primary" onClick={onGoBack} style={{ marginTop: 16 }}>
-          Voltar ao Catálogo
+          {t('tool.backToCatalog')}
         </button>
       </div>
     );
@@ -115,18 +118,57 @@ export default function ToolLayout({
   const category = categories.find(c => c.id === tool.categoryId);
   const isFav = favorites.includes(tool.id);
 
-  const handleShare = () => {
-    const url = `${window.location.origin}/${lang}/${tool.id}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-      if (onToast) {
-        onToast(lang === 'pt' ? 'Link da ferramenta copiado: ' + url : 'Tool link copied: ' + url);
+  const handleShare = async () => {
+    const url = `${window.location.origin}/${currentLang}/${tool.id}`;
+    const toolTitle = getToolName(tool, currentLang);
+    const title = `${toolTitle} — StackKit DevStudio`;
+
+    // 1. Try native Web Share API first
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title, text: tool.description, url });
+        return;
+      } catch (err) {
+        if (err && err.name === 'AbortError') return; // User closed share sheet
       }
+    }
+
+    // 2. Fallback to async Clipboard API
+    let copied = false;
+    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      } catch {
+        // Continue to execCommand fallback
+      }
+    }
+
+    // 3. Fallback to document.execCommand('copy')
+    if (!copied && typeof document !== 'undefined') {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        textArea.style.pointerEvents = 'none';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch {
+        copied = false;
+      }
+    }
+
+    if (onToast) {
+      onToast(copied ? t('tool.shareSuccess') : t('tool.share'));
     }
   };
 
   const renderToolComponent = () => {
-    const props = { key: resetKey, onCopy: onToast, lang };
+    const props = { key: resetKey, onCopy: onToast, lang: currentLang };
 
     switch (tool.id) {
       // Brazil
@@ -286,15 +328,21 @@ export default function ToolLayout({
       case 'teste-cidadania-canada':
       case 'canada-citizenship':
         return <CanadianCitizenshipTest {...props} />;
+      case 'family-arena':
+      case 'quiz-arena':
+      case 'family-quiz':
+      case 'arena-quiz':
+      case 'trivia-arena':
+        return <FamilyArena {...props} />;
 
       default:
         return (
           <div style={{ padding: 48, textAlign: 'center', color: 'var(--text-muted)' }}>
             <p style={{ fontSize: 15, marginBottom: 16 }}>
-              {lang === 'pt' ? 'Selecione uma ferramenta no catálogo para iniciar o estúdio.' : 'Select a tool from the catalog to launch the studio workspace.'}
+              {t('tool.selectToolPrompt')}
             </p>
             <button className="btn-primary" onClick={onGoBack}>
-              {lang === 'pt' ? 'Explorar Catálogo' : 'Explore Catalog'}
+              {t('tool.exploreCatalog')}
             </button>
           </div>
         );
@@ -313,16 +361,16 @@ export default function ToolLayout({
           <div className="tool-header-meta">
             <div className="tool-header-title-row">
               <h1 className="tool-header-title">
-                {lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
+                {getToolName(tool, currentLang)}
               </h1>
               {category && (
                 <span className="badge badge-cyan">
-                  {lang === 'pt' ? category.name : (category.nameEn || category.name)}
+                  {t(`categories.${category.id}`, { defaultValue: getCategoryName(category, currentLang) })}
                 </span>
               )}
             </div>
             <p className="tool-header-desc">
-              {lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description)}
+              {getToolDescription(tool, currentLang)}
             </p>
           </div>
         </div>
@@ -331,7 +379,7 @@ export default function ToolLayout({
           <button
             className={`btn-secondary btn-icon ${isFav ? 'btn-favorite-active' : ''}`}
             onClick={() => onToggleFavorite(tool.id)}
-            title={isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+            title={isFav ? t('tool.removeFromFavorites') : t('tool.addToFavorites')}
           >
             <Star size={16} fill={isFav ? '#f59e0b' : 'none'} color={isFav ? '#f59e0b' : 'currentColor'} />
           </button>
@@ -339,7 +387,7 @@ export default function ToolLayout({
           <button
             className="btn-secondary btn-icon"
             onClick={handleShare}
-            title="Compartilhar ferramenta"
+            title={t('tool.share')}
           >
             <Share2 size={16} />
           </button>
@@ -347,7 +395,7 @@ export default function ToolLayout({
           <button
             className="btn-secondary btn-icon"
             onClick={() => setResetKey(k => k + 1)}
-            title="Limpar / Recarregar estado"
+            title={t('tool.resetState')}
           >
             <RefreshCw size={16} />
           </button>
@@ -355,10 +403,10 @@ export default function ToolLayout({
           <button
             className="btn-secondary"
             onClick={onGoBack}
-            title="Voltar ao catálogo geral"
+            title={t('tool.backToCatalog')}
           >
             <ArrowLeft size={16} />
-            <span>Voltar ao Catálogo</span>
+            <span>{t('tool.backToCatalog')}</span>
           </button>
         </div>
       </div>
@@ -377,7 +425,7 @@ export default function ToolLayout({
           <div className="editorial-card">
             <div className="editorial-badge">
               <BookOpen size={14} />
-              <span>{lang === 'pt' ? 'Guia Técnico & Documentação' : 'Technical Guide & Documentation'}</span>
+              <span>{t('tool.guide')}</span>
             </div>
             <h2 className="editorial-title">{editorial.title}</h2>
             <p className="editorial-overview">{editorial.overview}</p>
@@ -388,7 +436,7 @@ export default function ToolLayout({
             <div className="editorial-card">
               <h3 className="editorial-subtitle">
                 <HelpCircle size={18} className="text-cyan" />
-                <span>{lang === 'pt' ? 'Passo a Passo: Como Utilizar' : 'Step-by-Step Instructions'}</span>
+                <span>{t('tool.howTo')}</span>
               </h3>
               <ol className="editorial-steps-list">
                 {editorial.howTo.map((step, idx) => (
@@ -406,12 +454,10 @@ export default function ToolLayout({
             <div className="editorial-card">
               <h3 className="editorial-subtitle">
                 <ShieldCheck size={18} className="text-emerald" />
-                <span>{lang === 'pt' ? 'Privacidade Client-Side Garantida' : 'Zero Server Storage Guarantee'}</span>
+                <span>{t('catalog.zeroStorageTitle')}</span>
               </h3>
               <p className="editorial-text">
-                {lang === 'pt'
-                  ? 'Esta ferramenta opera inteiramente no seu navegador. Cálculos matemáticos, validações e dados gerados nunca saem do seu computador ou trafegam por servidores externos.'
-                  : 'This utility runs 100% inside your local browser. Calculations, algorithms, and generated data never leave your device or touch external servers.'}
+                {t('catalog.zeroStorageDesc')}
               </p>
             </div>
 
@@ -431,7 +477,7 @@ export default function ToolLayout({
             <div className="editorial-card">
               <h3 className="editorial-subtitle">
                 <HelpCircle size={18} className="text-amber" />
-                <span>{lang === 'pt' ? 'Perguntas Frequentes (FAQ)' : 'Frequently Asked Questions (FAQ)'}</span>
+                <span>{t('tool.faq')}</span>
               </h3>
               <div className="editorial-faq-list">
                 {editorial.faqs.map((faq, idx) => (
@@ -453,19 +499,22 @@ export default function ToolLayout({
             <div className="editorial-card">
               <h3 className="editorial-subtitle">
                 <Sparkles size={18} className="text-cyan" />
-                <span>{lang === 'pt' ? 'Ferramentas Relacionadas' : 'Related Developer Tools'}</span>
+                <span>{t('catalog.popularTitle')}</span>
               </h3>
               <div className="editorial-related-grid">
-                {relatedTools.map(rel => (
-                  <button
-                    key={rel.id}
-                    className="editorial-related-chip"
-                    onClick={() => onSelectTool ? onSelectTool(rel.id) : null}
-                  >
-                    <DynamicIcon name={rel.icon} size={15} />
-                    <span>{lang === 'pt' ? rel.name : (rel.nameEn || rel.name)}</span>
-                  </button>
-                ))}
+                {relatedTools.map(rel => {
+                  const relName = getToolName(rel, currentLang);
+                  return (
+                    <button
+                      key={rel.id}
+                      className="editorial-related-chip"
+                      onClick={() => onSelectTool ? onSelectTool(rel.id) : null}
+                    >
+                      <DynamicIcon name={rel.icon} size={15} />
+                      <span>{relName}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -473,37 +522,37 @@ export default function ToolLayout({
           {/* Compliance & AdSense Required Footer Navigation */}
           <footer className="editorial-footer">
             <div className="editorial-footer-text">
-              © 2026 StackKit DevStudio · {lang === 'pt' ? 'Ferramentas Gratuitas e Seguras para Desenvolvedores' : 'Free & Secure Developer Utilities'}
+              {t('catalog.footerCopyright')}
             </div>
             <div className="editorial-footer-links">
               <a
-                href={`/${lang}/privacy-policy`}
+                href={`/${currentLang}/privacy-policy`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('privacy-policy');
                 }}
               >
-                {lang === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
+                {t('catalog.privacyPolicy')}
               </a>
               <span>·</span>
               <a
-                href={`/${lang}/terms-of-service`}
+                href={`/${currentLang}/terms-of-service`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('terms-of-service');
                 }}
               >
-                {lang === 'pt' ? 'Termos de Uso' : 'Terms of Service'}
+                {t('catalog.termsOfService')}
               </a>
               <span>·</span>
               <a
-                href={`/${lang}/about`}
+                href={`/${currentLang}/about`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigateCompliance) onNavigateCompliance('about');
                 }}
               >
-                {lang === 'pt' ? 'Sobre Nós' : 'About Us'}
+                {t('catalog.aboutUs')}
               </a>
             </div>
           </footer>

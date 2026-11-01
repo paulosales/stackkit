@@ -17,6 +17,7 @@
   --bg-surface-card: rgba(22, 30, 48, 0.7);
   --bg-input: #0f1523;
   --bg-input-focus: #141c2e;
+  --bg-elevated: #1a2336;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.07);
@@ -72,6 +73,7 @@
   --bg-surface-card: #ffffff;
   --bg-input: #f8fafc;
   --bg-input-focus: #ffffff;
+  --bg-elevated: #f1f5f9;
 
   --border-subtle: #e2e8f0;
   --border-strong: #cbd5e1;
@@ -90,13 +92,16 @@
 }
 
 /* Base resets */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   font-family: var(--font-sans);
@@ -121,26 +126,37 @@ html, body {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.25);
   border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.4);
 }
 
 /* Typography styles */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
-code, pre, kbd, .font-mono {
+code,
+pre,
+kbd,
+.font-mono {
   font-family: var(--font-mono);
 }
 
@@ -159,7 +175,9 @@ kbd {
 }
 
 /* Common form elements */
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: 13.5px;
   color: var(--text-primary);
@@ -171,13 +189,16 @@ input, textarea, select {
   transition: all var(--transition-fast);
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   background-color: var(--bg-input-focus);
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--text-muted);
 }
 

@@ -1,8 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Code2, ShieldCheck, Zap, Globe, ArrowLeft, Mail, Heart, Cpu, CheckCircle } from 'lucide-react';
 
 export default function AboutUs({ onGoBack, lang = 'pt' }) {
-  const isPt = lang === 'pt';
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
+  const isPt = currentLang === 'pt';
+  const isEs = currentLang === 'es';
 
   return (
     <div className="compliance-page-container" style={{
@@ -19,7 +23,7 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
           style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px' }}
         >
           <ArrowLeft size={16} />
-          <span>{isPt ? 'Voltar' : 'Back'}</span>
+          <span>{t('compliance.back')}</span>
         </button>
       </div>
 
@@ -41,13 +45,13 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
           marginBottom: 12
         }}>
           <Code2 size={14} />
-          <span>{isPt ? 'Sobre o Projeto' : 'About the Project'}</span>
+          <span>{t('compliance.aboutProject')}</span>
         </div>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, letterSpacing: '-0.02em' }}>
-          {isPt ? 'Sobre o StackKit DevStudio' : 'About StackKit DevStudio'}
+          {t('compliance.aboutTitle')}
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-          {isPt ? 'A Estação de Trabalho Definitiva para Desenvolvedores Modernos' : 'The Definitive Workstation for Modern Developers'}
+          {isPt ? 'A Estação de Trabalho Definitiva para Desenvolvedores Modernos' : isEs ? 'La Estación de Trabajo Definitiva para Desarrolladores Modernos' : 'The Definitive Workstation for Modern Developers'}
         </p>
       </header>
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, Star, ArrowUpRight, Flame, Sparkles, Shield, Zap, Terminal } from 'lucide-react';
-import { tools, categories } from '../data/toolsData';
+import { tools, categories, getToolName, getToolDescription, getCategoryName } from '../data/toolsData';
 import DynamicIcon from './DynamicIcon';
 
 export default function CatalogView({
@@ -12,6 +13,8 @@ export default function CatalogView({
   lang = 'pt',
   onNavigateCompliance
 }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTools = tools.filter(tool => {
@@ -22,8 +25,8 @@ export default function CatalogView({
     // Search query match
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
-    const nameMatch = tool.name.toLowerCase().includes(q) || (tool.nameEn && tool.nameEn.toLowerCase().includes(q));
-    const descMatch = tool.description.toLowerCase().includes(q) || (tool.descriptionEn && tool.descriptionEn.toLowerCase().includes(q));
+    const nameMatch = tool.name.toLowerCase().includes(q) || (tool.nameEn && tool.nameEn.toLowerCase().includes(q)) || (tool.nameEs && tool.nameEs.toLowerCase().includes(q));
+    const descMatch = tool.description.toLowerCase().includes(q) || (tool.descriptionEn && tool.descriptionEn.toLowerCase().includes(q)) || (tool.descriptionEs && tool.descriptionEs.toLowerCase().includes(q));
     const tagMatch = tool.tags && tool.tags.some(tag => tag.toLowerCase().includes(q));
     return nameMatch || descMatch || tagMatch;
   });
@@ -36,19 +39,17 @@ export default function CatalogView({
       <section className="catalog-hero">
         <div className="catalog-badge-pill">
           <Sparkles size={14} />
-          <span>{lang === 'pt' ? 'Suíte Completa para Desenvolvedores' : 'Complete Developer Suite'}</span>
+          <span>{t('catalog.badge')}</span>
           <span>·</span>
-          <span>{tools.length} {lang === 'pt' ? 'Ferramentas' : 'Tools'}</span>
+          <span>{tools.length} {t('sidebar.allTools')}</span>
         </div>
 
         <h1 className="catalog-hero-title">
-          {lang === 'pt' ? 'Ferramentas Ágeis para Desenvolvedores' : 'Productive Tools for Developers'}
+          {t('catalog.heroTitle')}
         </h1>
 
         <p className="catalog-hero-desc">
-          {lang === 'pt'
-            ? 'Gere documentos válidos, formate dados, converta arquivos, inspecione tokens JWT e teste expressões regulares. 100% executado localmente no seu navegador para total privacidade e velocidade.'
-            : 'Generate valid documents, format code, convert files, inspect JWT tokens and test regular expressions. 100% processed client-side for absolute privacy and lightning speed.'}
+          {t('catalog.heroSubtitle')}
         </p>
 
         {/* Big Search Bar */}
@@ -57,7 +58,7 @@ export default function CatalogView({
           <input
             type="search"
             className="catalog-search-input"
-            placeholder={lang === 'pt' ? 'Busque uma ferramenta por nome, sigla ou finalidade...' : 'Search a tool by name, tag, or purpose...'}
+            placeholder={t('catalog.searchPlaceholder')}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
@@ -70,6 +71,7 @@ export default function CatalogView({
         {categories.map(cat => {
           const count = cat.id === 'all' ? tools.length : tools.filter(t => t.categoryId === cat.id).length;
           const isActive = activeCategory === cat.id;
+          const catName = t(`categories.${cat.id}`, { defaultValue: getCategoryName(cat, currentLang) });
 
           return (
             <button
@@ -78,7 +80,7 @@ export default function CatalogView({
               onClick={() => onSelectCategory(cat.id)}
             >
               <DynamicIcon name={cat.icon} size={15} />
-              <span>{lang === 'pt' ? cat.name : cat.nameEn}</span>
+              <span>{catName}</span>
               <span className="category-chip-count">{count}</span>
             </button>
           );
@@ -91,7 +93,7 @@ export default function CatalogView({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Flame size={18} color="#f97316" />
             <h2 style={{ fontSize: 16, fontWeight: 700 }}>
-              {lang === 'pt' ? 'Mais Utilizadas' : 'Most Popular'}
+              {t('catalog.popularTitle')}
             </h2>
             <span className="badge badge-amber">{popularTools.length}</span>
           </div>
@@ -99,6 +101,9 @@ export default function CatalogView({
           <div className="tools-grid">
             {popularTools.map(tool => {
               const isFav = favorites.includes(tool.id);
+              const toolTitle = getToolName(tool, currentLang);
+              const toolDesc = getToolDescription(tool, currentLang);
+
               return (
                 <div
                   key={`popular-${tool.id}`}
@@ -115,7 +120,7 @@ export default function CatalogView({
                         e.stopPropagation();
                         onToggleFavorite(tool.id);
                       }}
-                      title={isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                      title={isFav ? t('tool.removeFromFavorites') : t('tool.addToFavorites')}
                     >
                       <Star size={16} fill={isFav ? 'var(--accent-amber)' : 'none'} />
                     </button>
@@ -123,10 +128,10 @@ export default function CatalogView({
 
                   <div className="tool-card-info">
                     <div className="tool-card-title">
-                      {lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
+                      {toolTitle}
                     </div>
                     <div className="tool-card-desc">
-                      {lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description)}
+                      {toolDesc}
                     </div>
                   </div>
 
@@ -135,7 +140,7 @@ export default function CatalogView({
                       {tool.categoryId.toUpperCase()}
                     </span>
                     <span className="tool-card-action-hint">
-                      {lang === 'pt' ? 'Abrir' : 'Open'} <ArrowUpRight size={13} />
+                      {t('catalog.openStudio')} <ArrowUpRight size={13} />
                     </span>
                   </div>
                 </div>
@@ -150,11 +155,14 @@ export default function CatalogView({
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2 style={{ fontSize: 16, fontWeight: 700 }}>
             {activeCategory === 'all'
-              ? (lang === 'pt' ? 'Todas as Ferramentas' : 'All Tools')
-              : categories.find(c => c.id === activeCategory)?.name || ''}
+              ? t('sidebar.allTools')
+              : (() => {
+                  const cat = categories.find(c => c.id === activeCategory);
+                  return cat ? t(`categories.${cat.id}`, { defaultValue: getCategoryName(cat, currentLang) }) : '';
+                })()}
           </h2>
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-            {filteredTools.length} {lang === 'pt' ? 'encontradas' : 'found'}
+            {filteredTools.length} {t('sidebar.allTools')}
           </span>
         </div>
 
@@ -168,16 +176,18 @@ export default function CatalogView({
             color: 'var(--text-muted)'
           }}>
             <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>
-              {lang === 'pt' ? 'Nenhuma ferramenta encontrada' : 'No tools matched your query'}
+              {t('command.noResults')}
             </p>
             <p style={{ fontSize: 13 }}>
-              {lang === 'pt' ? 'Tente buscar por outro termo ou selecione outra categoria.' : 'Try another search term or pick a different category.'}
+              {t('command.placeholder')}
             </p>
           </div>
         ) : (
           <div className="tools-grid">
             {filteredTools.map(tool => {
               const isFav = favorites.includes(tool.id);
+              const toolTitle = getToolName(tool, currentLang);
+              const toolDesc = getToolDescription(tool, currentLang);
 
               return (
                 <div
@@ -195,7 +205,7 @@ export default function CatalogView({
                         e.stopPropagation();
                         onToggleFavorite(tool.id);
                       }}
-                      title={isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                      title={isFav ? t('tool.removeFromFavorites') : t('tool.addToFavorites')}
                     >
                       <Star size={16} fill={isFav ? 'var(--accent-amber)' : 'none'} />
                     </button>
@@ -203,10 +213,10 @@ export default function CatalogView({
 
                   <div className="tool-card-info">
                     <div className="tool-card-title">
-                      {lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
+                      {toolTitle}
                     </div>
                     <div className="tool-card-desc">
-                      {lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description)}
+                      {toolDesc}
                     </div>
                   </div>
 
@@ -215,7 +225,7 @@ export default function CatalogView({
                       {tool.categoryId.toUpperCase()}
                     </span>
                     <span className="tool-card-action-hint">
-                      {lang === 'pt' ? 'Abrir estúdio' : 'Launch studio'} <ArrowUpRight size={13} />
+                      {t('catalog.openStudio')} <ArrowUpRight size={13} />
                     </span>
                   </div>
                 </div>
@@ -246,12 +256,10 @@ export default function CatalogView({
           </div>
           <div>
             <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>
-              {lang === 'pt' ? 'Privacidade Garantida' : 'Zero Server Storage'}
+              {t('catalog.zeroStorageTitle')}
             </h3>
             <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              {lang === 'pt'
-                ? 'Todos os cálculos, hashes e validações rodam no seu próprio navegador. Seus dados nunca saem da sua máquina.'
-                : 'All algorithms, hashes, and formatting run locally in your browser. Sensitive data never touches a remote server.'}
+              {t('catalog.zeroStorageDesc')}
             </p>
           </div>
         </div>
@@ -266,12 +274,10 @@ export default function CatalogView({
           </div>
           <div>
             <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>
-              {lang === 'pt' ? 'Performance Instantânea' : 'Instant Performance'}
+              {t('catalog.performanceTitle')}
             </h3>
             <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              {lang === 'pt'
-                ? 'Construído em React com Vite moderno. Sem latência de rede, respostas em tempo real para testes rápidos.'
-                : 'Built with Vite and modern React. Zero network latency, instant responses for rapid developer workflows.'}
+              {t('catalog.performanceDesc')}
             </p>
           </div>
         </div>
@@ -286,12 +292,10 @@ export default function CatalogView({
           </div>
           <div>
             <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>
-              {lang === 'pt' ? 'Desenvolvido para Devs' : 'Engineered for Devs'}
+              {t('catalog.designedForDevsTitle')}
             </h3>
             <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              {lang === 'pt'
-                ? 'Atalhos de teclado (Ctrl+K), abas de trabalho, suporte completo a padrões brasileiros e internacionais.'
-                : 'Keyboard navigation (Ctrl+K), multi-tab workspace, full support for Brazilian standards and global formats.'}
+              {t('catalog.designedForDevsDesc')}
             </p>
           </div>
         </div>
@@ -300,39 +304,31 @@ export default function CatalogView({
       {/* Editorial Publisher Overview & Specifications */}
       <section className="editorial-card" style={{ marginTop: 32 }}>
         <div className="editorial-badge">
-          <span>{lang === 'pt' ? 'Documentação & Especificações' : 'Documentation & Specifications'}</span>
+          <span>{t('catalog.docsTitle')}</span>
         </div>
         <h2 className="editorial-title" style={{ fontSize: 20 }}>
-          {lang === 'pt'
-            ? 'StackKit DevStudio — Estação Completa de Utilitários Client-Side'
-            : 'StackKit DevStudio — Complete Client-Side Developer Suite'}
+          StackKit DevStudio
         </h2>
         <p className="editorial-overview" style={{ marginBottom: 16 }}>
-          {lang === 'pt'
-            ? 'O StackKit DevStudio reúne mais de 40 ferramentas de alta performance projetadas especificamente para programadores, analistas de qualidade (QA) e equipes remotas. Todas as rotinas — desde a geração de identificadores fiscais brasileiros (CPF, CNPJ, RG, INSS) e tokens criptográficos até a validação de esquemas JSON, decodificação Base64 e agendamento de reuniões internacionais (World Time Buddy) — operam com segurança absoluta e sem envio de dados a servidores.'
-            : 'StackKit DevStudio provides over 40 high-performance utilities engineered specifically for software developers, QA engineers, and distributed global teams. All processing — ranging from Brazilian fiscal identifiers and cryptographic tokens to JSON validation, Base64 decoding, and international time zone scheduling — executes client-side with zero data transmission.'}
+          {t('catalog.docsP1')} {t('catalog.docsP2')}
         </p>
 
         <div className="editorial-card-grid" style={{ marginTop: 20 }}>
           <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
             <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--accent-cyan)' }}>
-              {lang === 'pt' ? 'Padrões Abertos e RFCs' : 'Open Standards & RFCs'}
+              {t('catalog.openStandardsTitle')}
             </h4>
             <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
-              {lang === 'pt'
-                ? 'Conformidade com RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64), ISO/IEC 18004 (QR Code) e algoritmos oficiais de Módulo 11 da Receita Federal.'
-                : 'Full compliance with RFC 7519 (JWT), RFC 8259 (JSON), RFC 4648 (Base64), ISO/IEC 18004 (QR Code), and official public verification algorithms.'}
+              {t('catalog.openStandardsDesc')}
             </p>
           </div>
 
           <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
             <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--accent-emerald)' }}>
-              {lang === 'pt' ? 'Segurança e LGPD/GDPR' : 'Privacy & Security'}
+              {t('catalog.securityTitle')}
             </h4>
             <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
-              {lang === 'pt'
-                ? 'Zero Server Storage: seus tokens, senhas e códigos nunca saem do seu navegador. Total transparência e conformidade estrita com a LGPD e GDPR.'
-                : 'Zero Server Storage: sensitive tokens, passwords, and source code never leave your device. Fully transparent and compliant with LGPD and GDPR.'}
+              {t('catalog.securityDesc')}
             </p>
           </div>
         </div>
@@ -352,40 +348,40 @@ export default function CatalogView({
         gap: 12
       }}>
         <div>
-          © 2026 StackKit DevStudio · {lang === 'pt' ? 'Ferramentas Gratuitas e Seguras para Desenvolvedores' : 'Free & Secure Developer Utilities'}
+          {t('catalog.footerCopyright')}
         </div>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
           <a
-            href={`/${lang}/privacy-policy`}
+            href={`/${currentLang}/privacy-policy`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('privacy-policy');
             }}
             style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
           >
-            {lang === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
+            {t('catalog.privacyPolicy')}
           </a>
           <span>·</span>
           <a
-            href={`/${lang}/terms-of-service`}
+            href={`/${currentLang}/terms-of-service`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('terms-of-service');
             }}
             style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
           >
-            {lang === 'pt' ? 'Termos de Uso' : 'Terms of Service'}
+            {t('catalog.termsOfService')}
           </a>
           <span>·</span>
           <a
-            href={`/${lang}/about`}
+            href={`/${currentLang}/about`}
             onClick={(e) => {
               e.preventDefault();
               if (onNavigateCompliance) onNavigateCompliance('about');
             }}
             style={{ color: 'var(--accent-cyan)', textDecoration: 'none', cursor: 'pointer' }}
           >
-            {lang === 'pt' ? 'Sobre Nós' : 'About Us'}
+            {t('catalog.aboutUs')}
           </a>
         </div>
       </footer>

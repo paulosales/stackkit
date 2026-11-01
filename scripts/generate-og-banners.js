@@ -16,8 +16,10 @@ for (const dir of [
   distOgDir,
   path.resolve(publicOgDir, 'en'),
   path.resolve(publicOgDir, 'pt'),
+  path.resolve(publicOgDir, 'es'),
   path.resolve(distOgDir, 'en'),
-  path.resolve(distOgDir, 'pt')
+  path.resolve(distOgDir, 'pt'),
+  path.resolve(distOgDir, 'es')
 ]) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -25,14 +27,15 @@ for (const dir of [
 }
 
 const categoryThemes = {
-  brazil: { labelEn: 'BRAZIL', labelPt: 'BRASIL', accent: '#10b981', secondary: '#06b6d4', glow: '#10b981' },
-  generators: { labelEn: 'GENERATORS', labelPt: 'GERADORES', accent: '#a855f7', secondary: '#ec4899', glow: '#a855f7' },
-  formatters: { labelEn: 'FORMATTERS', labelPt: 'FORMATADORES', accent: '#3b82f6', secondary: '#06b6d4', glow: '#3b82f6' },
-  converters: { labelEn: 'CONVERTERS', labelPt: 'CONVERSORES', accent: '#f59e0b', secondary: '#ef4444', glow: '#f59e0b' },
-  encoders: { labelEn: 'ENCODE / DECODE', labelPt: 'ENCODE / DECODE', accent: '#06b6d4', secondary: '#3b82f6', glow: '#06b6d4' },
-  network: { labelEn: 'NETWORK & TIME', labelPt: 'REDE & TEMPO', accent: '#0ea5e9', secondary: '#8b5cf6', glow: '#0ea5e9' },
-  utilities: { labelEn: 'UTILITIES', labelPt: 'UTILIDADES', accent: '#ec4899', secondary: '#f43f5e', glow: '#ec4899' },
-  default: { labelEn: 'DEVSTUDIO', labelPt: 'DEVSTUDIO', accent: '#38bdf8', secondary: '#818cf8', glow: '#38bdf8' }
+  brazil: { labelEn: 'BRAZIL', labelPt: 'BRASIL', labelEs: 'BRASIL', accent: '#10b981', secondary: '#06b6d4', glow: '#10b981' },
+  generators: { labelEn: 'GENERATORS', labelPt: 'GERADORES', labelEs: 'GENERADORES', accent: '#a855f7', secondary: '#ec4899', glow: '#a855f7' },
+  formatters: { labelEn: 'FORMATTERS', labelPt: 'FORMATADORES', labelEs: 'FORMATEADORES', accent: '#3b82f6', secondary: '#06b6d4', glow: '#3b82f6' },
+  converters: { labelEn: 'CONVERTERS', labelPt: 'CONVERSORES', labelEs: 'CONVERSORES', accent: '#f59e0b', secondary: '#ef4444', glow: '#f59e0b' },
+  encoders: { labelEn: 'ENCODE / DECODE', labelPt: 'ENCODE / DECODE', labelEs: 'CODIFICAR / DECODIFICAR', accent: '#06b6d4', secondary: '#3b82f6', glow: '#06b6d4' },
+  network: { labelEn: 'NETWORK & TIME', labelPt: 'REDE & TEMPO', labelEs: 'RED Y TIEMPO', accent: '#0ea5e9', secondary: '#8b5cf6', glow: '#0ea5e9' },
+  utilities: { labelEn: 'UTILITIES', labelPt: 'UTILIDADES', labelEs: 'UTILIDADES', accent: '#ec4899', secondary: '#f43f5e', glow: '#ec4899' },
+  games: { labelEn: 'GAMES', labelPt: 'JOGOS', labelEs: 'JUEGOS', accent: '#6366f1', secondary: '#a855f7', glow: '#6366f1' },
+  default: { labelEn: 'DEVSTUDIO', labelPt: 'DEVSTUDIO', labelEs: 'DEVSTUDIO', accent: '#38bdf8', secondary: '#818cf8', glow: '#38bdf8' }
 };
 
 function escapeXml(unsafe) {
@@ -137,6 +140,7 @@ export function generateBannerSvg({
 }) {
   const theme = categoryThemes[categoryId] || categoryThemes.default;
   const isPt = lang === 'pt';
+  const isEs = lang === 'es';
   const url = urlPath ? `stackkit.com.br/${lang}/${urlPath}` : `stackkit.com.br/${lang}`;
 
   // Dynamic font sizing for title to prevent overflow
@@ -152,9 +156,9 @@ export function generateBannerSvg({
   const descLines = wrapText(description, 68, 2);
 
   // Process tags
-  const processedTags = isPt ? tags : tags.map(translateTag);
+  const processedTags = (isPt || isEs) ? tags : tags.map(translateTag);
   const displayTags = [...new Set(processedTags)].slice(0, 3);
-  const privacyTag = isPt ? 'Zero Armazenamento' : 'Zero Server Storage';
+  const privacyTag = isPt ? 'Zero Armazenamento' : isEs ? 'Cero Almacenamiento' : 'Zero Server Storage';
   if (!displayTags.includes(privacyTag) && displayTags.length < 4) {
     displayTags.push(privacyTag);
   }
@@ -176,11 +180,11 @@ export function generateBannerSvg({
   }
 
   // Category badge width
-  const catLabel = isPt ? (theme.labelPt || theme.labelEn) : theme.labelEn;
+  const catLabel = isPt ? (theme.labelPt || theme.labelEn) : isEs ? (theme.labelEs || theme.labelEn) : theme.labelEn;
   const catBadgeWidth = Math.max(90, Math.round(catLabel.length * 8.5 + 32));
 
-  const clientSideIndicator = isPt ? '● 100% NO NAVEGADOR' : '● 100% CLIENT-SIDE';
-  const footerSecText = isPt ? '🔒 100% no Navegador · Gratuito e Seguro' : '🔒 100% Client-Side · Free &amp; Secure';
+  const clientSideIndicator = isPt ? '● 100% NO NAVEGADOR' : isEs ? '● 100% EN EL NAVEGADOR' : '● 100% CLIENT-SIDE';
+  const footerSecText = isPt ? '🔒 100% no Navegador · Gratuito e Seguro' : isEs ? '🔒 100% en el Navegador · Gratuito y Seguro' : '🔒 100% Client-Side · Free &amp; Secure';
 
   return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -316,17 +320,18 @@ function renderAndSaveBanner(config, lang, slug, aliases = []) {
   }
 }
 
-const languages = ['en', 'pt'];
+const languages = ['en', 'pt', 'es'];
 
-console.log(`Generating Multilingual Open Graph banners (1200x630 PNG) for EN and PT...`);
+console.log(`Generating Multilingual Open Graph banners (1200x630 PNG) for EN, PT and ES...`);
 let totalGenerated = 0;
 
 for (const lang of languages) {
   console.log(`\nGenerating [${lang.toUpperCase()}] banners for all ${tools.length} tools...`);
   for (const tool of tools) {
     const isPt = lang === 'pt';
-    const title = isPt ? tool.name : (tool.nameEn || tool.name);
-    const description = isPt ? tool.description : (tool.descriptionEn || tool.description);
+    const isEs = lang === 'es';
+    const title = isPt ? tool.name : isEs ? (tool.nameEs || tool.nameEn || tool.name) : (tool.nameEn || tool.name);
+    const description = isPt ? tool.description : isEs ? (tool.descriptionEs || tool.descriptionEn || tool.description) : (tool.descriptionEn || tool.description);
 
     renderAndSaveBanner({
       id: tool.id,
@@ -341,7 +346,7 @@ for (const lang of languages) {
     process.stdout.write(`\rGenerated: [${lang.toUpperCase()}] ${tool.id}.png`);
   }
 }
-console.log('\nAll tool banners generated for EN and PT!');
+console.log('\nAll tool banners generated for EN, PT and ES!');
 
 // Generate compliance and homepage banners for each language
 const compliancePages = {
@@ -428,10 +433,52 @@ const compliancePages = {
       tags: ['ferramentas-dev', 'world-clock', 'coolors', 'jwt', 'json'],
       urlPath: ''
     }
+  ],
+  es: [
+    {
+      slug: 'privacy-policy',
+      aliases: ['privacidad'],
+      title: 'Política de Privacidad',
+      subtitle: 'Conforme a LGPD & GDPR',
+      description: 'Arquitectura 100% en el navegador, sin almacenamiento de datos en servidores y máxima privacidad.',
+      categoryId: 'default',
+      tags: ['privacidad', 'lgpd', 'gdpr', 'client-side'],
+      urlPath: 'privacy-policy'
+    },
+    {
+      slug: 'terms-of-service',
+      aliases: ['terminos', 'terminos-de-servicio'],
+      title: 'Términos de Servicio y Uso',
+      subtitle: 'Directrices para Desarrolladores & QA',
+      description: 'Términos de uso para desarrolladores y analistas de QA en entornos de homologación y desarrollo de software.',
+      categoryId: 'default',
+      tags: ['terminos', 'sandbox', 'pruebas', 'licencia'],
+      urlPath: 'terms-of-service'
+    },
+    {
+      slug: 'about',
+      aliases: ['sobre-nosotros'],
+      title: 'Sobre StackKit DevStudio',
+      subtitle: 'Estándares Abiertos & Alto Rendimiento',
+      description: 'Estación all-in-one con más de 40 herramientas client-side gratuitas, privadas y de alto rendimiento.',
+      categoryId: 'default',
+      tags: ['devstudio', 'estandares-abiertos', 'rendimiento', 'client-side'],
+      urlPath: 'about'
+    },
+    {
+      slug: 'default',
+      aliases: ['inicio'],
+      title: 'StackKit DevStudio',
+      subtitle: 'Más de 40 Herramientas Gratuitas para Desarrolladores',
+      description: 'Estación all-in-one para desarrolladores con utilidades gratuitas: World Time Buddy, paleta Coolors, QR Code, formateadores y codificadores.',
+      categoryId: 'default',
+      tags: ['herramientas-dev', 'world-clock', 'coolors', 'jwt', 'json'],
+      urlPath: ''
+    }
   ]
 };
 
-console.log('Generating compliance and homepage Open Graph banners in EN and PT...');
+console.log('Generating compliance and homepage Open Graph banners in EN, PT and ES...');
 for (const lang of languages) {
   for (const page of compliancePages[lang]) {
     renderAndSaveBanner(page, lang, page.slug, page.aliases);

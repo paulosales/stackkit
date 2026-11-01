@@ -1,9 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Layers, Plus } from 'lucide-react';
-import { tools, findToolByIdOrAlias } from '../data/toolsData';
+import { tools, findToolByIdOrAlias, getToolName } from '../data/toolsData';
 import DynamicIcon from './DynamicIcon';
 
 export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onCloseTab, onOpenNew, lang = 'pt' }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
+
   // Ensure strict uniqueness and resolve canonical IDs
   const uniqueToolIds = Array.from(
     new Set(
@@ -24,7 +28,7 @@ export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onClo
         onClick={() => onSelectTab(null)}
       >
         <Layers size={14} />
-        <span>{lang === 'pt' ? 'Catálogo' : 'Catalog'}</span>
+        <span>{t('tabs.catalog')}</span>
       </div>
 
       {/* Dynamic open tool tabs (Deduplicated & Canonical) */}
@@ -32,23 +36,24 @@ export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onClo
         const tool = findToolByIdOrAlias(toolId);
         if (!tool) return null;
         const isActive = activeCanonicalId === tool.id;
+        const toolName = getToolName(tool, currentLang);
 
         return (
           <div
             key={tool.id}
             className={`tool-tab ${isActive ? 'active' : ''}`}
             onClick={() => onSelectTab(tool.id)}
-            title={lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
+            title={toolName}
           >
             <DynamicIcon name={tool.icon} size={14} />
-            <span>{lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}</span>
+            <span>{toolName}</span>
             <button
               className="tool-tab-close"
               onClick={(e) => {
                 e.stopPropagation();
                 onCloseTab(tool.id);
               }}
-              aria-label={lang === 'pt' ? 'Fechar aba' : 'Close tab'}
+              aria-label={t('tabs.closeTab')}
             >
               <X size={12} />
             </button>
@@ -61,7 +66,7 @@ export default function ToolTabs({ openToolIds, activeToolId, onSelectTab, onClo
         className="btn-icon"
         style={{ width: 26, height: 26, marginLeft: 4 }}
         onClick={onOpenNew}
-        title={lang === 'pt' ? 'Abrir outra ferramenta (Ctrl+K)' : 'Open new tool (Ctrl+K)'}
+        title={t('header.search')}
       >
         <Plus size={14} />
       </button>

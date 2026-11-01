@@ -1,9 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   ChevronLeft, ChevronRight, Search, Star, Layers,
   Sun, Moon, Globe, Code2, Sparkles
 } from 'lucide-react';
-import { categories, tools } from '../data/toolsData';
+import { categories, tools, getToolName, getCategoryName } from '../data/toolsData';
 import DynamicIcon from './DynamicIcon';
 
 export default function Sidebar({
@@ -23,6 +24,8 @@ export default function Sidebar({
   mobileOpen,
   onCloseMobile
 }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang || 'pt';
   const favoritedTools = tools.filter(t => favorites.includes(t.id) || (t.aliasIds && t.aliasIds.some(a => favorites.includes(a))));
 
   return (
@@ -30,9 +33,11 @@ export default function Sidebar({
       {/* Brand Header */}
       <div className="sidebar-header">
         <div className="brand-container" onClick={onGoHome} title="StackKit Home">
-          <div className="brand-logo-icon">
-            <Code2 size={20} />
-          </div>
+          {!collapsed && (
+            <div className="brand-logo-icon">
+              <Code2 size={20} />
+            </div>
+          )}
           {!collapsed && (
             <div className="brand-text">
               <span className="brand-title">Stack<span>Kit</span></span>
@@ -43,8 +48,8 @@ export default function Sidebar({
         <button
           className="sidebar-collapse-btn"
           onClick={onToggleCollapse}
-          title={collapsed ? (lang === 'pt' ? 'Expandir Menu' : 'Expand Sidebar') : (lang === 'pt' ? 'Recolher Menu' : 'Collapse Sidebar')}
-          aria-label={collapsed ? (lang === 'pt' ? 'Expandir Menu' : 'Expand Sidebar') : (lang === 'pt' ? 'Recolher Menu' : 'Collapse Sidebar')}
+          title={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
+          aria-label={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
@@ -55,7 +60,7 @@ export default function Sidebar({
         <button className="sidebar-search-btn" onClick={onOpenCommandPalette}>
           <div className="sidebar-search-btn-left">
             <Search size={15} />
-            {!collapsed && <span>{lang === 'pt' ? 'Buscar...' : 'Search...'}</span>}
+            {!collapsed && <span>{t('sidebar.search')}</span>}
           </div>
           {!collapsed && <kbd>⌘K</kbd>}
         </button>
@@ -68,14 +73,14 @@ export default function Sidebar({
           <li
             className={`sidebar-menu-item ${!activeToolId && activeCategory === 'all' ? 'active' : ''}`}
             onClick={onGoHome}
-            title={lang === 'pt' ? 'Catálogo Geral' : 'All Tools'}
+            title={t('sidebar.catalog')}
           >
             <div className="sidebar-menu-item-icon">
               <Layers size={18} />
             </div>
             {!collapsed && (
               <>
-                <span className="sidebar-menu-item-label">{lang === 'pt' ? 'Todas as Ferramentas' : 'All Tools'}</span>
+                <span className="sidebar-menu-item-label">{t('sidebar.allTools')}</span>
                 <span className="sidebar-menu-item-badge">{tools.length}</span>
               </>
             )}
@@ -87,26 +92,29 @@ export default function Sidebar({
           <div>
             {!collapsed && (
               <div className="sidebar-section-title">
-                <span>{lang === 'pt' ? 'Favoritos' : 'Favorites'}</span>
+                <span>{t('sidebar.favorites')}</span>
                 <Star size={12} fill="var(--accent-amber)" color="var(--accent-amber)" />
               </div>
             )}
             <ul className="sidebar-menu-list">
-              {favoritedTools.map(tool => (
-                <li
-                  key={tool.id}
-                  className={`sidebar-menu-item ${activeToolId === tool.id ? 'active' : ''}`}
-                  onClick={() => onSelectTool(tool.id)}
-                  title={lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
-                >
-                  <div className="sidebar-menu-item-icon" style={{ color: 'var(--accent-amber)' }}>
-                    <DynamicIcon name={tool.icon} size={16} />
-                  </div>
-                  {!collapsed && (
-                    <span className="sidebar-menu-item-label">{lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}</span>
-                  )}
-                </li>
-              ))}
+              {favoritedTools.map(tool => {
+                const toolName = getToolName(tool, currentLang);
+                return (
+                  <li
+                    key={tool.id}
+                    className={`sidebar-menu-item ${activeToolId === tool.id ? 'active' : ''}`}
+                    onClick={() => onSelectTool(tool.id)}
+                    title={toolName}
+                  >
+                    <div className="sidebar-menu-item-icon" style={{ color: 'var(--accent-amber)' }}>
+                      <DynamicIcon name={tool.icon} size={16} />
+                    </div>
+                    {!collapsed && (
+                      <span className="sidebar-menu-item-label">{toolName}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}
@@ -115,27 +123,28 @@ export default function Sidebar({
         <div>
           {!collapsed && (
             <div className="sidebar-section-title">
-              <span>{lang === 'pt' ? 'Categorias' : 'Categories'}</span>
+              <span>{t('sidebar.categories')}</span>
             </div>
           )}
           <ul className="sidebar-menu-list">
             {categories.filter(c => c.id !== 'all').map(cat => {
               const count = tools.filter(t => t.categoryId === cat.id).length;
               const isCatActive = !activeToolId && activeCategory === cat.id;
+              const catName = t(`categories.${cat.id}`, { defaultValue: getCategoryName(cat, currentLang) });
 
               return (
                 <li
                   key={cat.id}
                   className={`sidebar-menu-item ${isCatActive ? 'active' : ''}`}
                   onClick={() => onSelectCategory(cat.id)}
-                  title={lang === 'pt' ? cat.name : cat.nameEn}
+                  title={catName}
                 >
                   <div className="sidebar-menu-item-icon">
                     <DynamicIcon name={cat.icon} size={17} />
                   </div>
                   {!collapsed && (
                     <>
-                      <span className="sidebar-menu-item-label">{lang === 'pt' ? cat.name : cat.nameEn}</span>
+                      <span className="sidebar-menu-item-label">{catName}</span>
                       <span className="sidebar-menu-item-badge">{count}</span>
                     </>
                   )}
@@ -147,25 +156,25 @@ export default function Sidebar({
       </nav>
 
       {/* Sidebar Footer */}
-      <div className="sidebar-footer">
+      <div className={`sidebar-footer ${collapsed ? 'collapsed' : ''}`}>
         <button
           className="header-control-btn"
           onClick={onToggleTheme}
-          title={theme === 'dark' ? (lang === 'pt' ? 'Mudar para tema claro' : 'Switch to light theme') : (lang === 'pt' ? 'Mudar para tema escuro' : 'Switch to dark theme')}
-          style={{ flex: 1, justifyContent: 'center' }}
+          title={theme === 'dark' ? t('sidebar.theme.switchToLight') : t('sidebar.theme.switchToDark')}
+          style={{ width: '100%', justifyContent: 'center' }}
         >
           {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-          {!collapsed && <span>{theme === 'dark' ? (lang === 'pt' ? 'Claro' : 'Light') : (lang === 'pt' ? 'Escuro' : 'Dark')}</span>}
+          {!collapsed && <span>{theme === 'dark' ? t('sidebar.theme.light') : t('sidebar.theme.dark')}</span>}
         </button>
 
         <button
           className="header-control-btn"
           onClick={onToggleLang}
-          title={lang === 'pt' ? 'Switch to English' : 'Mudar para Português'}
-          style={{ flex: 1, justifyContent: 'center' }}
+          title={t(`sidebar.lang.switchTo_${currentLang === 'pt' ? 'en' : currentLang === 'en' ? 'es' : 'pt'}`)}
+          style={{ width: '100%', justifyContent: 'center' }}
         >
           <Globe size={15} />
-          {!collapsed && <span>{lang === 'pt' ? 'PT' : 'EN'}</span>}
+          {!collapsed && <span>{currentLang.toUpperCase()}</span>}
         </button>
       </div>
     </aside>

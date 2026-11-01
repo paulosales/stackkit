@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Globe, Copy, Check, RefreshCw, Wifi, Shield } from 'lucide-react';
 
 export default function MyIp({ onCopy, lang = 'pt' }) {
+  const { t } = useTranslation();
   const [ip, setIp] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -53,7 +55,7 @@ export default function MyIp({ onCopy, lang = 'pt' }) {
     navigator.clipboard.writeText(ip);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
-    if (onCopy) onCopy(lang === 'pt' ? 'Endereço IP copiado!' : 'IP address copied!');
+    if (onCopy) onCopy(t('myIp.ipCopiedToast'));
   };
 
   return (
@@ -61,12 +63,12 @@ export default function MyIp({ onCopy, lang = 'pt' }) {
       <div className="panel-header">
         <div className="panel-title">
           <Globe size={16} />
-          <span>{lang === 'pt' ? 'Informações de Rede e Meu IP Público' : 'Network Info & What is My Public IP'}</span>
+          <span>{t('myIp.title')}</span>
         </div>
         <div className="panel-actions">
           <button className="btn-secondary" onClick={fetchIp} disabled={loading}>
             <RefreshCw size={14} className={loading ? 'spinning' : ''} />
-            <span>{lang === 'pt' ? 'Atualizar IP' : 'Refresh IP'}</span>
+            <span>{t('myIp.refresh')}</span>
           </button>
         </div>
       </div>
@@ -86,42 +88,42 @@ export default function MyIp({ onCopy, lang = 'pt' }) {
         }}>
           <div>
             <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', marginBottom: 4 }}>
-              {lang === 'pt' ? 'Seu Endereço de IP Público:' : 'Your Public IP Address:'}
+              {t('myIp.publicIpLabel')}
             </div>
             <div style={{ fontSize: 32, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
-              {loading ? (lang === 'pt' ? 'Consultando...' : 'Fetching...') : (ip || '127.0.0.1')}
+              {loading ? t('myIp.fetching') : (ip || '127.0.0.1')}
             </div>
           </div>
 
           <button className="btn-primary" onClick={handleCopy} disabled={!ip}>
             {copied ? <Check size={16} /> : <Copy size={16} />}
-            <span>{copied ? (lang === 'pt' ? 'IP Copiado!' : 'IP Copied!') : (lang === 'pt' ? 'Copiar Meu IP' : 'Copy My IP')}</span>
+            <span>{copied ? t('myIp.ipCopied') : t('myIp.copyIp')}</span>
           </button>
         </div>
 
         {/* Environment details */}
         <div style={{ marginTop: 8 }}>
           <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 12, color: 'var(--text-secondary)' }}>
-            {lang === 'pt' ? 'Detalhes do Navegador e Ambiente Local:' : 'Browser & Local Environment Details:'}
+            {t('myIp.envDetails')}
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12 }}>
             <div style={{ padding: 12, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Fuso Horário (Timezone):' : 'Timezone:'}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('myIp.timezone')}</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', marginTop: 2 }}>
                 {browserInfo.timeZone || 'UTC'}
               </div>
             </div>
 
             <div style={{ padding: 12, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Idioma do Sistema:' : 'System Language:'}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('myIp.systemLang')}</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', marginTop: 2 }}>
                 {browserInfo.language || (lang === 'pt' ? 'pt-BR' : 'en-US')}
               </div>
             </div>
 
             <div style={{ padding: 12, background: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{lang === 'pt' ? 'Resolução da Tela:' : 'Screen Resolution:'}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('myIp.resolution')}</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', marginTop: 2 }}>
                 {browserInfo.screenResolution || '-'}
               </div>
@@ -138,8 +140,8 @@ export default function MyIp({ onCopy, lang = 'pt' }) {
       </div>
 
       <div className="panel-footer">
-        <span>{lang === 'pt' ? 'Requisição direta e segura via HTTPS' : 'Secure direct HTTPS request'}</span>
-        <span>{lang === 'pt' ? 'Privacidade preservada' : 'Privacy preserved'}</span>
+        <span>{t('myIp.secureRequest')}</span>
+        <span>{t('myIp.privacyPreserved')}</span>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Sparkles,
   Lock,
@@ -45,40 +46,63 @@ const DEFAULT_PALETTE = [
   { id: 'c-5', hex: '#E76F51', name: 'Burnt Sienna', locked: false }
 ];
 
+function parsePaletteFromUrl() {
+  if (typeof window === 'undefined') return null;
+  const fullUrl = window.location.search + window.location.hash;
+  const match = fullUrl.match(/[?&#](?:palette|colors)=([0-9a-fA-F-]+)/) ||
+                (window.location.hash ? window.location.hash.match(/^#([0-9a-fA-F]{3,6}(?:-[0-9a-fA-F]{3,6})+)$/) : null);
+
+  if (match && match[1]) {
+    try {
+      const tokens = match[1].split('-').filter(Boolean);
+      const validHexes = tokens.filter(t => t.length === 3 || t.length === 6);
+      if (validHexes.length >= 2) {
+        return validHexes.map((h, i) => {
+          const fullHex = `#${h.length === 3 ? h.split('').map(c => c + c).join('') : h}`.toUpperCase();
+          return {
+            id: `c-url-${i}-${h}`,
+            hex: fullHex,
+            name: getColorName(fullHex),
+            locked: false
+          };
+        });
+      }
+    } catch (err) {
+      console.warn('Could not parse palette from URL', err);
+    }
+  }
+  return null;
+}
+
 export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
+  const [isShared, setIsShared] = useState(false);
+
   // Main palette state
   const [colors, setColors] = useState(() => {
-    // Check if URL has a saved palette in query or hash (e.g. ?palette=264653-2a9d8f or #palette=...)
-    if (typeof window !== 'undefined') {
-      const fullUrl = window.location.search + window.location.hash;
-      if (fullUrl.includes('palette=')) {
-        try {
-          const match = fullUrl.match(/palette=([0-9a-fA-F-]+)/);
-          if (match && match[1]) {
-            const hexes = match[1].split('-');
-            if (hexes.length >= 2) {
-              return hexes.map((h, i) => {
-                const fullHex = `#${h}`.toUpperCase();
-                return {
-                  id: `c-url-${i}`,
-                  hex: fullHex,
-                  name: getColorName(fullHex),
-                  locked: false
-                };
-              });
-            }
-          }
-        } catch (err) {
-          console.warn('Could not parse palette from URL', err);
-        }
-      }
-    }
-    return DEFAULT_PALETTE;
+    return parsePaletteFromUrl() || DEFAULT_PALETTE;
   });
 
   // History for Undo / Redo
-  const [history, setHistory] = useState([DEFAULT_PALETTE]);
+  const [history, setHistory] = useState(() => [parsePaletteFromUrl() || DEFAULT_PALETTE]);
   const [historyIndex, setHistoryIndex] = useState(0);
+
+  // Sync when browser URL query or hash changes (e.g. Back/Forward)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const parsed = parsePaletteFromUrl();
+      if (parsed) {
+        setColors(parsed);
+      }
+    };
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('hashchange', handleUrlChange);
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []);
 
   // Settings
   const [harmonyMode, setHarmonyMode] = useState('random');
@@ -194,7 +218,7 @@ export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
   // Remove Column
   const handleRemoveColor = (id) => {
     if (colors.length <= 2) {
-      if (onCopy) onCopy('A paleta precisa ter no mínimo 2 cores!');
+      if (onCopy) onCopy(t('palette.minColorsError'));
       return;
     }
     const updated = colors.filter(c => c.id !== id);
@@ -205,7 +229,7 @@ export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
   // Add Column
   const handleAddColor = (indexToInsert = null) => {
     if (colors.length >= 10) {
-      if (onCopy) onCopy('Limite máximo de 10 cores atingido!');
+      if (onCopy) onCopy(t('palette.maxColorsError'));
       return;
     }
 
@@ -266,21 +290,77 @@ export default function PaletteGenerator({ onCopy, lang = 'pt' }) {
     setColors(updated);
     pushToHistory(updated);
     setActivePresetMenu(false);
-    if (onCopy) onCopy(`Paleta "${preset.name}" carregada!`);
+    if (onCopy) onCopy(t('palette.presetLoaded', { name: preset.name }));
   };
 
   // Copy Color Hex
   const handleCopyHex = (hex) => {
     navigator.clipboard.writeText(hex);
-    if (onCopy) onCopy(`Cor ${hex} copiada com sucesso!`);
+    if (onCopy) onCopy(t('palette.colorCopied', { hex }));
   };
 
-  // Copy URL Share Link
-  const handleSharePalette = () => {
+  // Copy / Share URL Link
+  const handleSharePalette = async () => {
     const hexTokens = colors.map(c => c.hex.replace('#', '')).join('-');
-    const shareUrl = `${window.location.origin}/${lang}/color-palette-generator?palette=${hexTokens}`;
-    navigator.clipboard.writeText(shareUrl);
-    if (onCopy) onCopy(lang === 'pt' ? 'Link compartilhável copiado para a área de transferência!' : 'Shareable link copied to clipboard!');
+    const currentPath = typeof window !== 'undefined' && window.location.pathname.startsWith(`/${currentLang}`)
+      ? window.location.pathname
+      : `/${currentLang}/color-palette-generator`;
+    const shareUrl = `${window.location.origin}${currentPath}?palette=${hexTokens}`;
+
+    // Update browser URL query string without reloading page
+    if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', shareUrl);
+    }
+
+    let shared = false;
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: t('palette.shareTitle'),
+          text: t('palette.shareText'),
+          url: shareUrl
+        });
+        shared = true;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+
+    if (!shared) {
+      let copied = false;
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          copied = true;
+        } catch {
+          copied = false;
+        }
+      }
+      if (!copied) {
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = shareUrl;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          copied = document.execCommand('copy');
+          document.body.removeChild(textarea);
+        } catch {
+          copied = false;
+        }
+      }
+
+      setIsShared(true);
+      setTimeout(() => setIsShared(false), 2000);
+      if (onCopy) {
+        onCopy(copied ? t('palette.shareSuccess') : t('palette.shareError'));
+      }
+    } else {
+      setIsShared(true);
+      setTimeout(() => setIsShared(false), 2000);
+      if (onCopy) onCopy(t('palette.shareSuccess'));
+    }
   };
 
   // Download SVG
@@ -315,7 +395,7 @@ ${texts}
     a.download = `stackkit-palette-${Date.now()}.svg`;
     a.click();
     URL.revokeObjectURL(url);
-    if (onCopy) onCopy('Paleta exportada como SVG!');
+    if (onCopy) onCopy(t('palette.svgExportSuccess'));
   };
 
   // Download PNG Canvas
@@ -368,7 +448,7 @@ ${texts}
     link.download = `stackkit-palette-${Date.now()}.png`;
     link.href = imageUri;
     link.click();
-    if (onCopy) onCopy('Paleta baixada em alta resolução (PNG)!');
+    if (onCopy) onCopy(t('palette.pngExportSuccess'));
   };
 
   // Export string generators
@@ -401,7 +481,7 @@ ${texts}
     navigator.clipboard.writeText(text);
     setCopiedField(key);
     setTimeout(() => setCopiedField(null), 1800);
-    if (onCopy) onCopy('Código copiado para a área de transferência!');
+    if (onCopy) onCopy(t('palette.codeCopiedSuccess'));
   };
 
   return (
@@ -416,11 +496,11 @@ ${texts}
           <button
             className="btn-primary coolors-generate-btn"
             onClick={handleGenerate}
-            title="Pressione a barra de espaço para gerar"
+            title={t('palette.pressSpacebar')}
           >
             <Sparkles size={18} />
-            <span>Gerar Paleta</span>
-            <kbd className="space-badge">Espaço</kbd>
+            <span>{t('palette.generatePalette')}</span>
+            <kbd className="space-badge">{t('palette.space')}</kbd>
           </button>
 
           {/* Undo / Redo */}
@@ -429,7 +509,7 @@ ${texts}
               className="btn-secondary btn-icon"
               onClick={handleUndo}
               disabled={historyIndex <= 0}
-              title="Desfazer (Ctrl + Z)"
+              title={t('palette.undo')}
             >
               <RotateCcw size={16} />
             </button>
@@ -437,7 +517,7 @@ ${texts}
               className="btn-secondary btn-icon"
               onClick={handleRedo}
               disabled={historyIndex >= history.length - 1}
-              title="Refazer (Ctrl + Y)"
+              title={t('palette.redo')}
             >
               <RotateCw size={16} />
             </button>
@@ -452,17 +532,17 @@ ${texts}
               className="select-input coolors-select"
               value={harmonyMode}
               onChange={(e) => setHarmonyMode(e.target.value)}
-              title="Método de harmonia de cores"
+              title={t('palette.harmonyMethod')}
             >
-              <option value="random">Harmonia: Aleatória / Vibrante</option>
-              <option value="analogous">Harmonia: Análoga</option>
-              <option value="monochromatic">Harmonia: Monocromática</option>
-              <option value="triadic">Harmonia: Tríade</option>
-              <option value="complementary">Harmonia: Complementar</option>
-              <option value="split-complementary">Harmonia: Dividido Complementar</option>
-              <option value="pastel">Estilo: Pastel Suave</option>
-              <option value="neon">Estilo: Cyberpunk / Neon</option>
-              <option value="vintage">Estilo: Vintage / Muted</option>
+              <option value="random">{t('palette.harmonyRandom')}</option>
+              <option value="analogous">{t('palette.harmonyAnalogous')}</option>
+              <option value="monochromatic">{t('palette.harmonyMonochromatic')}</option>
+              <option value="triadic">{t('palette.harmonyTriadic')}</option>
+              <option value="complementary">{t('palette.harmonyComplementary')}</option>
+              <option value="split-complementary">{t('palette.harmonySplitComplementary')}</option>
+              <option value="pastel">{t('palette.harmonyPastel')}</option>
+              <option value="neon">{t('palette.harmonyNeon')}</option>
+              <option value="vintage">{t('palette.harmonyVintage')}</option>
             </select>
           </div>
 
@@ -472,13 +552,13 @@ ${texts}
               className="select-input coolors-select"
               value={blindnessMode}
               onChange={(e) => setBlindnessMode(e.target.value)}
-              title="Simulador de Daltonismo"
+              title={t('palette.blindnessSimulator')}
             >
-              <option value="normal">Visão Normal</option>
-              <option value="protanopia">Protanopia (Sem Vermelho)</option>
-              <option value="deuteranopia">Deuteranopia (Sem Verde)</option>
-              <option value="tritanopia">Tritanopia (Sem Azul)</option>
-              <option value="achromatopsia">Acromatopsia (Escala de Cinza)</option>
+              <option value="normal">{t('palette.visionNormal')}</option>
+              <option value="protanopia">{t('palette.protanopia')}</option>
+              <option value="deuteranopia">{t('palette.deuteranopia')}</option>
+              <option value="tritanopia">{t('palette.tritanopia')}</option>
+              <option value="achromatopsia">{t('palette.achromatopsia')}</option>
             </select>
           </div>
         </div>
@@ -492,12 +572,12 @@ ${texts}
               onClick={() => setActivePresetMenu(!activePresetMenu)}
             >
               <PaletteIcon size={16} />
-              <span>Explorar</span>
+              <span>{t('palette.explore')}</span>
             </button>
 
             {activePresetMenu && (
               <div className="coolors-dropdown-menu">
-                <div className="dropdown-title">Paletas em Destaque</div>
+                <div className="dropdown-title">{t('palette.featuredPalettes')}</div>
                 <div className="presets-list">
                   {TRENDING_PALETTES.map((preset, idx) => (
                     <button
@@ -530,19 +610,19 @@ ${texts}
             className="btn-secondary"
             onClick={() => handleAddColor(null)}
             disabled={colors.length >= 10}
-            title="Adicionar coluna de cor (máx 10)"
+            title={t('palette.addColorTitle')}
           >
             <Plus size={16} />
-            <span className="hide-mobile">Cor</span>
+            <span className="hide-mobile">{t('palette.color')}</span>
           </button>
 
           {/* Share Link */}
           <button
-            className="btn-secondary btn-icon"
+            className={`btn-secondary btn-icon ${isShared ? 'btn-success' : ''}`}
             onClick={handleSharePalette}
-            title="Compartilhar link desta paleta"
+            title={t('palette.shareTooltip')}
           >
-            <Share2 size={16} />
+            {isShared ? <Check size={16} className="text-emerald-500" /> : <Share2 size={16} />}
           </button>
 
           {/* Export Modal trigger */}
@@ -551,7 +631,7 @@ ${texts}
             onClick={() => setExportModalOpen(true)}
           >
             <Download size={16} />
-            <span>Exportar</span>
+            <span>{t('palette.export')}</span>
           </button>
         </div>
       </div>
@@ -583,7 +663,7 @@ ${texts}
                     e.stopPropagation();
                     handleAddColor(index);
                   }}
-                  title="Inserir cor entre estas duas"
+                  title={t('palette.insertColorBetween')}
                 >
                   <Plus size={14} />
                 </button>
@@ -600,7 +680,7 @@ ${texts}
                   onClick={() => handleRemoveColor(col.id)}
                   disabled={colors.length <= 2}
                   style={{ color: contrast }}
-                  title="Remover cor (mínimo 2)"
+                  title={t('palette.removeColorTitle')}
                 >
                   <Trash2 size={18} />
                 </button>
@@ -611,7 +691,7 @@ ${texts}
                   onClick={() => handleMoveColumn(index, -1)}
                   disabled={index === 0}
                   style={{ color: contrast }}
-                  title="Mover para a esquerda"
+                  title={t('palette.moveLeft')}
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -622,7 +702,7 @@ ${texts}
                   onClick={() => handleMoveColumn(index, 1)}
                   disabled={index === colors.length - 1}
                   style={{ color: contrast }}
-                  title="Mover para a direita"
+                  title={t('palette.moveRight')}
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -633,7 +713,7 @@ ${texts}
                     className={`column-action-btn ${isShadesOpen ? 'active' : ''}`}
                     onClick={() => setActiveShadesColId(isShadesOpen ? null : col.id)}
                     style={{ color: contrast }}
-                    title="Ver tons e sombras (Shades)"
+                    title={t('palette.viewShades')}
                   >
                     <Layers size={18} />
                   </button>
@@ -642,7 +722,7 @@ ${texts}
                   {isShadesOpen && (
                     <div className="shades-dropdown">
                       <div className="shades-dropdown-header">
-                        <span>Tons de {col.name}</span>
+                        <span>{t('palette.shadesOf', { name: col.name })}</span>
                         <button
                           className="shades-close-btn"
                           onClick={() => setActiveShadesColId(null)}
@@ -684,7 +764,7 @@ ${texts}
                     }
                   }}
                   style={{ color: contrast }}
-                  title="Escolher cor exata"
+                  title={t('palette.pickColor')}
                 >
                   <Pipette size={18} />
                 </button>
@@ -701,7 +781,7 @@ ${texts}
                   className={`column-action-btn lock-btn ${col.locked ? 'locked' : ''}`}
                   onClick={() => handleToggleLock(col.id)}
                   style={{ color: contrast }}
-                  title={col.locked ? 'Cor travada (não mudará ao gerar)' : 'Travar cor'}
+                  title={col.locked ? t('palette.lockedTitle') : t('palette.lockTitle')}
                 >
                   {col.locked ? <Lock size={20} /> : <Unlock size={20} />}
                 </button>
@@ -713,7 +793,7 @@ ${texts}
                 <div
                   className="column-hex-display"
                   onClick={() => handleCopyHex(col.hex)}
-                  title="Clique para copiar o HEX"
+                  title={t('palette.clickToCopyHex')}
                 >
                   <span className="hex-prefix">#</span>
                   <span className="hex-value">{col.hex.replace('#', '')}</span>
@@ -735,7 +815,7 @@ ${texts}
                     }}
                   >
                     <Lock size={12} />
-                    <span>TRAVADO</span>
+                    <span>{t('palette.lockedBadge')}</span>
                   </div>
                 )}
 
@@ -746,9 +826,9 @@ ${texts}
                     backgroundColor: isDarkText ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.14)',
                     color: contrast
                   }}
-                  title={`Contraste com preto: ${wcag.ratioBlack}:1 | com branco: ${wcag.ratioWhite}:1`}
+                  title={t('palette.contrastRatioTooltip', { black: wcag.ratioBlack, white: wcag.ratioWhite })}
                 >
-                  <span>{isDarkText ? `P: ${wcag.ratioBlack}:1` : `B: ${wcag.ratioWhite}:1`}</span>
+                  <span>{isDarkText ? t('palette.contrastBlackShort', { ratio: wcag.ratioBlack }) : t('palette.contrastWhiteShort', { ratio: wcag.ratioWhite })}</span>
                   <span>{isDarkText ? (wcag.isBlackAa ? '· AA' : '') : (wcag.isWhiteAa ? '· AA' : '')}</span>
                 </div>
               </div>
@@ -761,21 +841,21 @@ ${texts}
       <div className="coolors-footer">
         <div className="coolors-shortcuts-info">
           <span className="shortcut-tip">
-            <kbd className="space-badge">Espaço</kbd> Gerar novas cores
+            <kbd className="space-badge">{t('palette.space')}</kbd> {t('palette.tipSpace')}
           </span>
           <span className="shortcut-tip">
-            <kbd className="space-badge">Ctrl + Z</kbd> Desfazer
+            <kbd className="space-badge">Ctrl + Z</kbd> {t('palette.tipUndo')}
           </span>
           <span className="shortcut-tip">
-            <kbd className="space-badge">Ctrl + Y</kbd> Refazer
+            <kbd className="space-badge">Ctrl + Y</kbd> {t('palette.tipRedo')}
           </span>
           <span className="shortcut-tip">
-            <Lock size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} /> Trave cores favoritas para compor harmonias
+            <Lock size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} /> {t('palette.tipLock')}
           </span>
         </div>
 
         <div className="coolors-count-status">
-          <span>{colors.length} de 10 cores</span>
+          <span>{t('palette.colorsCount', { current: colors.length, max: 10 })}</span>
         </div>
       </div>
 
@@ -789,7 +869,7 @@ ${texts}
             <div className="modal-header">
               <div className="modal-title-row">
                 <Download size={20} className="text-cyan" />
-                <h3>Exportar Paleta de Cores</h3>
+                <h3>{t('palette.modalExportTitle')}</h3>
               </div>
               <button
                 className="modal-close-btn"
@@ -842,13 +922,13 @@ ${texts}
                 className={`export-tab-btn ${exportTab === 'svg' ? 'active' : ''}`}
                 onClick={() => setExportTab('svg')}
               >
-                <ImageIcon size={15} /> Imagem SVG
+                <ImageIcon size={15} /> {t('palette.tabSvg')}
               </button>
               <button
                 className={`export-tab-btn ${exportTab === 'png' ? 'active' : ''}`}
                 onClick={() => setExportTab('png')}
               >
-                <ImageIcon size={15} /> Imagem PNG
+                <ImageIcon size={15} /> {t('palette.tabPng')}
               </button>
             </div>
 
@@ -862,7 +942,7 @@ ${texts}
                     onClick={() => copyExportContent(getCssVariablesExport(), 'css')}
                   >
                     {copiedField === 'css' ? <Check size={16} /> : <Copy size={16} />}
-                    <span>{copiedField === 'css' ? 'Copiado!' : 'Copiar CSS'}</span>
+                    <span>{copiedField === 'css' ? t('palette.copied') : t('palette.copyCss')}</span>
                   </button>
                 </div>
               )}
@@ -875,7 +955,7 @@ ${texts}
                     onClick={() => copyExportContent(getTailwindExport(), 'tailwind')}
                   >
                     {copiedField === 'tailwind' ? <Check size={16} /> : <Copy size={16} />}
-                    <span>{copiedField === 'tailwind' ? 'Copiado!' : 'Copiar Tailwind'}</span>
+                    <span>{copiedField === 'tailwind' ? t('palette.copied') : t('palette.copyTailwind')}</span>
                   </button>
                 </div>
               )}
@@ -888,35 +968,35 @@ ${texts}
                     onClick={() => copyExportContent(getJsonExport(), 'json')}
                   >
                     {copiedField === 'json' ? <Check size={16} /> : <Copy size={16} />}
-                    <span>{copiedField === 'json' ? 'Copiado!' : 'Copiar JSON'}</span>
+                    <span>{copiedField === 'json' ? t('palette.copied') : t('palette.copyJson')}</span>
                   </button>
                 </div>
               )}
 
               {exportTab === 'svg' && (
                 <div className="image-export-info">
-                  <p>Baixe a paleta em formato vetorial SVG, ideal para Figma, Illustrator ou inclusão direta no código.</p>
+                  <p>{t('palette.svgDesc')}</p>
                   <button
                     className="btn-primary btn-large"
                     onClick={handleDownloadSvg}
                     style={{ marginTop: 16 }}
                   >
                     <Download size={18} />
-                    <span>Baixar Arquivo SVG (.svg)</span>
+                    <span>{t('palette.downloadSvgBtn')}</span>
                   </button>
                 </div>
               )}
 
               {exportTab === 'png' && (
                 <div className="image-export-info">
-                  <p>Gere e baixe uma imagem de alta resolução (1200x630px) com as cores e nomes, perfeita para apresentações e redes sociais.</p>
+                  <p>{t('palette.pngDesc')}</p>
                   <button
                     className="btn-primary btn-large"
                     onClick={handleDownloadPng}
                     style={{ marginTop: 16 }}
                   >
                     <Download size={18} />
-                    <span>Baixar Imagem PNG (.png)</span>
+                    <span>{t('palette.downloadPngBtn')}</span>
                   </button>
                 </div>
               )}

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, X, Star, ArrowRight, CornerDownLeft } from 'lucide-react';
-import { tools } from '../data/toolsData';
+import { tools, getToolName, getToolDescription } from '../data/toolsData';
 
 export default function CommandPalette({ isOpen, onClose, onSelectTool, favorites = [], lang = 'pt' }) {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || lang;
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
@@ -18,8 +21,8 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
   const filtered = tools.filter(t => {
     if (!query.trim()) return true;
     const q = query.toLowerCase();
-    const nameMatch = t.name.toLowerCase().includes(q) || (t.nameEn && t.nameEn.toLowerCase().includes(q));
-    const descMatch = t.description.toLowerCase().includes(q) || (t.descriptionEn && t.descriptionEn.toLowerCase().includes(q));
+    const nameMatch = t.name.toLowerCase().includes(q) || (t.nameEn && t.nameEn.toLowerCase().includes(q)) || (t.nameEs && t.nameEs.toLowerCase().includes(q));
+    const descMatch = t.description.toLowerCase().includes(q) || (t.descriptionEn && t.descriptionEn.toLowerCase().includes(q)) || (t.descriptionEs && t.descriptionEs.toLowerCase().includes(q));
     const tagMatch = t.tags && t.tags.some(tag => tag.toLowerCase().includes(q));
     return nameMatch || descMatch || tagMatch;
   });
@@ -58,11 +61,11 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
             ref={inputRef}
             type="text"
             className="command-search-input"
-            placeholder={lang === 'pt' ? 'Busque qualquer ferramenta por nome, tag ou função...' : 'Search any tool by name, tag, or function...'}
+            placeholder={t('command.placeholder')}
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
-          <button className="btn-icon" onClick={onClose} aria-label="Fechar">
+          <button className="btn-icon" onClick={onClose} aria-label={t('command.close')}>
             <X size={18} />
           </button>
         </div>
@@ -70,12 +73,14 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
         <div className="command-results-list custom-scrollbar">
           {filtered.length === 0 ? (
             <div style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text-muted)' }}>
-              {lang === 'pt' ? 'Nenhuma ferramenta encontrada para esta busca' : 'No tools found for this query'}
+              {t('command.noResults')} &quot;{query}&quot;
             </div>
           ) : (
             filtered.map((tool, idx) => {
               const isFav = favorites.includes(tool.id);
               const isSelected = idx === selectedIndex;
+              const toolTitle = getToolName(tool, currentLang);
+              const toolDesc = getToolDescription(tool, currentLang);
 
               return (
                 <div
@@ -91,10 +96,10 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
                     <span className="badge badge-cyan" style={{ fontSize: 10 }}>{tool.categoryId}</span>
                     <div>
                       <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                        {lang === 'pt' ? tool.name : (tool.nameEn || tool.name)}
+                        {toolTitle}
                       </div>
                       <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                        {lang === 'pt' ? tool.description : (tool.descriptionEn || tool.description)}
+                        {toolDesc}
                       </div>
                     </div>
                   </div>
@@ -110,11 +115,11 @@ export default function CommandPalette({ isOpen, onClose, onSelectTool, favorite
 
         <div className="command-footer">
           <div style={{ display: 'flex', gap: 12 }}>
-            <span><kbd>↑</kbd> <kbd>↓</kbd> {lang === 'pt' ? 'para navegar' : 'to navigate'}</span>
-            <span><kbd>Enter</kbd> {lang === 'pt' ? 'para abrir' : 'to open'}</span>
-            <span><kbd>Esc</kbd> {lang === 'pt' ? 'para fechar' : 'to close'}</span>
+            <span><kbd>↑</kbd> <kbd>↓</kbd> {t('command.navigate')}</span>
+            <span><kbd>Enter</kbd> {t('command.open')}</span>
+            <span><kbd>Esc</kbd> {t('command.close')}</span>
           </div>
-          <div>{filtered.length} {lang === 'pt' ? 'ferramentas' : 'tools'}</div>
+          <div>{filtered.length} {t('sidebar.allTools')}</div>
         </div>
       </div>
     </div>
