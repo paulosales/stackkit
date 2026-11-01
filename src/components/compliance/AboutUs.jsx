@@ -1,12 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Code2, ShieldCheck, Zap, Globe, ArrowLeft, Mail, Heart, Cpu, CheckCircle } from 'lucide-react';
+import { Code2, ShieldCheck, Zap, Globe, ArrowLeft, Mail } from 'lucide-react';
 
-export default function AboutUs({ onGoBack, lang = 'pt' }) {
-  const { t, i18n } = useTranslation();
-  const currentLang = i18n.language || lang;
-  const isPt = currentLang === 'pt';
-  const isEs = currentLang === 'es';
+export default function AboutUs({ onGoBack }) {
+  const { t } = useTranslation();
 
   return (
     <div className="compliance-page-container" style={{
@@ -51,7 +48,7 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
           {t('compliance.aboutTitle')}
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-          {isPt ? 'A Estação de Trabalho Definitiva para Desenvolvedores Modernos' : isEs ? 'La Estación de Trabajo Definitiva para Desarrolladores Modernos' : 'The Definitive Workstation for Modern Developers'}
+          {t('compliance.aboutSubtitle')}
         </p>
       </header>
 
@@ -64,12 +61,10 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
         marginBottom: 36
       }}>
         <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, color: 'var(--accent-cyan)' }}>
-          {isPt ? 'Nossa Missão' : 'Our Mission'}
+          {t('compliance.missionTitle')}
         </h3>
         <p style={{ fontSize: 15, lineHeight: 1.7, margin: 0, color: 'var(--text-secondary)' }}>
-          {isPt
-            ? 'O StackKit DevStudio nasceu com um objetivo claro: fornecer a melhor, mais veloz e mais confiável suíte de utilitários para desenvolvedores, engenheiros de QA e criadores digitais. Eliminamos o atrito de anúncios invasivos, interfaces poluídas e ferramentas lentas que enviam dados para servidores desconhecidos.'
-            : 'StackKit DevStudio was built with a clear purpose: to provide the fastest, most reliable, and beautifully engineered workstation for software engineers, QA professionals, and digital creators worldwide. We eliminate invasive ads, bloated interfaces, and slow tools that transmit sensitive data to mystery servers.'}
+          {t('compliance.missionDesc')}
         </p>
       </div>
 
@@ -94,12 +89,10 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
             <ShieldCheck size={22} />
           </div>
           <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
-            {isPt ? '100% Client-Side & Privado' : '100% Client-Side Privacy'}
+            {t('compliance.pillarPrivacyTitle')}
           </h4>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            {isPt
-              ? 'Toda a computação — de validações fiscais e tokens JWT a conversões e hashes — é executada no seu próprio navegador através do motor Web Crypto e JavaScript.'
-              : 'All computing — from fiscal check digits and JWT tokens to conversions and hashes — executes in your local browser runtime via Web Crypto and native JS.'}
+            {t('compliance.pillarPrivacyDesc')}
           </p>
         </div>
 
@@ -117,12 +110,10 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
             <Zap size={22} />
           </div>
           <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
-            {isPt ? 'Performance Instantânea' : 'Instant Performance'}
+            {t('compliance.pillarPerformanceTitle')}
           </h4>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            {isPt
-              ? 'Construído com React e Vite de última geração. Zero latência de rede, inicialização em milissegundos e atalhos de teclado (Ctrl+K) para produtividade máxima.'
-              : 'Engineered with React and Vite. Zero server latency, sub-millisecond responsiveness, and full keyboard navigation (Ctrl+K) for high productivity.'}
+            {t('compliance.pillarPerformanceDesc')}
           </p>
         </div>
 
@@ -140,12 +131,10 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
             <Globe size={22} />
           </div>
           <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
-            {isPt ? 'Padrões Globais & Brasil' : 'Global Standards & Brazil'}
+            {t('compliance.pillarStandardsTitle')}
           </h4>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            {isPt
-              ? 'Suporte completo a padrões fiscais brasileiros (CPF, CNPJ 2026, INSS, CNJ) e especificações mundiais (RFC 7519, RFC 8259, IANA Time Zones).'
-              : 'Comprehensive support for Brazilian fiscal specifications (CPF, Alphanumeric CNPJ, INSS, CNJ) and global RFC standards.'}
+            {t('compliance.pillarStandardsDesc')}
           </p>
         </div>
       </div>
@@ -164,12 +153,10 @@ export default function AboutUs({ onGoBack, lang = 'pt' }) {
       }}>
         <div>
           <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>
-            {isPt ? 'Dúvidas, Sugestões ou Parcerias?' : 'Feedback, Bug Reports & Inquiries'}
+            {t('compliance.contactTitle')}
           </h4>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
-            {isPt
-              ? 'Tem uma sugestão de nova ferramenta ou encontrou um bug? Adoraríamos ouvir você.'
-              : 'Have a feature request, new tool suggestion, or bug report? We would love to hear from you.'}
+            {t('compliance.contactDesc')}
           </p>
         </div>
         <a
