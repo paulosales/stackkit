@@ -573,8 +573,10 @@ export const toolSpecificContent = {
   'overtime-calculator': {
     titlePt: 'Calculadora de Horas Extras CLT (50%, 100% e Reflexo no DSR)',
     titleEn: 'Brazilian Overtime Pay Calculator (50%, 100% & DSR)',
+    titleEs: 'Calculadora de Horas Extras CLT (50%, 100% e Impacto en DSR)',
     overviewPt: 'O cálculo de horas extras no regime CLT brasileiro segue as diretrizes da Constituição Federal e da Consolidação das Leis do Trabalho. As horas extras em dias úteis recebem adicional mínimo de 50%, enquanto domingos e feriados recebem 100%. Além do adicional de horas, a legislação trabalhista brasileira (Lei 605/1949 e Súmula 172 do TST) exige o cálculo do reflexo no Descanso Semanal Remunerado (DSR).',
     overviewEn: 'Brazilian labor law specifies overtime compensation calculated from monthly base salary and contracted monthly hours. Standard workdays receive a minimum 50% premium, while Sundays and official holidays receive 100%, plus statutory DSR (Weekly Paid Rest) reflections.',
+    overviewEs: 'El cálculo de horas extras en el régimen CLT brasileño sigue las directrices de la Constitución Federal y de la Consolidación de las Leyes del Trabajo. Las horas extras en días hábiles reciben un recargo mínimo del 50%, mientras que los domingos y feriados reciben el 100%. Además, la legislación laboral brasileña (Ley 605/1949 y Sumario 172 del TST) exige calcular el impacto en el Descanso Semanal Remunerado (DSR).',
     howToPt: [
       'Informe o salário base bruto e a carga horária mensal contratual (geralmente 220 horas).',
       'Insira a quantidade de horas extras trabalhadas a 50% e a 100%.',
@@ -587,12 +589,20 @@ export const toolSpecificContent = {
       'Provide the count of working days and Sundays/holidays for the current month.',
       'Review detailed breakdown of base hourly rate, overtime premiums, and DSR reflection.'
     ],
+    howToEs: [
+      'Ingrese el salario base bruto y la jornada mensual contractual (generalmente 220 horas).',
+      'Introduzca la cantidad de horas extras trabajadas al 50% y al 100%.',
+      'Indique la cantidad de días hábiles y de domingos/feriados del mes correspondientes.',
+      'Revise el desglose detallado del valor de la hora normal, adicionales por horas extras y el impacto en el DSR.'
+    ],
     faqs: [
       {
         qPt: 'Como é calculada a fórmula do DSR sobre horas extras?',
         qEn: 'How is the DSR reflection on overtime computed?',
+        qEs: '¿Cómo se calcula la fórmula del DSR sobre las horas extras?',
         aPt: 'A fórmula oficial é: DSR = (Total das horas extras do mês / Número de dias úteis) × Número de domingos e feriados do mês.',
-        aEn: 'The statutory formula is: DSR = (Total monthly overtime / Working days in month) × Sundays and holidays in month.'
+        aEn: 'The statutory formula is: DSR = (Total monthly overtime / Working days in month) × Sundays and holidays in month.',
+        aEs: 'La fórmula oficial es: DSR = (Total de horas extras del mes / Número de días hábiles) × Número de domingos y feriados del mes.'
       }
     ]
   },

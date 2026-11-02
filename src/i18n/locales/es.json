@@ -372,6 +372,36 @@
       "toasts": {
         "copied": "¡Proceso {{text}} copiado!"
       }
+    },
+    "overtime": {
+      "paramsTitle": "Parámetros de Cálculo CLT",
+      "baseSalary": "Salario Base Mensual (R$)",
+      "monthlyHours": "Jornada Mensual",
+      "hoursOptions": {
+        "220": "220 horas (44h semanales)",
+        "200": "200 horas (40h semanales)",
+        "180": "180 horas (36h semanales)",
+        "150": "150 horas (30h semanales)"
+      },
+      "hours50": "Horas Extras 50% (Días Hábiles)",
+      "hours50Placeholder": "Ej: 10",
+      "hours100": "Horas Extras 100% (Domingos/Feriados)",
+      "hours100Placeholder": "Ej: 5",
+      "workingDays": "Días Hábiles en el Mes",
+      "restDays": "Domingos y Feriados en el Mes",
+      "breakdownTitle": "Desglose de Valores",
+      "totalGrossLabel": "Total Bruto Estimado a Recibir:",
+      "normalHourValue": "Valor de la Hora Normal:",
+      "hour50Value": "Valor Hora 50%:",
+      "total50": "Subtotal Horas 50%:",
+      "total100": "Subtotal Horas 100%:",
+      "totalOvertime": "Total Horas Extras:",
+      "dsrValue": "Impacto en el DSR (Descanso Semanal):",
+      "legalBasis": "Artículo 59 de la CLT y Sumario 172 del TST",
+      "dsrIncluded": "DSR incluido",
+      "toasts": {
+        "copied": "¡Valor {{value}} copiado!"
+      }
     }
   },
   "myIp": {

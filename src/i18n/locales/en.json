@@ -372,6 +372,36 @@
       "toasts": {
         "copied": "Lawsuit {{text}} copied!"
       }
+    },
+    "overtime": {
+      "paramsTitle": "CLT Overtime Calculation Parameters",
+      "baseSalary": "Monthly Base Salary (R$)",
+      "monthlyHours": "Monthly Work Hours",
+      "hoursOptions": {
+        "220": "220 hours (44h weekly)",
+        "200": "200 hours (40h weekly)",
+        "180": "180 hours (36h weekly)",
+        "150": "150 hours (30h weekly)"
+      },
+      "hours50": "50% Overtime Hours (Business Days)",
+      "hours50Placeholder": "e.g., 10",
+      "hours100": "100% Overtime Hours (Sundays & Holidays)",
+      "hours100Placeholder": "e.g., 5",
+      "workingDays": "Working Days in Month",
+      "restDays": "Sundays and Holidays in Month",
+      "breakdownTitle": "Statement of Values",
+      "totalGrossLabel": "Estimated Gross Total to Receive:",
+      "normalHourValue": "Regular Hourly Rate:",
+      "hour50Value": "50% Overtime Rate:",
+      "total50": "50% Overtime Subtotal:",
+      "total100": "100% Overtime Subtotal:",
+      "totalOvertime": "Total Overtime Pay:",
+      "dsrValue": "DSR (Weekly Rest) Impact:",
+      "legalBasis": "Article 59 of the CLT and Precedent 172 of the TST",
+      "dsrIncluded": "Weekly paid rest (DSR) included",
+      "toasts": {
+        "copied": "Value {{value}} copied!"
+      }
     }
   },
   "myIp": {
