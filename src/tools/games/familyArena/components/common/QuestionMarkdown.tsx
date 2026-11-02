@@ -3,7 +3,7 @@ import { Image as ImageIcon } from 'lucide-react';
 
 export interface QuestionMarkdownProps {
   content: string;
-  size?: 'large' | 'medium' | 'small' | 'compact';
+  size?: 'large' | 'medium' | 'small' | 'compact' | 'player';
   className?: string;
   align?: 'center' | 'left';
 }
@@ -15,13 +15,14 @@ function SafeImage({
 }: {
   src: string;
   alt: string;
-  size: 'large' | 'medium' | 'small' | 'compact';
+  size: 'large' | 'medium' | 'small' | 'compact' | 'player';
 }) {
   const [failed, setFailed] = useState(false);
 
   const sizeClasses = {
     large: 'max-h-64 sm:max-h-80',
     medium: 'max-h-48 sm:max-h-60',
+    player: 'max-h-44 sm:max-h-60',
     small: 'max-h-36 sm:max-h-48',
     compact: 'max-h-32 sm:max-h-40',
   }[size];
@@ -315,7 +316,8 @@ export const QuestionMarkdown: React.FC<QuestionMarkdownProps> = ({
   const textSizes = {
     large: 'text-2xl sm:text-4xl font-extrabold',
     medium: 'text-xl sm:text-3xl font-extrabold',
-    small: 'text-base sm:text-lg font-bold',
+    player: 'text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug',
+    small: 'text-lg sm:text-xl font-bold',
     compact: 'text-sm font-bold',
   }[size];
 

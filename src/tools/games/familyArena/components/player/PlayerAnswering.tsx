@@ -83,9 +83,9 @@ export const PlayerAnswering: React.FC<PlayerAnsweringProps> = ({
         </div>
       </div>
 
-      {/* Question prompt brief */}
-      <div className="text-center mb-4 px-2">
-        <QuestionMarkdown content={questionText} size="small" />
+      {/* Question prompt card */}
+      <div className="w-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 mb-4 shadow-md text-center transition-colors">
+        <QuestionMarkdown content={questionText} size="player" align="center" />
       </div>
 
       {/* Answering State Banner */}
@@ -113,7 +113,7 @@ export const PlayerAnswering: React.FC<PlayerAnsweringProps> = ({
               key={idx}
               onClick={() => handleSelect(idx)}
               disabled={isLocked}
-              className={`w-full min-h-[110px] sm:min-h-[140px] rounded-3xl p-5 text-white font-bold transition-all flex flex-col justify-between text-left shadow-xl ${
+              className={`w-full min-h-[115px] sm:min-h-[140px] rounded-3xl p-4 sm:p-5 text-white font-bold transition-all flex flex-col justify-between shadow-xl select-none ${
                 theme.bg
               } ${
                 isSelected
@@ -123,15 +123,23 @@ export const PlayerAnswering: React.FC<PlayerAnsweringProps> = ({
                   : 'hover:scale-[1.01] active:scale-95'
               }`}
             >
-              <div className="flex items-center justify-between w-full">
-                <span className="text-2xl drop-shadow">{theme.symbol}</span>
-                <span className="text-xs uppercase px-2 py-0.5 rounded-full bg-black/20 font-mono">
+              {/* Top row with Symbol & Letter label */}
+              <div className="flex items-center justify-between w-full text-white/90">
+                <span className="text-xl sm:text-2xl drop-shadow font-black">{theme.symbol}</span>
+                <span className="text-xs sm:text-sm font-black uppercase px-2.5 py-0.5 rounded-full bg-black/25 font-mono shadow-inner">
                   {theme.label}
                 </span>
               </div>
-              <div className="text-base sm:text-lg font-extrabold line-clamp-3 leading-snug drop-shadow-sm">
-                {optText}
+
+              {/* Centered Option Text */}
+              <div className="flex-1 flex items-center justify-center text-center px-2 py-1 my-auto">
+                <span className="text-lg sm:text-2xl font-black leading-snug break-words drop-shadow">
+                  {optText}
+                </span>
               </div>
+
+              {/* Invisible bottom spacer matching top row so text is perfectly centered */}
+              <div className="h-5 sm:h-6 invisible select-none pointer-events-none" aria-hidden="true" />
             </button>
           );
         })}
