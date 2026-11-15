@@ -402,6 +402,101 @@
       "toasts": {
         "copied": "¡Valor {{value}} copiado!"
       }
+    },
+    "scrumPoker": {
+      "title": "Scrum Poker",
+      "heroBadge": "Planificación P2P Sin Servidores",
+      "heroTitle": "Scrum Planning Poker en Tiempo Real",
+      "heroSubtitle": "Estime con su equipo ágil en móvil y escritorio. 100% privado, WebRTC punto a punto sin servidores.",
+      "hostCardTitle": "Crear Sesión (Host)",
+      "hostCardDesc": "Inicie una nueva sala, proyéctela en la pantalla del equipo, realice rondas en tiempo real y descubra las estimaciones.",
+      "selectDeck": "Baraja Inicial de Cartas",
+      "createRoomBtn": "Crear Sala y Moderar",
+      "joinCardTitle": "Unirse a Sesión",
+      "joinCardDesc": "Conéctese con su móvil o portátil ingresando el código de 5 letras facilitado por el moderador.",
+      "roomCodeLabel": "Código de Sala (5 letras)",
+      "yourNameLabel": "Su Nombre",
+      "namePlaceholder": "ej: Carlos (Frontend)",
+      "avatarLabel": "Avatar",
+      "voterRole": "Votante (Estimador)",
+      "spectatorRole": "Observador / Espectador",
+      "joinRoomBtn": "Entrar en la Sala",
+      "soloDemoTitle": "¿Desea probarlo ahora mismo?",
+      "soloDemoDesc": "Inicie una sesión interactiva instantánea con compañeros de equipo simulados.",
+      "soloDemoBtn": "Iniciar Demo en Solitario",
+      "copyCodeTitle": "Haga clic para copiar el código de sala",
+      "leaveRoom": "Salir de la Sesión",
+      "exit": "Salir",
+      "roles": {
+        "host": "Host / Moderador",
+        "participant": "Participante"
+      },
+      "currentRound": "Ronda Actual",
+      "roundTitle": "Ronda #{{round}}",
+      "roundDesc": "Vote con su equipo y descubra el consenso cuando todos estén listos.",
+      "roundDescParticipant": "Elija una carta que represente su estimación para esta ronda.",
+      "status": {
+        "revealed": "Cartas Reveladas",
+        "voting": "Votación en Curso",
+        "votingProgress": "Votación en Curso ({{voted}}/{{total}})"
+      },
+      "inviteTeamBtn": "Invitar Equipo / QR",
+      "newRoundBtn": "Nueva Ronda",
+      "simulateBtn": "+3 Compañeros",
+      "simulateTeammatesTip": "Añade 3 compañeros simulados para probar la votación",
+      "revealCardsBtn": "Revelar Cartas",
+      "revoteBtn": "Revotar",
+      "tableTitle": "Mesa de Planificación",
+      "noParticipantsTitle": "Esperando a que los miembros del equipo se unan...",
+      "noParticipantsDesc": "Comparta el código de sala o el código QR con su equipo, o haga clic en \"+3 Compañeros\" para probar ahora.",
+      "showQrCodeBtn": "Mostrar Código QR",
+      "addSimulatedBtn": "Añadir 3 Compañeros Simulados",
+      "yourHostVote": "Su Voto (Moderador)",
+      "votedBanner": "¡Su carta ha sido colocada!",
+      "votedSub": "Seleccionado: {{val}} • Toque otra carta para cambiar",
+      "clearVote": "Borrar",
+      "chooseCardPrompt": "👇 Elija una carta abajo que represente su estimación",
+      "spectatorBanner": "Ha ingresado como Observador. ¡Puede ver las votaciones en tiempo real!",
+      "cardDeckTitle": "Su Baraja",
+      "teamVotesTitle": "Estimaciones del Equipo",
+      "waitingForHost": "Esperando a que el moderador inicie la siguiente ronda...",
+      "roomParticipants": "En la Sala",
+      "features": {
+        "rounds": "Estimación instantánea ronda a ronda",
+        "realtime": "Mesa de votación en tiempo real y revelación 3D",
+        "stats": "Análisis de consenso, % de acuerdo y estadísticas"
+      },
+      "stats": {
+        "unanimousTitle": "🎉 ¡Consenso Unánime!",
+        "unanimousDesc": "¡Todos coincidieron en {{mode}} puntos! Listo para aceptar la estimación.",
+        "strongAgreement": "👍 Fuerte Acuerdo ({{percent}}%) en {{mode}} puntos",
+        "strongAgreementDesc": "La mayoría coincide en {{mode}}. Se sugiere acuerdo rápido.",
+        "divergenceTitle": "💬 Variación Detectada ({{min}} vs {{max}})",
+        "divergenceDesc": "Se recomienda 2 minutos de diálogo entre el menor ({{lowest}}) y el mayor ({{highest}}) para clarificar requisitos.",
+        "resultsReady": "Votos Revelados",
+        "resultsReadyDesc": "{{count}} de {{total}} miembros han votado.",
+        "average": "Promedio",
+        "median": "Mediana",
+        "mode": "Moda",
+        "agreement": "Concordancia",
+        "voteDistribution": "Distribución de Votos"
+      },
+      "share": {
+        "title": "Invite a su Equipo",
+        "subtitle": "Escanee con la cámara del móvil o comparta el enlace directo para unirse al instante.",
+        "scanTip": "Abra la cámara del móvil para escanear",
+        "directLink": "Enlace Directo de Entrada",
+        "advancedSettings": "Wi-Fi Local / IP Personalizada del Host"
+      }
+    },
+    "calligraphy": {
+      "title": "Generador de Hojas de Caligrafía",
+      "subtitle": "Diseñe, personalice e imprima hojas de práctica de caligrafía y escritura cursiva con pautas de 4 líneas.",
+      "downloadPdf": "Descargar PDF",
+      "print": "Imprimir",
+      "save": "Guardar",
+      "savedSheets": "Hojas Guardadas",
+      "templates": "Plantillas"
     }
   },
   "myIp": {

@@ -334,6 +334,118 @@ export const toolSpecificContent = {
     ]
   },
 
+  'scrum-poker': {
+    titlePt: 'Scrum Poker & Planning Poker P2P em Tempo Real',
+    titleEn: 'Scrum Poker & Real-Time Peer-to-Peer Planning Poker',
+    titleEs: 'Scrum Poker & Planning Poker P2P en Tiempo Real',
+    overviewPt: 'O Scrum Poker (ou Planning Poker) do StackKit é uma ferramenta ágil interativa e sem servidores para estimativa colaborativa de histórias de usuário em equipes Scrum e Kanban. Utilizando conexões diretas WebRTC DataChannels ponto a ponto (peer-to-peer), moderadores e desenvolvedores conectam seus dispositivos instantaneamente via QR Code ou link direto com zero latência e total privacidade de dados.',
+    overviewEn: 'StackKit Scrum Poker is a serverless, real-time interactive planning poker tool designed for agile software engineering teams estimating user stories and tasks. Powered by direct WebRTC peer-to-peer DataChannels, teams connect laptops and smartphones instantly with QR codes or direct links, ensuring zero-latency voting and complete data privacy without storing information on external servers.',
+    overviewEs: 'Scrum Poker de StackKit es una herramienta ágil e interactiva sin servidores para la estimación colaborativa de historias de usuario en equipos Scrum y Kanban. Mediante conexiones directas WebRTC DataChannels punto a punto (peer-to-peer), moderadores y desarrolladores conectan sus dispositivos al instante mediante código QR o enlace directo con latencia cero y total privacidad.',
+    howToPt: [
+      'Inicie a sessão como Host (Moderador) para gerar uma sala com código exclusivo de 5 caracteres e QR Code.',
+      'Membros da equipe escaneiam o QR Code no smartphone ou abrem o link direto no navegador para entrar como Estimadores (Votantes) ou Observadores.',
+      'A equipe inicia as rodadas de estimativa sem complicações ou necessidade de cadastrar histórias antecipadamente.',
+      'Cada participante escolhe sua carta de estimativa (Fibonacci, Fibonacci Modificado, Tamanhos de Camiseta ou Sequencial) com as cartas viradas para baixo.',
+      'O moderador clica em "Revelar Cartas" para visualizar os votos de todos com animação 3D, métricas de consenso (Média, Mediana, Moda) e confetes!'
+    ],
+    howToEn: [
+      'Launch the session as Host (Moderator) to create a room with a 5-character room code and instant QR Code.',
+      'Team members scan the QR Code on mobile or click the direct join link to enter as Estimators (Voters) or Observers.',
+      'The team runs agile estimation rounds seamlessly without needing to configure or manage story backlogs.',
+      'Participants select their estimation card (Standard Fibonacci, Modified Fibonacci, T-Shirt sizes, or Sequential) kept face-down.',
+      'The moderator reveals cards with 3D flip animations, immediate consensus analytics (Average, Median, Mode, Agreement %), and celebratory confetti!'
+    ],
+    howToEs: [
+      'Inicie la sesión como Anfitrión (Moderador) para crear una sala con código de 5 caracteres y código QR instantáneo.',
+      'Los miembros del equipo escanean el código QR en su móvil o abren el enlace para unirse como Estimadores (Votantes) u Observadores.',
+      'El equipo inicia rondas ágiles de estimación directamente sin necesidad de cargar o asociar historias previamente.',
+      'Cada participante selecciona su carta de estimación (Fibonacci, Fibonacci Modificado, Tallas de Camiseta o Secuencial) con las cartas boca abajo.',
+      'El moderador hace clic en "Revelar Cartas" para descubrir las estimaciones con animación 3D, métricas de consenso y confeti.'
+    ],
+    faqs: [
+      {
+        qPt: 'Como funciona a conexão peer-to-peer sem servidores no Scrum Poker?',
+        qEn: 'How does the serverless peer-to-peer connection work in Scrum Poker?',
+        qEs: '¿Cómo funciona la conexión peer-to-peer sin servidores en Scrum Poker?',
+        aPt: 'Assim como no Family Arena, a comunicação entre o moderador e os votantes ocorre diretamente via WebRTC DataChannels do navegador, garantindo privacidade absoluta e velocidade em tempo real sem salvar dados em bancos externos.',
+        aEn: 'Just like Family Arena, communication between the moderator and voters streams directly through browser WebRTC DataChannels, ensuring maximum privacy and sub-second updates without saving your backlog tickets on cloud databases.',
+        aEs: 'Al igual que en Family Arena, la comunicación entre el moderador y los votantes se realiza directamente mediante WebRTC DataChannels en el navegador, garantizando privacidad absoluta y actualizaciones en tiempo real.'
+      },
+      {
+        qPt: 'Quais baralhos de estimativa estão disponíveis?',
+        qEn: 'Which estimation card decks are supported?',
+        qEs: '¿Qué barajas de estimación están disponibles?',
+        aPt: 'Oferece suporte a Fibonacci Padrão (0, 1, 2, 3, 5, 8, 13, 21...), Fibonacci Modificado para Scrum (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100), Tamanhos de Camiseta (XS a XXL), Potências de 2 e Sequencial (1 a 10), além de cartas de interrogação (?) e pausa para café (☕).',
+        aEn: 'It supports Standard Fibonacci (0, 1, 2, 3, 5, 8, 13, 21...), Modified Scrum Fibonacci (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100), T-Shirt Sizes (XS to XXL), Powers of 2, and Sequential (1-10), along with question mark (?) and coffee break (☕) cards.',
+        aEs: 'Admite Fibonacci Estándar (0, 1, 2, 3, 5, 8, 13, 21...), Fibonacci Modificado para Scrum (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100), Tallas de Camiseta (XS a XXL), Potencias de 2 y Secuencial (1-10), además de cartas de interrogación (?) y café (☕).'
+      },
+      {
+        qPt: 'Posso exportar o resultado das estimativas da sessão?',
+        qEn: 'Can I export the estimation results after the session?',
+        qEs: '¿Puedo exportar los resultados de las estimaciones?',
+        aPt: 'Sim! Na tela de Resumo da Sessão você pode exportar todas as histórias estimadas e seus story points em formato CSV, JSON ou copiar uma tabela formatada em Markdown para o Notion, Confluence ou chat da equipe.',
+        aEn: 'Yes! From the Session Summary modal you can export all estimated stories and story points in CSV, JSON, or copy a markdown table directly into Notion, Confluence, Jira, or team chat.',
+        aEs: '¡Sí! En el modal de Resumen de Sesión puede exportar todas las historias estimadas en formatos CSV, JSON o copiar una tabla en Markdown para Notion, Confluence o Slack.'
+      }
+    ]
+  },
+
+  'calligraphy-generator': {
+    titlePt: 'Gerador de Folhas de Caligrafia & Treino de Escrita Cursiva',
+    titleEn: 'Calligraphy & Handwriting Practice Sheet Studio',
+    titleEs: 'Generador de Hojas de Caligrafía y Práctica de Escritura',
+    overviewPt: 'O Gerador de Folhas de Caligrafia do StackKit é um estúdio completo e 100% no navegador para projetar, personalizar, salvar e imprimir folhas de treino de caligrafia, caligrafia artística e escrita cursiva. Com pautas de 4 linhas (ascendente, linha média pontilhada para altura-x, linha de base destacada e linha descendente), guias angulares de inclinação para Copperplate e Spencerian, gerador automático de pangramas e alfabetos, e exportação nítida em PDF ou impressão direta sem necessidade de servidor.',
+    overviewEn: 'The StackKit Calligraphy & Handwriting Practice Sheet Studio is a complete, client-side workstation to design, customize, save, and print calligraphy and cursive handwriting worksheets. Featuring a 4-line guideline geometry (ascender line, dashed x-height midline, highlighted baseline, and descender line), customizable slant guidelines for Copperplate and Spencerian scripts, one-click alphabet and pangram generators, local storage library, and high-resolution PDF download or direct browser printing.',
+    overviewEs: 'El Generador de Hojas de Caligrafía de StackKit es un estudio completo y 100% en el navegador para diseñar, personalizar, guardar e imprimir hojas de práctica de caligrafía y escritura cursiva. Cuenta con un sistema de pautas de 4 líneas (ascendente, línea media discontinua para altura-x, línea de base destacada y descendente), guías angulares de inclinación para Copperplate y Spencerian, generador de alfabetos y pangramas, y exportación a PDF o impresión directa sin servidor.',
+    howToPt: [
+      'Escolha um modelo inicial pronto (Clássico com Alfabeto Aa-Zz, Caligrafia Copperplate com guias de 55°, Pangramas literários ou Pauta em branco).',
+      'Digite suas frases, pangramas ou poemas na aba Conteúdo e clique em "Gerar Linhas" para quebrar o texto automaticamente com linhas de guia e linhas em branco para treino livre.',
+      'Ajuste a geometria das pautas na aba Linhas-Guia (altura da linha, altura-x, linha de base e guias de inclinação de 52°, 55° ou 68°).',
+      'Personalize a tipografia escolhendo entre 26 fontes de caligrafia clássica, cursiva, manuscrita, escolar e gótica (Great Vibes, Allura, Pinyon Script, Parisienne, Tangerine, Cedarville, MedievalSharp e mais) e defina o estilo do traço.',
+      'Clique em "Download PDF" para baixar o arquivo pronto para impressão ou "Imprimir" para enviar diretamente à impressora em folha A4 ou Carta.'
+    ],
+    howToEn: [
+      'Select a ready-to-use template (Classic Alphabet Aa-Zz, Copperplate with 55° slant guides, Famous Pangrams, or Blank Drills).',
+      'Enter custom sentences, poems, or pangrams in the Content tab to automatically wrap lines with paired trace and blank freehand rows.',
+      'Customize the 4-line geometry in Guidelines tab (row height, x-height midline, colored baseline, and 52°, 55°, or 68° slant angles).',
+      'Select from 26 calligraphy, cursive, handwriting, school manuscript, and gothic fonts (Great Vibes, Allura, Pinyon Script, Parisienne, Tangerine, Cedarville, MedievalSharp, and more) and configure trace styles.',
+      'Click "Download PDF" for a high-resolution multi-page PDF or "Print" for direct vector browser printing on A4 or Letter paper.'
+    ],
+    howToEs: [
+      'Seleccione una plantilla prediseñada (Alfabeto Clásico Aa-Zz, Copperplate con guías de 55°, Pangramas o Hojas en blanco).',
+      'Ingrese oraciones, citas o pangramas en la pestaña Contenido para generar líneas de caligrafía con espacio para práctica libre.',
+      'Ajuste las pautas de 4 líneas (altura de renglón, línea media x-height, línea de base y guías angulares de 52°, 55° o 68°).',
+      'Elija entre 26 fuentes de caligrafía, cursiva, escritura a mano, escolar y gótica (Great Vibes, Allura, Pinyon Script, Parisienne, Tangerine, Cedarville, MedievalSharp y más) y defina el estilo de trazado.',
+      'Haga clic en "Descargar PDF" para obtener un PDF nítido de alta resolución o "Imprimir" directamente en papel A4 o Carta.'
+    ],
+    faqs: [
+      {
+        qPt: 'Como funciona o sistema de 4 linhas com guias de inclinação?',
+        qEn: 'How does the 4-line guideline system with slant guides work?',
+        qEs: '¿Cómo funciona el sistema de 4 líneas con guías de inclinación?',
+        aPt: 'As 4 linhas definem a linha superior de ascendentes (cap-height), a linha média pontilhada para a altura-x das minúsculas, a linha de base onde as letras repousam e a linha inferior para descendentes. As linhas de inclinação (como 55° para Copperplate ou 68° para Spencerian) ajudam a manter um ângulo uniforme e elegante.',
+        aEn: 'The 4 lines define the top ascender boundary (cap-height), the dashed midline for lowercase x-height, the colored baseline where letter bodies rest, and the bottom descender boundary. The slant guides (such as 55° for Copperplate or 68° for Spencerian) train your hand to maintain consistent calligraphy angles.',
+        aEs: 'Las 4 líneas definen el límite superior de ascendentes (cap-height), la línea media discontinua para la altura-x, la línea de base coloreada donde descansan las letras y el límite inferior para descendentes. Las guías de inclinación (como 55° para Copperplate) garantizan un ángulo uniforme y fluido.'
+      },
+      {
+        qPt: 'As folhas e modelos ficam salvos no navegador?',
+        qEn: 'Are worksheets and custom designs saved locally in the browser?',
+        qEs: '¿Se guardan las hojas creadas en el navegador?',
+        aPt: 'Sim! Suas folhas em edição são salvas automaticamente no Local Storage do navegador. Você também pode salvar com nome na biblioteca "Minhas Folhas", exportar um backup em arquivo JSON e importar a qualquer momento sem precisar de cadastro.',
+        aEn: 'Yes! Your active draft is continuously auto-saved in your browser LocalStorage. You can also save multiple named worksheets to your library, export JSON backups, and import them anytime without needing an account.',
+        aEs: '¡Sí! El borrador activo se guarda continuamente en el LocalStorage de su navegador. También puede guardar múltiples hojas en su biblioteca, exportar copias de seguridad en JSON e importarlas en cualquier momento.'
+      },
+      {
+        qPt: 'Posso baixar em PDF de alta qualidade e imprimir?',
+        qEn: 'Can I export high-resolution PDFs and print directly?',
+        qEs: '¿Puedo exportar en PDF de alta calidad e imprimir?',
+        aPt: 'Com certeza! Você pode baixar um arquivo PDF de alta resolução (escala 2x nítida) ou acionar o diálogo de impressão nativo do navegador perfeitamente formatado para papel A4 e Carta.',
+        aEn: 'Absolutely! You can download high-resolution multi-page PDF documents (crisp 2x scale) or trigger direct browser printing with dedicated vector print rules for A4 and US Letter sizes.',
+        aEs: '¡Por supuesto! Puede descargar documentos PDF de alta resolución en escala 2x nítida o utilizar la impresión directa del navegador con reglas vectoriales optimizadas para papel A4 y Carta.'
+      }
+    ]
+  },
+
   'world-time-buddy': {
     titlePt: 'World Time Buddy & Conversor de Fuso Horário para Reuniões Globais',
     titleEn: 'World Time Buddy & Global Meeting Time Zone Converter',

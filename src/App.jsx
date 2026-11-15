@@ -173,6 +173,9 @@ export default function App() {
   // Sync theme
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.toggle('light', theme === 'light');
+    document.documentElement.style.colorScheme = theme;
     localStorage.setItem('stackkit_theme', theme);
   }, [theme]);
 

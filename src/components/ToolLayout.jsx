@@ -65,6 +65,8 @@ const MarkdownPreview = lazy(() => import('../tools/utilities/MarkdownPreview'))
 const CharacterCounter = lazy(() => import('../tools/utilities/CharacterCounter'));
 const CanadianCitizenshipTest = lazy(() => import('../tools/utilities/CanadianCitizenshipTest'));
 const FamilyArena = lazy(() => import('../tools/games/FamilyArena'));
+const ScrumPoker = lazy(() => import('../tools/games/ScrumPoker'));
+const CalligraphyGenerator = lazy(() => import('../tools/generators/CalligraphyGenerator'));
 
 // Sleek loading skeleton for lazy-loaded tools
 function ToolSkeletonLoader() {
@@ -334,6 +336,20 @@ export default function ToolLayout({
       case 'arena-quiz':
       case 'trivia-arena':
         return <FamilyArena {...props} />;
+      case 'scrum-poker':
+      case 'planning-poker':
+      case 'poker-planning':
+      case 'agile-poker':
+      case 'scrum-planning':
+        return <ScrumPoker {...props} />;
+      case 'calligraphy-generator':
+      case 'calligraphy-sheet-generator':
+      case 'calligraphy-practice':
+      case 'gerador-de-caligrafia':
+      case 'folha-de-caligrafia':
+      case 'handwriting-worksheet':
+      case 'calligraphy-worksheet':
+        return <CalligraphyGenerator {...props} />;
 
       default:
         return (

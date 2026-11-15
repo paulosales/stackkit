@@ -1,0 +1,461 @@
+/* ==========================================================================
+   SCRUM POKER - COMPREHENSIVE DESIGN SYSTEM & STYLES
+   Direct WebRTC Peer-to-Peer Agile Story Points Estimation
+   ========================================================================== */
+
+@import '../familyArena/FamilyArena.css';
+
+/* Root scoped container */
+.family-arena-root.scrum-poker-root,
+.scrum-poker-root {
+  width: 100%;
+  min-height: 640px;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  color: #0f172a;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.family-arena-root.scrum-poker-root.dark,
+.scrum-poker-root.dark,
+[data-theme="dark"] .scrum-poker-root,
+.scrum-poker-root[data-theme="dark"],
+.dark .scrum-poker-root {
+  color: #f8fafc;
+  background-color: #090d16;
+}
+
+.family-arena-root.scrum-poker-root.light,
+.scrum-poker-root.light,
+[data-theme="light"] .scrum-poker-root,
+.scrum-poker-root[data-theme="light"],
+.light .scrum-poker-root {
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+/* ==========================================================================
+   3D PLAYING CARDS & FLIP ANIMATION
+   ========================================================================== */
+
+.sp-card-scene {
+  width: 108px;
+  height: 156px;
+  perspective: 1000px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 640px) {
+  .sp-card-scene {
+    width: 124px;
+    height: 178px;
+  }
+}
+
+.sp-card-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sp-card-3d.flipped {
+  transform: rotateY(180deg);
+}
+
+.sp-card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.12);
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+}
+
+.dark .sp-card-face,
+[data-theme="dark"] .sp-card-face,
+.scrum-poker-root.dark .sp-card-face,
+.scrum-poker-root[data-theme="dark"] .sp-card-face {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+.light .sp-card-face,
+[data-theme="light"] .sp-card-face,
+.scrum-poker-root.light .sp-card-face,
+.scrum-poker-root[data-theme="light"] .sp-card-face {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.12);
+}
+
+.sp-card-back {
+  transform: rotateY(0deg);
+}
+
+.sp-card-front {
+  transform: rotateY(180deg);
+}
+
+/* Luxury Card Back Frame & Pattern */
+.sp-card-back-frame {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.dark .sp-card-back-frame,
+[data-theme="dark"] .sp-card-back-frame,
+.scrum-poker-root.dark .sp-card-back-frame,
+.scrum-poker-root[data-theme="dark"] .sp-card-back-frame {
+  background-color: #172033;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.sp-card-pattern {
+  background-color: #1e1b4b;
+  background-image:
+    radial-gradient(#818cf8 1px, transparent 1px),
+    radial-gradient(#4f46e5 1px, #1e1b4b 1px);
+  background-size: 14px 14px;
+  background-position: 0 0, 7px 7px;
+  border-radius: 10px;
+  border: 1px solid rgba(165, 180, 252, 0.35);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.7);
+}
+
+.dark .sp-card-pattern,
+[data-theme="dark"] .sp-card-pattern,
+.scrum-poker-root.dark .sp-card-pattern,
+.scrum-poker-root[data-theme="dark"] .sp-card-pattern {
+  background-color: #0c1222;
+  background-image:
+    radial-gradient(#38bdf8 1px, transparent 1px),
+    radial-gradient(#1e293b 1px, #0c1222 1px);
+  background-size: 14px 14px;
+  background-position: 0 0, 7px 7px;
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.85);
+}
+
+/* Center Casino Chip / Token Medallion */
+.sp-card-chip {
+  background: radial-gradient(circle at 35% 35%, #6366f1 0%, #312e81 60%, #1e1b4b 100%);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.dark .sp-card-chip,
+[data-theme="dark"] .sp-card-chip,
+.scrum-poker-root.dark .sp-card-chip,
+.scrum-poker-root[data-theme="dark"] .sp-card-chip {
+  background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #0369a1 60%, #082f49 100%);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+/* Glow Highlights on Revealed Cards */
+.sp-card-consensus {
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, #ffffff 80%) !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.4), 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .sp-card-consensus,
+[data-theme="dark"] .sp-card-consensus,
+.scrum-poker-root.dark .sp-card-consensus,
+.scrum-poker-root[data-theme="dark"] .sp-card-consensus {
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, #0f172a 80%) !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.sp-card-highest {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .sp-card-highest,
+[data-theme="dark"] .sp-card-highest,
+.scrum-poker-root.dark .sp-card-highest,
+.scrum-poker-root[data-theme="dark"] .sp-card-highest {
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.45), 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.sp-card-lowest {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .sp-card-lowest,
+[data-theme="dark"] .sp-card-lowest,
+.scrum-poker-root.dark .sp-card-lowest,
+.scrum-poker-root[data-theme="dark"] .sp-card-lowest {
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.45), 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Shimmer pulse for voter still thinking */
+@keyframes sp-shimmer {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+}
+
+.sp-pulse-thinking {
+  animation: sp-shimmer 2.2s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   DECK PICKER CARDS
+   ========================================================================== */
+
+.sp-deck-card {
+  width: 76px;
+  height: 112px;
+  min-width: 76px;
+  border-radius: 14px;
+  position: relative;
+  display: block;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dark .sp-deck-card,
+[data-theme="dark"] .sp-deck-card,
+.scrum-poker-root.dark .sp-deck-card,
+.scrum-poker-root[data-theme="dark"] .sp-deck-card {
+  background-color: #131a29;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.light .sp-deck-card,
+[data-theme="light"] .sp-deck-card,
+.scrum-poker-root.light .sp-deck-card,
+.scrum-poker-root[data-theme="light"] .sp-deck-card {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+}
+
+.sp-deck-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  border-color: #6366f1 !important;
+  box-shadow: 0 14px 28px -6px rgba(99, 102, 241, 0.35);
+}
+
+.dark .sp-deck-card:hover,
+[data-theme="dark"] .sp-deck-card:hover,
+.scrum-poker-root.dark .sp-deck-card:hover,
+.scrum-poker-root[data-theme="dark"] .sp-deck-card:hover {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 14px 28px -6px rgba(56, 189, 248, 0.35);
+}
+
+.sp-deck-card:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+.sp-deck-card.selected {
+  transform: translateY(-14px) scale(1.08);
+  background-color: #eef2ff !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 20px 35px -6px rgba(99, 102, 241, 0.4), 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.dark .sp-deck-card.selected,
+[data-theme="dark"] .sp-deck-card.selected,
+.scrum-poker-root.dark .sp-deck-card.selected,
+.scrum-poker-root[data-theme="dark"] .sp-deck-card.selected {
+  background-color: #141c2e !important;
+  border-color: #06b6d4 !important;
+  box-shadow: 0 20px 35px -6px rgba(6, 182, 212, 0.45), 0 0 0 2px rgba(6, 182, 212, 0.3);
+}
+
+.sp-deck-card-check {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.5), 0 0 0 2px #ffffff;
+  z-index: 20;
+}
+
+.dark .sp-deck-card-check,
+[data-theme="dark"] .sp-deck-card-check,
+.scrum-poker-root.dark .sp-deck-card-check,
+.scrum-poker-root[data-theme="dark"] .sp-deck-card-check {
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.6), 0 0 0 2px #0f172a;
+}
+
+@media (min-width: 640px) {
+  .sp-deck-card {
+    width: 88px;
+    height: 128px;
+    min-width: 88px;
+  }
+}
+
+@media (min-width: 768px) {
+  .sp-deck-card {
+    width: 98px;
+    height: 142px;
+    min-width: 98px;
+  }
+}
+
+/* ==========================================================================
+   POKER PLANNING TABLE (STADIUM FELT)
+   ========================================================================== */
+
+.sp-poker-table {
+  background: radial-gradient(ellipse at center, rgba(30, 41, 59, 0.65) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-poker-table::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.light .sp-poker-table,
+[data-theme="light"] .sp-poker-table,
+.scrum-poker-root.light .sp-poker-table,
+.scrum-poker-root[data-theme="light"] .sp-poker-table {
+  background: radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 100%);
+  border: 2px solid #cbd5e1;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04), 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+}
+
+.light .sp-poker-table::before,
+[data-theme="light"] .sp-poker-table::before,
+.scrum-poker-root.light .sp-poker-table::before,
+.scrum-poker-root[data-theme="light"] .sp-poker-table::before {
+  border: 1px dashed rgba(100, 116, 139, 0.3);
+}
+
+/* ==========================================================================
+   MODAL OVERLAY (BULLETPROOF CENTERED FIXED)
+   ========================================================================== */
+
+.sp-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  background-color: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.dark .sp-modal-backdrop,
+[data-theme="dark"] .sp-modal-backdrop,
+.scrum-poker-root.dark .sp-modal-backdrop,
+.scrum-poker-root[data-theme="dark"] .sp-modal-backdrop {
+  background-color: rgba(9, 13, 22, 0.78) !important;
+}
+
+.sp-modal-box {
+  position: relative !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 20px !important;
+}
+
+.dark .sp-modal-box,
+[data-theme="dark"] .sp-modal-box,
+.scrum-poker-root.dark .sp-modal-box,
+.scrum-poker-root[data-theme="dark"] .sp-modal-box {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* ==========================================================================
+   SCROLLBAR & ANIMATIONS
+   ========================================================================== */
+
+.sp-deck-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.sp-deck-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+}
+
+.sp-deck-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+.dark .sp-deck-scroll::-webkit-scrollbar-track,
+[data-theme="dark"] .sp-deck-scroll::-webkit-scrollbar-track,
+.scrum-poker-root.dark .sp-deck-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .sp-deck-scroll::-webkit-scrollbar-thumb,
+[data-theme="dark"] .sp-deck-scroll::-webkit-scrollbar-thumb,
+.scrum-poker-root.dark .sp-deck-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+}
+
+@keyframes sp-fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sp-fade-slide {
+  animation: sp-fade-slide 0.3s ease-out forwards;
+}

@@ -172,6 +172,20 @@ export const tools = [
     tags: ['curriculo', 'resume', 'cv', 'linkedin', 'pdf', 'ats', 'templates', 'gerador', 'carreira']
   },
   {
+    id: 'calligraphy-generator',
+    aliasIds: ['calligraphy-sheet-generator', 'calligraphy-practice', 'gerador-de-caligrafia', 'folha-de-caligrafia', 'handwriting-worksheet', 'calligraphy-worksheet'],
+    categoryId: 'generators',
+    name: 'Gerador de Folhas de Caligrafia',
+    nameEn: 'Calligraphy & Handwriting Sheet Studio',
+    nameEs: 'Generador de Hojas de Caligrafía',
+    description: 'Crie, personalize e imprima folhas de treino de caligrafia com pautas de 4 linhas, guias de inclinação e exportação em PDF',
+    descriptionEn: 'Design, customize, and print calligraphy and handwriting practice sheets with 4-line guidelines, slant angles, and PDF export',
+    descriptionEs: 'Diseñe, personalice e imprima hojas de práctica de caligrafía con pautas de 4 líneas, guías de inclinación y exportación en PDF',
+    icon: 'PenTool',
+    popular: true,
+    tags: ['caligrafia', 'calligraphy', 'handwriting', 'cursiva', 'letras', 'worksheet', 'folha de treino', 'copperplate', 'alfabeto', 'pdf', 'imprimir']
+  },
+  {
     id: 'email-signature-generator',
     aliasIds: ['gerador-assinatura-email', 'gerador-assinaturas', 'assinatura-email', 'email-signature'],
     categoryId: 'generators',
@@ -670,6 +684,20 @@ export const tools = [
     icon: 'Gamepad2',
     popular: true,
     tags: ['quiz', 'jogo', 'multiplayer', 'trivia', 'game', 'webrtc', 'p2p', 'familia', 'party', 'juegos']
+  },
+  {
+    id: 'scrum-poker',
+    aliasIds: ['planning-poker', 'poker-planning', 'agile-poker', 'scrum-planning'],
+    categoryId: 'games',
+    name: 'Scrum Poker',
+    nameEn: 'Scrum Poker',
+    nameEs: 'Scrum Poker',
+    description: 'Estime tarefas ágeis em equipe em tempo real com WebRTC peer-to-peer sem servidores e suporte a QR Code',
+    descriptionEn: 'Real-time peer-to-peer agile estimation planning poker for teams with zero backend servers and instant QR Code join',
+    descriptionEs: 'Estimación ágil de tareas en tiempo real peer-to-peer con WebRTC sin servidores y unión instantánea por código QR',
+    icon: 'Layers',
+    popular: true,
+    tags: ['scrum', 'agile', 'planning poker', 'poker', 'story points', 'fibonacci', 'webrtc', 'p2p', 'multiplayer', 'jogos']
   }
 ];
 

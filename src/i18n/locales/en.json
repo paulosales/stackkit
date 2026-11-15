@@ -402,6 +402,101 @@
       "toasts": {
         "copied": "Value {{value}} copied!"
       }
+    },
+    "scrumPoker": {
+      "title": "Scrum Poker",
+      "heroBadge": "Zero-Server Peer-to-Peer Planning",
+      "heroTitle": "Real-Time Scrum Planning Poker",
+      "heroSubtitle": "Estimate with your agile team across mobile & desktop. 100% private, zero-server WebRTC via direct peer connections.",
+      "hostCardTitle": "Host a Session",
+      "hostCardDesc": "Create a new session, project onto a team screen, run rounds in real time, and reveal estimates.",
+      "selectDeck": "Starting Card Deck",
+      "createRoomBtn": "Create Room & Host",
+      "joinCardTitle": "Join Session",
+      "joinCardDesc": "Connect with your phone or laptop by entering the 5-letter Room Code from the host.",
+      "roomCodeLabel": "Room Code (5 letters)",
+      "yourNameLabel": "Your Name",
+      "namePlaceholder": "e.g. Alex (Frontend)",
+      "avatarLabel": "Avatar",
+      "voterRole": "Voter (Estimator)",
+      "spectatorRole": "Observer / Spectator",
+      "joinRoomBtn": "Join Session",
+      "soloDemoTitle": "Want to try it right away?",
+      "soloDemoDesc": "Launch an instant interactive session with simulated teammates.",
+      "soloDemoBtn": "Launch Solo Demo",
+      "copyCodeTitle": "Click to copy Room Code",
+      "leaveRoom": "Leave Session",
+      "exit": "Exit",
+      "roles": {
+        "host": "Host / Moderator",
+        "participant": "Participant"
+      },
+      "currentRound": "Current Round",
+      "roundTitle": "Round #{{round}}",
+      "roundDesc": "Vote with your team and reveal consensus when everyone is ready.",
+      "roundDescParticipant": "Select a card representing your estimate for this round.",
+      "status": {
+        "revealed": "Cards Revealed",
+        "voting": "Voting in Progress",
+        "votingProgress": "Voting in Progress ({{voted}}/{{total}})"
+      },
+      "inviteTeamBtn": "Invite Team / QR",
+      "newRoundBtn": "New Round",
+      "simulateBtn": "+3 Teammates",
+      "simulateTeammatesTip": "Add 3 simulated teammates to test votes",
+      "revealCardsBtn": "Reveal Cards",
+      "revoteBtn": "Revote",
+      "tableTitle": "Planning Table",
+      "noParticipantsTitle": "Waiting for team members to join...",
+      "noParticipantsDesc": "Share the room code or QR code with your team, or click \"+3 Teammates\" to test right now.",
+      "showQrCodeBtn": "Show QR Code",
+      "addSimulatedBtn": "Add 3 Simulated Teammates",
+      "yourHostVote": "Your Vote (Host)",
+      "votedBanner": "Your card is placed!",
+      "votedSub": "Selected: {{val}} • Tap any card to change",
+      "clearVote": "Clear",
+      "chooseCardPrompt": "👇 Pick a card below representing your estimate",
+      "spectatorBanner": "You joined as an Observer. You can watch the votes in real time!",
+      "cardDeckTitle": "Your Deck",
+      "teamVotesTitle": "Team Estimates",
+      "waitingForHost": "Waiting for host to start next round...",
+      "roomParticipants": "In the Room",
+      "features": {
+        "rounds": "Instant round-by-round estimation",
+        "realtime": "Real-time voting board & instant 3D card reveal",
+        "stats": "Consensus analytics, agreement % & statistics"
+      },
+      "stats": {
+        "unanimousTitle": "🎉 Unanimous Consensus!",
+        "unanimousDesc": "Everyone agreed on {{mode}} points! Ready to accept estimate.",
+        "strongAgreement": "👍 Strong Agreement ({{percent}}%) on {{mode}} points",
+        "strongAgreementDesc": "The majority aligns on {{mode}}. Quick consensus recommended.",
+        "divergenceTitle": "💬 Variance Detected ({{min}} vs {{max}})",
+        "divergenceDesc": "Recommend a 2-minute sync between lowest ({{lowest}}) and highest ({{highest}}) to clarify requirements.",
+        "resultsReady": "Votes Revealed",
+        "resultsReadyDesc": "{{count}} of {{total}} team members voted.",
+        "average": "Average",
+        "median": "Median",
+        "mode": "Mode",
+        "agreement": "Agreement",
+        "voteDistribution": "Vote Distribution"
+      },
+      "share": {
+        "title": "Invite Your Team",
+        "subtitle": "Scan with phone camera or share the direct link to join instantly.",
+        "scanTip": "Open phone camera to scan",
+        "directLink": "Direct Join Link",
+        "advancedSettings": "Local Wi-Fi / Custom Host IP"
+      }
+    },
+    "calligraphy": {
+      "title": "Calligraphy & Handwriting Sheet Studio",
+      "subtitle": "Create, customize, and print 4-line calligraphy and cursive handwriting practice worksheets.",
+      "downloadPdf": "Download PDF",
+      "print": "Print",
+      "save": "Save",
+      "savedSheets": "Saved Sheets",
+      "templates": "Templates"
     }
   },
   "myIp": {

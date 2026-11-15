@@ -1,0 +1,2084 @@
+/* Calligraphy Studio Scoped Stylesheet - Generated with Tailwind CSS */
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Architects+Daughter&family=Bad+Script&family=Caveat:wght@400..700&family=Cedarville+Cursive&family=Comic+Neue:wght@400;700&family=Dancing+Script:wght@400..700&family=Delius&family=Fredoka:wght@400;600&family=Great+Vibes&family=Homemade+Apple&family=Indie+Flower&family=Italianno&family=Kalam:wght@400;700&family=Marck+Script&family=MedievalSharp&family=Parisienne&family=Patrick+Hand&family=Pinyon+Script&family=Playpen+Sans:wght@400;500;600;700&family=Rouge+Script&family=Sacramento&family=Satisfy&family=Schoolbell&family=Shadows+Into+Light&family=Tangerine:wght@400;700&family=UnifrakturMaguntia&display=swap');
+
+.calligraphy-root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Custom Scrollbars */
+.calligraphy-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.calligraphy-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.calligraphy-root ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.calligraphy-root ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.calligraphy-root.dark ::-webkit-scrollbar-thumb,
+.calligraphy-root[data-theme='dark'] ::-webkit-scrollbar-thumb,
+:is(.dark, [data-theme='dark']) .calligraphy-root ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.calligraphy-root.dark ::-webkit-scrollbar-thumb:hover,
+.calligraphy-root[data-theme='dark'] ::-webkit-scrollbar-thumb:hover,
+:is(.dark, [data-theme='dark']) .calligraphy-root ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Quick subtle animation for modals and controls */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.calligraphy-root .animate-fadeIn,
+.calligraphy-root.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+.calligraphy-root .shadow-xs,
+.calligraphy-root.shadow-xs {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+/* Print Stylesheet for 100% Vector Print Fidelity */
+@media print {
+  @page {
+    margin: 10mm;
+    size: auto;
+  }
+
+  html, body {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  header, nav, aside, .app-sidebar, .app-header {
+    display: none !important;
+  }
+
+  .worksheet-page-sheet {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    border-radius: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    padding: 24px 32px !important;
+  }
+
+  .worksheet-page-sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .worksheet-page-sheet,
+  .print\:break-after-page,
+  .print\:page-break-after-always {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+}
+
+.calligraphy-root *, .calligraphy-root :before, .calligraphy-root ::before, .calligraphy-root :after, .calligraphy-root ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+.calligraphy-root::backdrop, ::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}/*
+! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com
+*//*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+.calligraphy-root *,
+.calligraphy-root :before, .calligraphy-root ::before,
+.calligraphy-root :after, .calligraphy-root ::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+.calligraphy-root :before, .calligraphy-root ::before,
+.calligraphy-root :after, .calligraphy-root ::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+.calligraphy-root,
+.calligraphy-root {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+.calligraphy-root {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+.calligraphy-root hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+.calligraphy-root abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+.calligraphy-root h1,
+.calligraphy-root h2,
+.calligraphy-root h3,
+.calligraphy-root h4,
+.calligraphy-root h5,
+.calligraphy-root h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+.calligraphy-root a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+.calligraphy-root b,
+.calligraphy-root strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+
+.calligraphy-root code,
+.calligraphy-root kbd,
+.calligraphy-root samp,
+.calligraphy-root pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+.calligraphy-root small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+.calligraphy-root sub,
+.calligraphy-root sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.calligraphy-root sub {
+  bottom: -0.25em;
+}
+
+.calligraphy-root sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+.calligraphy-root table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+.calligraphy-root button,
+.calligraphy-root input,
+.calligraphy-root optgroup,
+.calligraphy-root select,
+.calligraphy-root textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+.calligraphy-root button,
+.calligraphy-root select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+.calligraphy-root button,
+.calligraphy-root input:where([type='button']),
+.calligraphy-root input:where([type='reset']),
+.calligraphy-root input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+.calligraphy-root :-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+.calligraphy-root :-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+.calligraphy-root progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+.calligraphy-root ::-webkit-inner-spin-button,
+.calligraphy-root ::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+.calligraphy-root [type='search'], .calligraphy-root[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+.calligraphy-root ::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+.calligraphy-root ::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+.calligraphy-root summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+.calligraphy-root blockquote,
+.calligraphy-root dl,
+.calligraphy-root dd,
+.calligraphy-root h1,
+.calligraphy-root h2,
+.calligraphy-root h3,
+.calligraphy-root h4,
+.calligraphy-root h5,
+.calligraphy-root h6,
+.calligraphy-root hr,
+.calligraphy-root figure,
+.calligraphy-root p,
+.calligraphy-root pre {
+  margin: 0;
+}
+
+.calligraphy-root fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.calligraphy-root legend {
+  padding: 0;
+}
+
+.calligraphy-root ol,
+.calligraphy-root ul,
+.calligraphy-root menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+.calligraphy-root dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+.calligraphy-root textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+.calligraphy-root input::-moz-placeholder, .calligraphy-root textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+.calligraphy-root input::placeholder,
+.calligraphy-root textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+.calligraphy-root button,
+.calligraphy-root [role="button"], .calligraphy-root[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+.calligraphy-root :disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+.calligraphy-root img,
+.calligraphy-root svg,
+.calligraphy-root video,
+.calligraphy-root canvas,
+.calligraphy-root audio,
+.calligraphy-root iframe,
+.calligraphy-root embed,
+.calligraphy-root object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+.calligraphy-root img,
+.calligraphy-root video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+.calligraphy-root [hidden]:where(:not([hidden="until-found"])), .calligraphy-root[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+.calligraphy-root .pointer-events-none, .calligraphy-root.pointer-events-none {
+  pointer-events: none;
+}
+.calligraphy-root .fixed, .calligraphy-root.fixed {
+  position: fixed;
+}
+.calligraphy-root .absolute, .calligraphy-root.absolute {
+  position: absolute;
+}
+.calligraphy-root .relative, .calligraphy-root.relative {
+  position: relative;
+}
+.calligraphy-root .sticky, .calligraphy-root.sticky {
+  position: sticky;
+}
+.calligraphy-root .inset-0, .calligraphy-root.inset-0 {
+  inset: 0px;
+}
+.calligraphy-root .-top-3, .calligraphy-root.-top-3 {
+  top: -0.75rem;
+}
+.calligraphy-root .left-0, .calligraphy-root.left-0 {
+  left: 0px;
+}
+.calligraphy-root .right-0, .calligraphy-root.right-0 {
+  right: 0px;
+}
+.calligraphy-root .right-2, .calligraphy-root.right-2 {
+  right: 0.5rem;
+}
+.calligraphy-root .top-0, .calligraphy-root.top-0 {
+  top: 0px;
+}
+.calligraphy-root .z-10, .calligraphy-root.z-10 {
+  z-index: 10;
+}
+.calligraphy-root .z-20, .calligraphy-root.z-20 {
+  z-index: 20;
+}
+.calligraphy-root .z-30, .calligraphy-root.z-30 {
+  z-index: 30;
+}
+.calligraphy-root .z-50, .calligraphy-root.z-50 {
+  z-index: 50;
+}
+.calligraphy-root .mx-auto, .calligraphy-root.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.calligraphy-root .mb-1, .calligraphy-root.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.calligraphy-root .mb-1\.5, .calligraphy-root.mb-1\.5 {
+  margin-bottom: 0.375rem;
+}
+.calligraphy-root .mb-2, .calligraphy-root.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.calligraphy-root .mb-3, .calligraphy-root.mb-3 {
+  margin-bottom: 0.75rem;
+}
+.calligraphy-root .mb-4, .calligraphy-root.mb-4 {
+  margin-bottom: 1rem;
+}
+.calligraphy-root .mb-6, .calligraphy-root.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.calligraphy-root .mb-8, .calligraphy-root.mb-8 {
+  margin-bottom: 2rem;
+}
+.calligraphy-root .ml-1, .calligraphy-root.ml-1 {
+  margin-left: 0.25rem;
+}
+.calligraphy-root .mr-2, .calligraphy-root.mr-2 {
+  margin-right: 0.5rem;
+}
+.calligraphy-root .mt-0\.5, .calligraphy-root.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+.calligraphy-root .mt-1, .calligraphy-root.mt-1 {
+  margin-top: 0.25rem;
+}
+.calligraphy-root .mt-1\.5, .calligraphy-root.mt-1\.5 {
+  margin-top: 0.375rem;
+}
+.calligraphy-root .mt-3, .calligraphy-root.mt-3 {
+  margin-top: 0.75rem;
+}
+.calligraphy-root .mt-8, .calligraphy-root.mt-8 {
+  margin-top: 2rem;
+}
+.calligraphy-root .block, .calligraphy-root.block {
+  display: block;
+}
+.calligraphy-root .flex, .calligraphy-root.flex {
+  display: flex;
+}
+.calligraphy-root .grid, .calligraphy-root.grid {
+  display: grid;
+}
+.calligraphy-root .hidden, .calligraphy-root.hidden {
+  display: none;
+}
+.calligraphy-root .h-16, .calligraphy-root.h-16 {
+  height: 4rem;
+}
+.calligraphy-root .h-3, .calligraphy-root.h-3 {
+  height: 0.75rem;
+}
+.calligraphy-root .h-3\.5, .calligraphy-root.h-3\.5 {
+  height: 0.875rem;
+}
+.calligraphy-root .h-4, .calligraphy-root.h-4 {
+  height: 1rem;
+}
+.calligraphy-root .h-5, .calligraphy-root.h-5 {
+  height: 1.25rem;
+}
+.calligraphy-root .h-6, .calligraphy-root.h-6 {
+  height: 1.5rem;
+}
+.calligraphy-root .h-7, .calligraphy-root.h-7 {
+  height: 1.75rem;
+}
+.calligraphy-root .h-8, .calligraphy-root.h-8 {
+  height: 2rem;
+}
+.calligraphy-root .h-9, .calligraphy-root.h-9 {
+  height: 2.25rem;
+}
+.calligraphy-root .h-\[calc\(100vh-120px\)\], .calligraphy-root.h-\[calc\(100vh-120px\)\] {
+  height: calc(100vh - 120px);
+}
+.calligraphy-root .h-full, .calligraphy-root.h-full {
+  height: 100%;
+}
+.calligraphy-root .max-h-48, .calligraphy-root.max-h-48 {
+  max-height: 12rem;
+}
+.calligraphy-root .max-h-64, .calligraphy-root.max-h-64 {
+  max-height: 16rem;
+}
+.calligraphy-root .max-h-\[85vh\], .calligraphy-root.max-h-\[85vh\] {
+  max-height: 85vh;
+}
+.calligraphy-root .max-h-\[88vh\], .calligraphy-root.max-h-\[88vh\] {
+  max-height: 88vh;
+}
+.calligraphy-root .min-h-0, .calligraphy-root.min-h-0 {
+  min-height: 0px;
+}
+.calligraphy-root .min-h-\[740px\], .calligraphy-root.min-h-\[740px\] {
+  min-height: 740px;
+}
+.calligraphy-root .w-12, .calligraphy-root.w-12 {
+  width: 3rem;
+}
+.calligraphy-root .w-3, .calligraphy-root.w-3 {
+  width: 0.75rem;
+}
+.calligraphy-root .w-3\.5, .calligraphy-root.w-3\.5 {
+  width: 0.875rem;
+}
+.calligraphy-root .w-4, .calligraphy-root.w-4 {
+  width: 1rem;
+}
+.calligraphy-root .w-44, .calligraphy-root.w-44 {
+  width: 11rem;
+}
+.calligraphy-root .w-5, .calligraphy-root.w-5 {
+  width: 1.25rem;
+}
+.calligraphy-root .w-6, .calligraphy-root.w-6 {
+  width: 1.5rem;
+}
+.calligraphy-root .w-7, .calligraphy-root.w-7 {
+  width: 1.75rem;
+}
+.calligraphy-root .w-8, .calligraphy-root.w-8 {
+  width: 2rem;
+}
+.calligraphy-root .w-80, .calligraphy-root.w-80 {
+  width: 20rem;
+}
+.calligraphy-root .w-9, .calligraphy-root.w-9 {
+  width: 2.25rem;
+}
+.calligraphy-root .w-full, .calligraphy-root.w-full {
+  width: 100%;
+}
+.calligraphy-root .w-px, .calligraphy-root.w-px {
+  width: 1px;
+}
+.calligraphy-root .min-w-0, .calligraphy-root.min-w-0 {
+  min-width: 0px;
+}
+.calligraphy-root .max-w-2xl, .calligraphy-root.max-w-2xl {
+  max-width: 42rem;
+}
+.calligraphy-root .max-w-xl, .calligraphy-root.max-w-xl {
+  max-width: 36rem;
+}
+.calligraphy-root .flex-1, .calligraphy-root.flex-1 {
+  flex: 1 1 0%;
+}
+.calligraphy-root .flex-shrink-0, .calligraphy-root.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.calligraphy-root .shrink-0, .calligraphy-root.shrink-0 {
+  flex-shrink: 0;
+}
+.calligraphy-root .origin-top, .calligraphy-root.origin-top {
+  transform-origin: top;
+}
+.calligraphy-root .transform, .calligraphy-root.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.calligraphy-root .cursor-pointer, .calligraphy-root.cursor-pointer {
+  cursor: pointer;
+}
+.calligraphy-root .select-none, .calligraphy-root.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.calligraphy-root .select-text, .calligraphy-root.select-text {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+}
+.calligraphy-root .grid-cols-1, .calligraphy-root.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.calligraphy-root .grid-cols-2, .calligraphy-root.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.calligraphy-root .grid-cols-3, .calligraphy-root.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.calligraphy-root .flex-col, .calligraphy-root.flex-col {
+  flex-direction: column;
+}
+.calligraphy-root .flex-wrap, .calligraphy-root.flex-wrap {
+  flex-wrap: wrap;
+}
+.calligraphy-root .items-end, .calligraphy-root.items-end {
+  align-items: flex-end;
+}
+.calligraphy-root .items-center, .calligraphy-root.items-center {
+  align-items: center;
+}
+.calligraphy-root .justify-end, .calligraphy-root.justify-end {
+  justify-content: flex-end;
+}
+.calligraphy-root .justify-center, .calligraphy-root.justify-center {
+  justify-content: center;
+}
+.calligraphy-root .justify-between, .calligraphy-root.justify-between {
+  justify-content: space-between;
+}
+.calligraphy-root .gap-1, .calligraphy-root.gap-1 {
+  gap: 0.25rem;
+}
+.calligraphy-root .gap-1\.5, .calligraphy-root.gap-1\.5 {
+  gap: 0.375rem;
+}
+.calligraphy-root .gap-2, .calligraphy-root.gap-2 {
+  gap: 0.5rem;
+}
+.calligraphy-root .gap-2\.5, .calligraphy-root.gap-2\.5 {
+  gap: 0.625rem;
+}
+.calligraphy-root .gap-3, .calligraphy-root.gap-3 {
+  gap: 0.75rem;
+}
+.calligraphy-root .gap-4, .calligraphy-root.gap-4 {
+  gap: 1rem;
+}
+.calligraphy-root .gap-6, .calligraphy-root.gap-6 {
+  gap: 1.5rem;
+}
+.calligraphy-root .gap-8, .calligraphy-root.gap-8 {
+  gap: 2rem;
+}
+.calligraphy-root .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .space-y-2\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.calligraphy-root .overflow-hidden, .calligraphy-root.overflow-hidden {
+  overflow: hidden;
+}
+.calligraphy-root .overflow-x-auto, .calligraphy-root.overflow-x-auto {
+  overflow-x: auto;
+}
+.calligraphy-root .overflow-y-auto, .calligraphy-root.overflow-y-auto {
+  overflow-y: auto;
+}
+.calligraphy-root .truncate, .calligraphy-root.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.calligraphy-root .whitespace-nowrap, .calligraphy-root.whitespace-nowrap {
+  white-space: nowrap;
+}
+.calligraphy-root .whitespace-pre, .calligraphy-root.whitespace-pre {
+  white-space: pre;
+}
+.calligraphy-root .rounded, .calligraphy-root.rounded {
+  border-radius: 0.25rem;
+}
+.calligraphy-root .rounded-2xl, .calligraphy-root.rounded-2xl {
+  border-radius: 1rem;
+}
+.calligraphy-root .rounded-full, .calligraphy-root.rounded-full {
+  border-radius: 9999px;
+}
+.calligraphy-root .rounded-lg, .calligraphy-root.rounded-lg {
+  border-radius: 0.5rem;
+}
+.calligraphy-root .rounded-md, .calligraphy-root.rounded-md {
+  border-radius: 0.375rem;
+}
+.calligraphy-root .rounded-sm, .calligraphy-root.rounded-sm {
+  border-radius: 0.125rem;
+}
+.calligraphy-root .rounded-xl, .calligraphy-root.rounded-xl {
+  border-radius: 0.75rem;
+}
+.calligraphy-root .border, .calligraphy-root.border {
+  border-width: 1px;
+}
+.calligraphy-root .border-b, .calligraphy-root.border-b {
+  border-bottom-width: 1px;
+}
+.calligraphy-root .border-r, .calligraphy-root.border-r {
+  border-right-width: 1px;
+}
+.calligraphy-root .border-t, .calligraphy-root.border-t {
+  border-top-width: 1px;
+}
+.calligraphy-root .border-dashed, .calligraphy-root.border-dashed {
+  border-style: dashed;
+}
+.calligraphy-root .border-indigo-100, .calligraphy-root.border-indigo-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(224 231 255 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-indigo-400, .calligraphy-root.border-indigo-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(129 140 248 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-indigo-500, .calligraphy-root.border-indigo-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-indigo-600, .calligraphy-root.border-indigo-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(79 70 229 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-slate-100, .calligraphy-root.border-slate-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(241 245 249 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-slate-200, .calligraphy-root.border-slate-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-slate-200\/80, .calligraphy-root.border-slate-200\/80 {
+  border-color: rgb(226 232 240 / 0.8);
+}
+.calligraphy-root .border-slate-300, .calligraphy-root.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .border-transparent, .calligraphy-root.border-transparent {
+  border-color: transparent;
+}
+.calligraphy-root .bg-amber-100, .calligraphy-root.bg-amber-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-blue-100, .calligraphy-root.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-indigo-50, .calligraphy-root.bg-indigo-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 242 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-indigo-50\/40, .calligraphy-root.bg-indigo-50\/40 {
+  background-color: rgb(238 242 255 / 0.4);
+}
+.calligraphy-root .bg-indigo-50\/50, .calligraphy-root.bg-indigo-50\/50 {
+  background-color: rgb(238 242 255 / 0.5);
+}
+.calligraphy-root .bg-indigo-50\/60, .calligraphy-root.bg-indigo-50\/60 {
+  background-color: rgb(238 242 255 / 0.6);
+}
+.calligraphy-root .bg-indigo-600, .calligraphy-root.bg-indigo-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 70 229 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-purple-100, .calligraphy-root.bg-purple-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 232 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-slate-100, .calligraphy-root.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-slate-200, .calligraphy-root.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-slate-200\/80, .calligraphy-root.bg-slate-200\/80 {
+  background-color: rgb(226 232 240 / 0.8);
+}
+.calligraphy-root .bg-slate-50, .calligraphy-root.bg-slate-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-slate-50\/50, .calligraphy-root.bg-slate-50\/50 {
+  background-color: rgb(248 250 252 / 0.5);
+}
+.calligraphy-root .bg-slate-50\/70, .calligraphy-root.bg-slate-50\/70 {
+  background-color: rgb(248 250 252 / 0.7);
+}
+.calligraphy-root .bg-slate-900\/60, .calligraphy-root.bg-slate-900\/60 {
+  background-color: rgb(15 23 42 / 0.6);
+}
+.calligraphy-root .bg-transparent, .calligraphy-root.bg-transparent {
+  background-color: transparent;
+}
+.calligraphy-root .bg-white, .calligraphy-root.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .bg-white\/90, .calligraphy-root.bg-white\/90 {
+  background-color: rgb(255 255 255 / 0.9);
+}
+.calligraphy-root .bg-white\/95, .calligraphy-root.bg-white\/95 {
+  background-color: rgb(255 255 255 / 0.95);
+}
+.calligraphy-root .bg-gradient-to-tr, .calligraphy-root.bg-gradient-to-tr {
+  background-image: linear-gradient(to top right, var(--tw-gradient-stops));
+}
+.calligraphy-root .from-indigo-600, .calligraphy-root.from-indigo-600 {
+  --tw-gradient-from: #4f46e5 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(79 70 229 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.calligraphy-root .to-violet-500, .calligraphy-root.to-violet-500 {
+  --tw-gradient-to: #8b5cf6 var(--tw-gradient-to-position);
+}
+.calligraphy-root .p-0, .calligraphy-root.p-0 {
+  padding: 0px;
+}
+.calligraphy-root .p-0\.5, .calligraphy-root.p-0\.5 {
+  padding: 0.125rem;
+}
+.calligraphy-root .p-1, .calligraphy-root.p-1 {
+  padding: 0.25rem;
+}
+.calligraphy-root .p-1\.5, .calligraphy-root.p-1\.5 {
+  padding: 0.375rem;
+}
+.calligraphy-root .p-2, .calligraphy-root.p-2 {
+  padding: 0.5rem;
+}
+.calligraphy-root .p-2\.5, .calligraphy-root.p-2\.5 {
+  padding: 0.625rem;
+}
+.calligraphy-root .p-3, .calligraphy-root.p-3 {
+  padding: 0.75rem;
+}
+.calligraphy-root .p-3\.5, .calligraphy-root.p-3\.5 {
+  padding: 0.875rem;
+}
+.calligraphy-root .p-4, .calligraphy-root.p-4 {
+  padding: 1rem;
+}
+.calligraphy-root .p-6, .calligraphy-root.p-6 {
+  padding: 1.5rem;
+}
+.calligraphy-root .px-2, .calligraphy-root.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.calligraphy-root .px-2\.5, .calligraphy-root.px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+.calligraphy-root .px-3, .calligraphy-root.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.calligraphy-root .px-3\.5, .calligraphy-root.px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+}
+.calligraphy-root .px-4, .calligraphy-root.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.calligraphy-root .px-6, .calligraphy-root.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.calligraphy-root .py-0\.5, .calligraphy-root.py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+.calligraphy-root .py-1, .calligraphy-root.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.calligraphy-root .py-1\.5, .calligraphy-root.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+.calligraphy-root .py-10, .calligraphy-root.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+.calligraphy-root .py-2, .calligraphy-root.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.calligraphy-root .py-3\.5, .calligraphy-root.py-3\.5 {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+.calligraphy-root .py-4, .calligraphy-root.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.calligraphy-root .pb-2, .calligraphy-root.pb-2 {
+  padding-bottom: 0.5rem;
+}
+.calligraphy-root .pr-1, .calligraphy-root.pr-1 {
+  padding-right: 0.25rem;
+}
+.calligraphy-root .pt-1, .calligraphy-root.pt-1 {
+  padding-top: 0.25rem;
+}
+.calligraphy-root .pt-2, .calligraphy-root.pt-2 {
+  padding-top: 0.5rem;
+}
+.calligraphy-root .pt-3, .calligraphy-root.pt-3 {
+  padding-top: 0.75rem;
+}
+.calligraphy-root .pt-4, .calligraphy-root.pt-4 {
+  padding-top: 1rem;
+}
+.calligraphy-root .text-left, .calligraphy-root.text-left {
+  text-align: left;
+}
+.calligraphy-root .text-center, .calligraphy-root.text-center {
+  text-align: center;
+}
+.calligraphy-root .font-sans, .calligraphy-root.font-sans {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.calligraphy-root .text-2xl, .calligraphy-root.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.calligraphy-root .text-\[10px\], .calligraphy-root.text-\[10px\] {
+  font-size: 10px;
+}
+.calligraphy-root .text-\[11px\], .calligraphy-root.text-\[11px\] {
+  font-size: 11px;
+}
+.calligraphy-root .text-base, .calligraphy-root.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.calligraphy-root .text-lg, .calligraphy-root.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.calligraphy-root .text-sm, .calligraphy-root.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.calligraphy-root .text-xs, .calligraphy-root.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.calligraphy-root .font-bold, .calligraphy-root.font-bold {
+  font-weight: 700;
+}
+.calligraphy-root .font-medium, .calligraphy-root.font-medium {
+  font-weight: 500;
+}
+.calligraphy-root .font-semibold, .calligraphy-root.font-semibold {
+  font-weight: 600;
+}
+.calligraphy-root .uppercase, .calligraphy-root.uppercase {
+  text-transform: uppercase;
+}
+.calligraphy-root .lowercase, .calligraphy-root.lowercase {
+  text-transform: lowercase;
+}
+.calligraphy-root .italic, .calligraphy-root.italic {
+  font-style: italic;
+}
+.calligraphy-root .leading-tight, .calligraphy-root.leading-tight {
+  line-height: 1.25;
+}
+.calligraphy-root .tracking-tight, .calligraphy-root.tracking-tight {
+  letter-spacing: -0.025em;
+}
+.calligraphy-root .tracking-wide, .calligraphy-root.tracking-wide {
+  letter-spacing: 0.025em;
+}
+.calligraphy-root .tracking-wider, .calligraphy-root.tracking-wider {
+  letter-spacing: 0.05em;
+}
+.calligraphy-root .text-amber-500, .calligraphy-root.text-amber-500 {
+  --tw-text-opacity: 1;
+  color: rgb(245 158 11 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-amber-800, .calligraphy-root.text-amber-800 {
+  --tw-text-opacity: 1;
+  color: rgb(146 64 14 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-blue-800, .calligraphy-root.text-blue-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-emerald-600, .calligraphy-root.text-emerald-600 {
+  --tw-text-opacity: 1;
+  color: rgb(5 150 105 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-emerald-700, .calligraphy-root.text-emerald-700 {
+  --tw-text-opacity: 1;
+  color: rgb(4 120 87 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-indigo-200, .calligraphy-root.text-indigo-200 {
+  --tw-text-opacity: 1;
+  color: rgb(199 210 254 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-indigo-600, .calligraphy-root.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-indigo-700, .calligraphy-root.text-indigo-700 {
+  --tw-text-opacity: 1;
+  color: rgb(67 56 202 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-indigo-900, .calligraphy-root.text-indigo-900 {
+  --tw-text-opacity: 1;
+  color: rgb(49 46 129 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-purple-800, .calligraphy-root.text-purple-800 {
+  --tw-text-opacity: 1;
+  color: rgb(107 33 168 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-red-500, .calligraphy-root.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-rose-500, .calligraphy-root.text-rose-500 {
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-300, .calligraphy-root.text-slate-300 {
+  --tw-text-opacity: 1;
+  color: rgb(203 213 225 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-400, .calligraphy-root.text-slate-400 {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-500, .calligraphy-root.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-600, .calligraphy-root.text-slate-600 {
+  --tw-text-opacity: 1;
+  color: rgb(71 85 105 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-700, .calligraphy-root.text-slate-700 {
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-800, .calligraphy-root.text-slate-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-slate-900, .calligraphy-root.text-slate-900 {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .text-white, .calligraphy-root.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .antialiased, .calligraphy-root.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.calligraphy-root .accent-indigo-600, .calligraphy-root.accent-indigo-600 {
+  accent-color: #4f46e5;
+}
+.calligraphy-root .opacity-0, .calligraphy-root.opacity-0 {
+  opacity: 0;
+}
+.calligraphy-root .shadow-2xl, .calligraphy-root.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.calligraphy-root .shadow-md, .calligraphy-root.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.calligraphy-root .shadow-sm, .calligraphy-root.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.calligraphy-root .shadow-xl, .calligraphy-root.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.calligraphy-root .outline-none, .calligraphy-root.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.calligraphy-root .outline, .calligraphy-root.outline {
+  outline-style: solid;
+}
+.calligraphy-root .ring-1, .calligraphy-root.ring-1 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.calligraphy-root .ring-indigo-600, .calligraphy-root.ring-indigo-600 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(79 70 229 / var(--tw-ring-opacity, 1));
+}
+.calligraphy-root .filter, .calligraphy-root.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.calligraphy-root .backdrop-blur-md, .calligraphy-root.backdrop-blur-md {
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.calligraphy-root .backdrop-blur-sm, .calligraphy-root.backdrop-blur-sm {
+  --tw-backdrop-blur: blur(4px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.calligraphy-root .transition-all, .calligraphy-root.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.calligraphy-root .transition-colors, .calligraphy-root.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.calligraphy-root .transition-opacity, .calligraphy-root.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.calligraphy-root .transition-transform, .calligraphy-root.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.calligraphy-root .duration-150, .calligraphy-root.duration-150 {
+  transition-duration: 150ms;
+}
+.calligraphy-root .placeholder\:text-slate-400::-moz-placeholder, .calligraphy-root.placeholder\:text-slate-400::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .placeholder\:text-slate-400::placeholder, .calligraphy-root.placeholder\:text-slate-400::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:scale-110:hover, .calligraphy-root.hover\:scale-110:hover {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.calligraphy-root .hover\:border-indigo-200:hover, .calligraphy-root.hover\:border-indigo-200:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(199 210 254 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .hover\:border-indigo-300:hover, .calligraphy-root.hover\:border-indigo-300:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(165 180 252 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .hover\:border-indigo-400:hover, .calligraphy-root.hover\:border-indigo-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(129 140 248 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .hover\:border-slate-300:hover, .calligraphy-root.hover\:border-slate-300:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .hover\:bg-indigo-100:hover, .calligraphy-root.hover\:bg-indigo-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(224 231 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-indigo-50:hover, .calligraphy-root.hover\:bg-indigo-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 242 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-indigo-50\/20:hover, .calligraphy-root.hover\:bg-indigo-50\/20:hover {
+  background-color: rgb(238 242 255 / 0.2);
+}
+.calligraphy-root .hover\:bg-indigo-600:hover, .calligraphy-root.hover\:bg-indigo-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 70 229 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-indigo-700:hover, .calligraphy-root.hover\:bg-indigo-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-red-50:hover, .calligraphy-root.hover\:bg-red-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-slate-100:hover, .calligraphy-root.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-slate-200:hover, .calligraphy-root.hover\:bg-slate-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-slate-200\/70:hover, .calligraphy-root.hover\:bg-slate-200\/70:hover {
+  background-color: rgb(226 232 240 / 0.7);
+}
+.calligraphy-root .hover\:bg-slate-50:hover, .calligraphy-root.hover\:bg-slate-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:bg-slate-50\/50:hover, .calligraphy-root.hover\:bg-slate-50\/50:hover {
+  background-color: rgb(248 250 252 / 0.5);
+}
+.calligraphy-root .hover\:bg-slate-50\/70:hover, .calligraphy-root.hover\:bg-slate-50\/70:hover {
+  background-color: rgb(248 250 252 / 0.7);
+}
+.calligraphy-root .hover\:bg-white:hover, .calligraphy-root.hover\:bg-white:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .hover\:text-indigo-600:hover, .calligraphy-root.hover\:text-indigo-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-indigo-800:hover, .calligraphy-root.hover\:text-indigo-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 48 163 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-indigo-900:hover, .calligraphy-root.hover\:text-indigo-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(49 46 129 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-red-500:hover, .calligraphy-root.hover\:text-red-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-red-600:hover, .calligraphy-root.hover\:text-red-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-red-700:hover, .calligraphy-root.hover\:text-red-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-slate-700:hover, .calligraphy-root.hover\:text-slate-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-slate-800:hover, .calligraphy-root.hover\:text-slate-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-slate-900:hover, .calligraphy-root.hover\:text-slate-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:text-white:hover, .calligraphy-root.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .hover\:underline:hover, .calligraphy-root.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+.calligraphy-root .hover\:shadow-md:hover, .calligraphy-root.hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.calligraphy-root .focus\:border-indigo-400:focus, .calligraphy-root.focus\:border-indigo-400:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(129 140 248 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .focus\:border-indigo-500:focus, .calligraphy-root.focus\:border-indigo-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .focus\:bg-white:focus, .calligraphy-root.focus\:bg-white:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .focus\:ring-1:focus, .calligraphy-root.focus\:ring-1:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.calligraphy-root .focus\:ring-indigo-500:focus, .calligraphy-root.focus\:ring-indigo-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity, 1));
+}
+.calligraphy-root .disabled\:opacity-30:disabled, .calligraphy-root.disabled\:opacity-30:disabled {
+  opacity: 0.3;
+}
+.calligraphy-root .disabled\:opacity-50:disabled, .calligraphy-root.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+.calligraphy-root .disabled\:opacity-70:disabled, .calligraphy-root.disabled\:opacity-70:disabled {
+  opacity: 0.7;
+}
+.calligraphy-root .group:hover .group-hover\:text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .group\/sec:hover .group-hover\/sec\:opacity-100 {
+  opacity: 1;
+}
+@media (min-width: 640px) {
+
+  .calligraphy-root .sm\:block, .calligraphy-root.sm\:block {
+    display: block;
+  }
+
+  .calligraphy-root .sm\:inline, .calligraphy-root.sm\:inline {
+    display: inline;
+  }
+}
+@media (min-width: 768px) {
+
+  .calligraphy-root .md\:inline, .calligraphy-root.md\:inline {
+    display: inline;
+  }
+
+  .calligraphy-root .md\:w-64, .calligraphy-root.md\:w-64 {
+    width: 16rem;
+  }
+
+  .calligraphy-root .md\:w-96, .calligraphy-root.md\:w-96 {
+    width: 24rem;
+  }
+
+  .calligraphy-root .md\:grid-cols-2, .calligraphy-root.md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calligraphy-root .md\:p-8, .calligraphy-root.md\:p-8 {
+    padding: 2rem;
+  }
+
+  .calligraphy-root .md\:px-6, .calligraphy-root.md\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .calligraphy-root .md\:text-3xl, .calligraphy-root.md\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .calligraphy-root .md\:text-base, .calligraphy-root.md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .calligraphy-root .md\:text-sm, .calligraphy-root.md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+@media (min-width: 1024px) {
+
+  .calligraphy-root .lg\:inline, .calligraphy-root.lg\:inline {
+    display: inline;
+  }
+
+  .calligraphy-root .lg\:flex, .calligraphy-root.lg\:flex {
+    display: flex;
+  }
+}
+@media (min-width: 1280px) {
+
+  .calligraphy-root .xl\:flex, .calligraphy-root.xl\:flex {
+    display: flex;
+  }
+}
+.calligraphy-root .dark\:border-indigo-900\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:border-indigo-900\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  border-color: rgb(49 46 129 / 0.6);
+}
+.calligraphy-root .dark\:border-slate-600:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:border-slate-600:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:border-slate-700:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:border-slate-700:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:border-slate-800:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:border-slate-800:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#070b13\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#070b13\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(7 11 19 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#0b0f19\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0b0f19\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(11 15 25 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#0d121f\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0d121f\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(13 18 31 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#0f1523\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0f1523\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 21 35 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#0f1523\]\/50:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0f1523\]\/50:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(15 21 35 / 0.5);
+}
+.calligraphy-root .dark\:bg-\[\#0f1523\]\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0f1523\]\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(15 21 35 / 0.6);
+}
+.calligraphy-root .dark\:bg-\[\#0f1523\]\/70:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0f1523\]\/70:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(15 21 35 / 0.7);
+}
+.calligraphy-root .dark\:bg-\[\#0f1523\]\/80:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#0f1523\]\/80:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(15 21 35 / 0.8);
+}
+.calligraphy-root .dark\:bg-\[\#131a29\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#131a29\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(19 26 41 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-\[\#131a29\]\/90:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#131a29\]\/90:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(19 26 41 / 0.9);
+}
+.calligraphy-root .dark\:bg-\[\#1a2336\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-\[\#1a2336\]:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 35 54 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-amber-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-amber-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(69 26 3 / 0.6);
+}
+.calligraphy-root .dark\:bg-black\/80:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-black\/80:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(0 0 0 / 0.8);
+}
+.calligraphy-root .dark\:bg-blue-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-blue-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(23 37 84 / 0.6);
+}
+.calligraphy-root .dark\:bg-indigo-950\/30:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-indigo-950\/30:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.3);
+}
+.calligraphy-root .dark\:bg-indigo-950\/40:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-indigo-950\/40:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.4);
+}
+.calligraphy-root .dark\:bg-indigo-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-indigo-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.6);
+}
+.calligraphy-root .dark\:bg-purple-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-purple-950\/60:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(59 7 100 / 0.6);
+}
+.calligraphy-root .dark\:bg-slate-800:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-slate-800:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:bg-slate-800\/95:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:bg-slate-800\/95:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 41 59 / 0.95);
+}
+.calligraphy-root .dark\:text-amber-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-amber-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(252 211 77 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-blue-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-blue-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(147 197 253 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-emerald-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-emerald-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(52 211 153 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-indigo-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-indigo-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(165 180 252 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-indigo-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-indigo-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-purple-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-purple-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(216 180 254 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-100:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-100:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(241 245 249 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-200:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-200:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-300:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(203 213 225 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:text-slate-600:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:text-slate-600:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(71 85 105 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:placeholder\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"])::-moz-placeholder, .calligraphy-root.dark\:placeholder\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"])::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:placeholder\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"])::placeholder, .calligraphy-root.dark\:placeholder\:text-slate-500:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"])::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:border-indigo-500:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:border-indigo-500:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:border-indigo-800:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:border-indigo-800:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 48 163 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:border-slate-600:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:border-slate-600:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:bg-\[\#1a2336\]:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-\[\#1a2336\]:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 35 54 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:bg-\[\#1a2336\]\/60:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-\[\#1a2336\]\/60:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(26 35 54 / 0.6);
+}
+.calligraphy-root .dark\:hover\:bg-\[\#1a2336\]\/80:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-\[\#1a2336\]\/80:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(26 35 54 / 0.8);
+}
+.calligraphy-root .dark\:hover\:bg-indigo-950\/20:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-indigo-950\/20:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.2);
+}
+.calligraphy-root .dark\:hover\:bg-indigo-950\/50:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-indigo-950\/50:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.5);
+}
+.calligraphy-root .dark\:hover\:bg-indigo-950\/60:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-indigo-950\/60:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(30 27 75 / 0.6);
+}
+.calligraphy-root .dark\:hover\:bg-red-950\/50:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-red-950\/50:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  background-color: rgb(69 10 10 / 0.5);
+}
+.calligraphy-root .dark\:hover\:bg-slate-700:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:bg-slate-700:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:text-indigo-200:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:text-indigo-200:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(199 210 254 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:text-indigo-400:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:text-indigo-400:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:text-red-400:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:text-red-400:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:hover\:text-slate-200:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:hover\:text-slate-200:hover:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity, 1));
+}
+.calligraphy-root .dark\:focus\:bg-\[\#1a2336\]:focus:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]), .calligraphy-root.dark\:focus\:bg-\[\#1a2336\]:focus:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 35 54 / var(--tw-bg-opacity, 1));
+}
+.calligraphy-root .group:hover .dark\:group-hover\:text-indigo-400:is(.dark *, [data-theme="dark"] *, .dark, [data-theme="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+}
+@media print {
+
+  .calligraphy-root .print\:m-0, .calligraphy-root.print\:m-0 {
+    margin: 0px;
+  }
+
+  .calligraphy-root .print\:hidden, .calligraphy-root.print\:hidden {
+    display: none;
+  }
+
+  .calligraphy-root .print\:transform-none, .calligraphy-root.print\:transform-none {
+    transform: none;
+  }
+
+  .calligraphy-root .print\:select-auto, .calligraphy-root.print\:select-auto {
+    -webkit-user-select: auto;
+       -moz-user-select: auto;
+            user-select: auto;
+  }
+
+  .calligraphy-root .print\:break-after-page, .calligraphy-root.print\:break-after-page {
+    -moz-column-break-after: page;
+         break-after: page;
+  }
+
+  .calligraphy-root .print\:gap-0, .calligraphy-root.print\:gap-0 {
+    gap: 0px;
+  }
+
+  .calligraphy-root .print\:overflow-visible, .calligraphy-root.print\:overflow-visible {
+    overflow: visible;
+  }
+
+  .calligraphy-root .print\:rounded-none, .calligraphy-root.print\:rounded-none {
+    border-radius: 0px;
+  }
+
+  .calligraphy-root .print\:border-none, .calligraphy-root.print\:border-none {
+    border-style: none;
+  }
+
+  .calligraphy-root .print\:bg-white, .calligraphy-root.print\:bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  }
+
+  .calligraphy-root .print\:p-0, .calligraphy-root.print\:p-0 {
+    padding: 0px;
+  }
+
+  .calligraphy-root .print\:text-slate-500, .calligraphy-root.print\:text-slate-500 {
+    --tw-text-opacity: 1;
+    color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+  }
+
+  .calligraphy-root .print\:shadow-none, .calligraphy-root.print\:shadow-none {
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+}
+
+/* -------------------------------------------------------------
+   Worksheet Header Logo Action Controls (Update & Remove)
+   ------------------------------------------------------------- */
+.calligraphy-root .worksheet-header,
+.calligraphy-root .worksheet-header *,
+.calligraphy-root .worksheet-logo-badge,
+.calligraphy-root .worksheet-logo-toolbar {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+.calligraphy-root .worksheet-logo-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.calligraphy-root .worksheet-logo-img {
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1.5px dashed transparent;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.calligraphy-root .worksheet-logo-badge:hover .worksheet-logo-img {
+  border-color: #6366f1;
+}
+
+.calligraphy-root .worksheet-logo-toolbar {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  z-index: 100;
+}
+
+/* Alignment positions for toolbar to avoid page overflow */
+.calligraphy-root .worksheet-logo-toolbar.toolbar-left {
+  left: 0;
+  transform: none;
+}
+.calligraphy-root .worksheet-logo-toolbar.toolbar-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.calligraphy-root .worksheet-logo-toolbar.toolbar-right {
+  right: 0;
+  left: auto;
+  transform: none;
+}
+
+/* Hover bridge */
+.calligraphy-root .worksheet-logo-toolbar::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.calligraphy-root .worksheet-logo-badge:hover .worksheet-logo-toolbar,
+.calligraphy-root .worksheet-logo-badge:focus-within .worksheet-logo-toolbar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Custom styled action buttons in sidebar and toolbar */
+.calligraphy-root .btn-logo-update {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: 1px solid #4338ca;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.calligraphy-root .btn-logo-update:hover {
+  background-color: #4338ca;
+}
+
+.calligraphy-root .btn-logo-remove {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: 1px solid #b91c1c;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.calligraphy-root .btn-logo-remove:hover {
+  background-color: #b91c1c;
+}
+
+.calligraphy-root .btn-sidebar-update-logo {
+  background-color: #eef2ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.calligraphy-root .btn-sidebar-update-logo:hover {
+  background-color: #e0e7ff;
+}
+.calligraphy-root[data-theme='dark'] .btn-sidebar-update-logo,
+.calligraphy-root.dark .btn-sidebar-update-logo {
+  background-color: rgba(49, 46, 129, 0.4);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.4);
+}
+.calligraphy-root[data-theme='dark'] .btn-sidebar-update-logo:hover,
+.calligraphy-root.dark .btn-sidebar-update-logo:hover {
+  background-color: rgba(49, 46, 129, 0.6);
+}
+
+.calligraphy-root .btn-sidebar-remove-logo {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.calligraphy-root .btn-sidebar-remove-logo:hover {
+  background-color: #fee2e2;
+}
+.calligraphy-root[data-theme='dark'] .btn-sidebar-remove-logo,
+.calligraphy-root.dark .btn-sidebar-remove-logo {
+  background-color: rgba(127, 29, 29, 0.3);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.calligraphy-root[data-theme='dark'] .btn-sidebar-remove-logo:hover,
+.calligraphy-root.dark .btn-sidebar-remove-logo:hover {
+  background-color: rgba(127, 29, 29, 0.5);
+}
+
