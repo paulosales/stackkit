@@ -1,14 +1,18 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Worksheet } from '../types';
 import {
   loadCurrentWorksheet,
   saveCurrentWorksheet,
   saveWorksheetToLibrary,
+  isDefaultWorksheet,
 } from '../utils/storage';
+import { getDefaultWorksheet } from '../constants/defaultTemplates';
 import { downloadWorksheetPDF } from '../utils/pdfGenerator';
 
-export function useWorksheet() {
-  const [worksheet, setWorksheet] = useState<Worksheet>(() => loadCurrentWorksheet());
+export function useWorksheet(lang?: string) {
+  const { t } = useTranslation();
+  const [worksheet, setWorksheet] = useState<Worksheet>(() => loadCurrentWorksheet(lang));
   const [activePageIndex, setActivePageIndex] = useState<number>(0);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState<boolean>(false);
   const [pdfProgress, setPdfProgress] = useState<{ current: number; total: number } | null>(null);
@@ -17,6 +21,17 @@ export function useWorksheet() {
   const [viewMode, setViewMode] = useState<'single' | 'all'>('all');
 
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // If the active worksheet is an unmodified default template and lang changes, adapt it
+  useEffect(() => {
+    if (!lang) return;
+    setWorksheet((prev) => {
+      if (isDefaultWorksheet(prev)) {
+        return getDefaultWorksheet(lang);
+      }
+      return prev;
+    });
+  }, [lang]);
 
   // Auto-save draft to local storage on changes
   useEffect(() => {
@@ -44,18 +59,18 @@ export function useWorksheet() {
   // Manual Quick Save to library
   const handleQuickSave = useCallback(() => {
     saveWorksheetToLibrary(worksheet);
-    setSaveStatus('Saved to browser library!');
+    setSaveStatus(t('calligraphy.navbar.saveStatusSaved', 'Saved to browser library!'));
     setTimeout(() => setSaveStatus(''), 2500);
-  }, [worksheet]);
+  }, [worksheet, t]);
 
   // Load a worksheet (from template or saved sheet)
   const handleLoadWorksheet = useCallback((loaded: Worksheet) => {
     setWorksheet(loaded);
     saveCurrentWorksheet(loaded);
     setActivePageIndex(0);
-    setSaveStatus('Worksheet loaded!');
+    setSaveStatus(t('calligraphy.navbar.saveStatusLoaded', 'Worksheet loaded!'));
     setTimeout(() => setSaveStatus(''), 2500);
-  }, []);
+  }, [t]);
 
   // Update Worksheet state with functional updater
   const handleUpdateWorksheet = useCallback((updater: (prev: Worksheet) => Worksheet) => {
@@ -82,16 +97,16 @@ export function useWorksheet() {
         },
       });
 
-      setSaveStatus('PDF downloaded successfully!');
+      setSaveStatus(t('calligraphy.navbar.saveStatusPdfSuccess', 'PDF downloaded successfully!'));
       setTimeout(() => setSaveStatus(''), 3000);
     } catch (err) {
       console.error('Failed to export PDF:', err);
-      alert('Failed to generate PDF. Please try printing directly or reduce page count.');
+      alert(t('calligraphy.navbar.saveStatusPdfError', 'Failed to generate PDF. Please try printing directly or reduce page count.'));
     } finally {
       setIsDownloadingPDF(false);
       setPdfProgress(null);
     }
-  }, [worksheet]);
+  }, [worksheet, t]);
 
   return {
     worksheet,

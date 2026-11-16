@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageLayoutConfig, HeaderConfig } from '../../types';
 import { PAPER_SIZES } from '../../constants/paperSizes';
 import {
@@ -32,11 +33,13 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
   onUpdateHeader,
   onUpdateTitle,
 }) => {
+  const { t } = useTranslation();
+
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert('Image file is too large. Please select an image under 5MB.');
+        alert(t('calligraphy.layout.imageTooLarge', 'Image file is too large. Please select an image under 5MB.'));
         return;
       }
       const reader = new FileReader();
@@ -62,9 +65,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       case 'studentDate':
         onUpdateHeader({
           showName: true,
-          nameLabel: 'Name: ______________________',
+          nameLabel: t('calligraphy.layout.namePlaceholder', 'Name: ______________________'),
           showDate: true,
-          dateLabel: 'Date: ____________',
+          dateLabel: t('calligraphy.layout.datePlaceholder', 'Date: ____________'),
           showGrade: false,
           showScore: false,
           customFieldEnabled: false,
@@ -73,9 +76,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       case 'studentGrade':
         onUpdateHeader({
           showName: true,
-          nameLabel: 'Name: ______________________',
+          nameLabel: t('calligraphy.layout.namePlaceholder', 'Name: ______________________'),
           showGrade: true,
-          gradeLabel: 'Grade: ______',
+          gradeLabel: t('calligraphy.layout.gradePlaceholder', 'Grade: ______'),
           showDate: false,
           showScore: false,
           customFieldEnabled: false,
@@ -84,9 +87,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       case 'calligrapher':
         onUpdateHeader({
           showName: true,
-          nameLabel: 'Calligrapher: ___________________',
+          nameLabel: t('calligraphy.layout.namePlaceholder', 'Name: ______________________'),
           showDate: true,
-          dateLabel: 'Date: ____________',
+          dateLabel: t('calligraphy.layout.datePlaceholder', 'Date: ____________'),
           showGrade: false,
           showScore: false,
           customFieldEnabled: false,
@@ -95,13 +98,13 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       case 'classroom':
         onUpdateHeader({
           showName: true,
-          nameLabel: 'Name: ______________________',
+          nameLabel: t('calligraphy.layout.namePlaceholder', 'Name: ______________________'),
           showGrade: true,
-          gradeLabel: 'Grade: ______',
+          gradeLabel: t('calligraphy.layout.gradePlaceholder', 'Grade: ______'),
           showDate: true,
-          dateLabel: 'Date: ____________',
+          dateLabel: t('calligraphy.layout.datePlaceholder', 'Date: ____________'),
           showScore: true,
-          scoreLabel: 'Score: ______',
+          scoreLabel: t('calligraphy.layout.scorePlaceholder', 'Score: ______'),
           customFieldEnabled: false,
         });
         break;
@@ -113,17 +116,18 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       {/* Paper & Print Settings */}
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          <Layout className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Paper Size & Orientation
+          <Layout className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+          {t('calligraphy.layout.paperTitle', 'Paper Size & Orientation')}
         </label>
 
         {/* Paper Size */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <label className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-              Paper Format:
+              {t('calligraphy.layout.paperFormat', 'Paper Format:')}
             </label>
             <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold">
-              A4 is Default
+              {t('calligraphy.layout.a4Default', 'A4 is Default')}
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -144,7 +148,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
                     <span className="font-semibold">{paper.name}</span>
                     {paper.id === 'a4' && (
                       <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/80 text-indigo-700 dark:text-indigo-300 font-bold ml-1">
-                        Default
+                        {t('calligraphy.layout.default', 'Default')}
                       </span>
                     )}
                   </div>
@@ -160,7 +164,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Orientation */}
         <div>
           <label className="text-xs text-slate-600 dark:text-slate-400 block mb-1.5 font-medium">
-            Orientation:
+            {t('calligraphy.layout.orientation', 'Orientation:')}
           </label>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <button
@@ -172,7 +176,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
                   : 'bg-slate-50 dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
               }`}
             >
-              Portrait (Vertical)
+              {t('calligraphy.layout.portrait', 'Portrait (Vertical)')}
             </button>
             <button
               type="button"
@@ -183,7 +187,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
                   : 'bg-slate-50 dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
               }`}
             >
-              Landscape (Horizontal)
+              {t('calligraphy.layout.landscape', 'Landscape (Horizontal)')}
             </button>
           </div>
         </div>
@@ -192,7 +196,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3">
           <div>
             <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-              <span>Gap Between Rows</span>
+              <span>{t('calligraphy.layout.gapBetweenRows', 'Gap Between Rows')}</span>
               <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                 {layout.gapBetweenRows}px
               </span>
@@ -209,7 +213,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
 
           <div>
             <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-              <span>Gap Between Sections</span>
+              <span>{t('calligraphy.layout.gapBetweenSections', 'Gap Between Sections')}</span>
               <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                 {layout.sectionGap}px
               </span>
@@ -226,7 +230,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
 
           <div className="flex items-center justify-between pt-1">
             <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-              Show Page Numbers
+              {t('calligraphy.layout.showPageNumber', 'Show Page Numbers')}
             </span>
             <input
               type="checkbox"
@@ -240,10 +244,13 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
             <div>
               <span className="text-xs text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1.5">
                 <Scissors className="w-3.5 h-3.5 text-rose-500" />
-                Show Page Break Guides in Preview
+                {t('calligraphy.layout.showPageBreaks', 'Show Page Break Guides in Preview')}
               </span>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-                Displays physical paper boundary cutoff lines and multi-page break indicators
+                {t(
+                  'calligraphy.layout.showPageBreaksDesc',
+                  'Displays physical paper boundary cutoff lines and multi-page break indicators'
+                )}
               </p>
             </div>
             <input
@@ -260,11 +267,14 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-            <ImageIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Header Logo & Branding
+            <ImageIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+            {t('calligraphy.layout.logoTitle', 'Header Logo & Branding')}
           </label>
           {header.logoUrl && (
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Show in Header</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                {t('calligraphy.layout.showInHeader', 'Show in Header')}
+              </span>
               <input
                 type="checkbox"
                 checked={header.showLogo ?? true}
@@ -275,7 +285,10 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
           )}
         </div>
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Upload an emblem, school crest, or calligraphy studio logo to place in the worksheet header.
+          {t(
+            'calligraphy.layout.logoDesc',
+            'Upload an emblem, school crest, or calligraphy studio logo to place in the worksheet header.'
+          )}
         </p>
 
         <div className="space-y-3 pt-1 border-t border-slate-100 dark:border-slate-800">
@@ -291,10 +304,19 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
                 </div>
                 <div className="text-xs truncate flex-1">
                   <div className="font-semibold text-slate-800 dark:text-slate-100 text-sm">
-                    Current Header Logo
+                    {t('calligraphy.layout.currentLogo', 'Current Header Logo')}
                   </div>
                   <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-0.5">
-                    {header.logoAlignment ? header.logoAlignment.charAt(0).toUpperCase() + header.logoAlignment.slice(1) : 'Left'} Aligned • {header.logoHeight || 45}px
+                    {t('calligraphy.layout.alignedBadge', '{{alignment}} Aligned • {{height}}px', {
+                      alignment: header.logoAlignment
+                        ? header.logoAlignment === 'center'
+                          ? t('calligraphy.layout.alignCenter', 'Center')
+                          : header.logoAlignment === 'right'
+                          ? t('calligraphy.layout.alignRight', 'Right')
+                          : t('calligraphy.layout.alignLeft', 'Left')
+                        : t('calligraphy.layout.alignLeft', 'Left'),
+                      height: header.logoHeight || 45,
+                    })}
                   </span>
                 </div>
               </div>
@@ -303,10 +325,10 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200/70 dark:border-slate-700">
                 <label
                   className="btn-sidebar-update-logo shadow-xs"
-                  title="Upload a new logo to replace the current one"
+                  title={t('calligraphy.layout.updateLogoTooltip', 'Upload a new logo to replace the current one')}
                 >
                   <Upload className="w-3.5 h-3.5" />
-                  <span>Update Logo</span>
+                  <span>{t('calligraphy.layout.updateLogo', 'Update Logo')}</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -319,10 +341,10 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
                   type="button"
                   onClick={handleRemoveLogo}
                   className="btn-sidebar-remove-logo shadow-xs"
-                  title="Remove header logo"
+                  title={t('calligraphy.layout.removeLogoTooltip', 'Remove header logo')}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                  <span>Remove Logo</span>
+                  <span>{t('calligraphy.layout.removeLogo', 'Remove Logo')}</span>
                 </button>
               </div>
             </div>
@@ -330,10 +352,10 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
             <label className="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-50/50 dark:bg-[#1a2336]/50 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/30 transition-all text-center group">
               <Upload className="w-6 h-6 text-indigo-500 mb-1.5 group-hover:scale-110 transition-transform" />
               <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
-                Click to Upload Header Logo
+                {t('calligraphy.layout.clickUploadLogo', 'Click to Upload Header Logo')}
               </span>
               <span className="text-[10px] text-slate-400 mt-0.5">
-                PNG, JPG, SVG, WebP (under 5MB)
+                {t('calligraphy.layout.fileTypesHint', 'PNG, JPG, SVG, WebP (under 5MB)')}
               </span>
               <input
                 type="file"
@@ -347,13 +369,13 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
           {/* Logo Alignment */}
           <div>
             <label className="text-xs text-slate-600 dark:text-slate-400 block mb-1.5 font-medium">
-              Logo Position & Alignment:
+              {t('calligraphy.layout.logoPosition', 'Logo Position & Alignment:')}
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'left', label: 'Left', icon: <AlignLeft className="w-3.5 h-3.5" /> },
-                { id: 'center', label: 'Center', icon: <AlignCenter className="w-3.5 h-3.5" /> },
-                { id: 'right', label: 'Right', icon: <AlignRight className="w-3.5 h-3.5" /> },
+                { id: 'left', label: t('calligraphy.layout.alignLeft', 'Left'), icon: <AlignLeft className="w-3.5 h-3.5" /> },
+                { id: 'center', label: t('calligraphy.layout.alignCenter', 'Center'), icon: <AlignCenter className="w-3.5 h-3.5" /> },
+                { id: 'right', label: t('calligraphy.layout.alignRight', 'Right'), icon: <AlignRight className="w-3.5 h-3.5" /> },
               ].map((align) => (
                 <button
                   key={align.id}
@@ -377,7 +399,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
           {/* Logo Size */}
           <div>
             <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-              <span>Logo Height</span>
+              <span>{t('calligraphy.layout.logoHeight', 'Logo Height')}</span>
               <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                 {header.logoHeight || 45}px
               </span>
@@ -398,13 +420,14 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
       {/* Title & Header Metadata */}
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          <UserCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Header Fields & Metadata
+          <UserCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+          {t('calligraphy.layout.headerFieldsTitle', 'Header Fields & Metadata')}
         </label>
 
         {/* Presets */}
         <div>
           <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block mb-1.5">
-            Quick Header Presets:
+            {t('calligraphy.layout.quickPresets', 'Quick Header Presets:')}
           </span>
           <div className="grid grid-cols-2 gap-1.5 text-xs">
             <button
@@ -412,28 +435,28 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               onClick={() => handleApplyPreset('studentDate')}
               className="py-1 px-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 text-center text-[11px] transition-colors cursor-pointer"
             >
-              Name & Date
+              {t('calligraphy.layout.presetStudentDate', 'Name & Date')}
             </button>
             <button
               type="button"
               onClick={() => handleApplyPreset('studentGrade')}
               className="py-1 px-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 text-center text-[11px] transition-colors cursor-pointer"
             >
-              Name & Grade
+              {t('calligraphy.layout.presetStudentGrade', 'Name & Grade')}
             </button>
             <button
               type="button"
               onClick={() => handleApplyPreset('calligrapher')}
               className="py-1 px-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 text-center text-[11px] transition-colors cursor-pointer"
             >
-              Calligrapher & Date
+              {t('calligraphy.layout.presetCalligrapher', 'Calligrapher & Date')}
             </button>
             <button
               type="button"
               onClick={() => handleApplyPreset('classroom')}
               className="py-1 px-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 text-center text-[11px] transition-colors cursor-pointer"
             >
-              Full Classroom
+              {t('calligraphy.layout.presetClassroom', 'Full Classroom')}
             </button>
           </div>
         </div>
@@ -441,7 +464,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Main Title */}
         <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Worksheet Title:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.titleLabel', 'Worksheet Title:')}
+            </span>
             <input
               type="checkbox"
               checked={showTitle}
@@ -462,7 +487,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Student Name */}
         <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Name Line:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.nameField', 'Name Line:')}
+            </span>
             <input
               type="checkbox"
               checked={header.showName}
@@ -476,7 +503,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               value={header.nameLabel}
               onChange={(e) => onUpdateHeader({ nameLabel: e.target.value })}
               className="w-full text-xs p-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100"
-              placeholder="e.g. Name: ______________________"
+              placeholder={t('calligraphy.layout.namePlaceholder', 'e.g. Name: ______________________')}
             />
           )}
         </div>
@@ -484,7 +511,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Date */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Date Line:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.dateField', 'Date Line:')}
+            </span>
             <input
               type="checkbox"
               checked={header.showDate}
@@ -498,7 +527,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               value={header.dateLabel}
               onChange={(e) => onUpdateHeader({ dateLabel: e.target.value })}
               className="w-full text-xs p-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100"
-              placeholder="e.g. Date: ____________"
+              placeholder={t('calligraphy.layout.datePlaceholder', 'e.g. Date: ____________')}
             />
           )}
         </div>
@@ -506,7 +535,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Grade */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Grade Line:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.gradeField', 'Grade Line:')}
+            </span>
             <input
               type="checkbox"
               checked={header.showGrade}
@@ -520,7 +551,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               value={header.gradeLabel}
               onChange={(e) => onUpdateHeader({ gradeLabel: e.target.value })}
               className="w-full text-xs p-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100"
-              placeholder="e.g. Grade: ______"
+              placeholder={t('calligraphy.layout.gradePlaceholder', 'e.g. Grade: ______')}
             />
           )}
         </div>
@@ -528,7 +559,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Score */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Score / Mark Line:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.scoreField', 'Score / Mark Line:')}
+            </span>
             <input
               type="checkbox"
               checked={header.showScore}
@@ -542,7 +575,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               value={header.scoreLabel}
               onChange={(e) => onUpdateHeader({ scoreLabel: e.target.value })}
               className="w-full text-xs p-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100"
-              placeholder="e.g. Score: ______"
+              placeholder={t('calligraphy.layout.scorePlaceholder', 'e.g. Score: ______')}
             />
           )}
         </div>
@@ -550,7 +583,9 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
         {/* Custom Extra Line */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Custom Field:</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              {t('calligraphy.layout.customField', 'Custom Field:')}
+            </span>
             <input
               type="checkbox"
               checked={header.customFieldEnabled ?? false}
@@ -564,7 +599,7 @@ export const PageLayoutTab: React.FC<PageLayoutTabProps> = ({
               value={header.customFieldLabel || ''}
               onChange={(e) => onUpdateHeader({ customFieldLabel: e.target.value })}
               className="w-full text-xs p-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100"
-              placeholder="e.g. Teacher: ____________ or Room: ______"
+              placeholder={t('calligraphy.layout.customPlaceholder', 'e.g. Teacher: ____________ or Room: ______')}
             />
           )}
         </div>

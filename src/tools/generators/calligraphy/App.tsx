@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useWorksheet } from './hooks/useWorksheet';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/sidebar/Sidebar';
@@ -26,8 +27,15 @@ function getStackKitTheme(): 'dark' | 'light' {
   return 'dark'; // StackKit default
 }
 
-export const App: React.FC<CalligraphyStudioProps> = () => {
+export const App: React.FC<CalligraphyStudioProps> = ({ lang }) => {
+  const { i18n } = useTranslation();
   const [theme, setTheme] = useState<'dark' | 'light'>(getStackKitTheme);
+
+  useEffect(() => {
+    if (lang && i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, i18n]);
 
   useEffect(() => {
     const applyTheme = () => {
@@ -54,6 +62,8 @@ export const App: React.FC<CalligraphyStudioProps> = () => {
     };
   }, []);
 
+  const activeLang = lang || i18n.language || 'en';
+
   const {
     worksheet,
     activePageIndex,
@@ -69,7 +79,7 @@ export const App: React.FC<CalligraphyStudioProps> = () => {
     onLoadWorksheet,
     onUpdateWorksheet,
     onDownloadPDF,
-  } = useWorksheet();
+  } = useWorksheet(activeLang);
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);

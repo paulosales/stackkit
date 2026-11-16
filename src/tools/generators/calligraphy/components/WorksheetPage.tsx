@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   GuideLineConfig,
   TypographyConfig,
@@ -79,6 +80,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
   onDeleteSection,
   onAddSection,
 }) => {
+  const { t } = useTranslation();
   const { widthPx: pageWidth, heightPx: physicalPaperHeight } = getPaperDimensions(
     layout.paperSize || 'a4',
     layout.orientation || 'portrait'
@@ -91,7 +93,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert('Image file is too large. Please select an image under 5MB.');
+        alert(t('calligraphy.layout.imageTooLarge', 'Image file is too large. Please select an image under 5MB.'));
         return;
       }
       const reader = new FileReader();
@@ -144,13 +146,13 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
             style={{ height: `${header.logoHeight || 45}px`, maxHeight: '95px' }}
             className="worksheet-logo-img max-w-[220px]"
             onClick={() => isEditingEnabled && fileInputRef.current?.click()}
-            title={isEditingEnabled ? 'Click to change logo image' : undefined}
+            title={isEditingEnabled ? t('calligraphy.preview.clickToChangeLogo', 'Click to change logo image') : undefined}
           />
 
           {/* Single Floating Alignment, Resize, Update & Remove Toolbar on Hover */}
           {isEditingEnabled && onUpdateHeader && (
             <div className={`worksheet-logo-toolbar toolbar-${alignment} print:hidden font-sans`}>
-              <span className="text-[10px] text-slate-400 font-medium">Align:</span>
+              <span className="text-[10px] text-slate-400 font-medium">{t('calligraphy.layout.alignPrefix', 'Align:')}</span>
               <button
                 type="button"
                 onClick={(e) => {
@@ -160,7 +162,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 className={`p-1 rounded hover:bg-slate-800 transition-colors cursor-pointer ${
                   (header.logoAlignment || 'left') === 'left' ? 'text-indigo-400 font-bold bg-slate-800' : 'text-slate-300'
                 }`}
-                title="Align Logo Left"
+                title={t('calligraphy.preview.alignLogoLeft', 'Align Logo Left')}
               >
                 <AlignLeft className="w-3.5 h-3.5" />
               </button>
@@ -173,7 +175,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 className={`p-1 rounded hover:bg-slate-800 transition-colors cursor-pointer ${
                   header.logoAlignment === 'center' ? 'text-indigo-400 font-bold bg-slate-800' : 'text-slate-300'
                 }`}
-                title="Align Logo Center"
+                title={t('calligraphy.preview.alignLogoCenter', 'Align Logo Center')}
               >
                 <AlignCenter className="w-3.5 h-3.5" />
               </button>
@@ -186,7 +188,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 className={`p-1 rounded hover:bg-slate-800 transition-colors cursor-pointer ${
                   header.logoAlignment === 'right' ? 'text-indigo-400 font-bold bg-slate-800' : 'text-slate-300'
                 }`}
-                title="Align Logo Right"
+                title={t('calligraphy.preview.alignLogoRight', 'Align Logo Right')}
               >
                 <AlignRight className="w-3.5 h-3.5" />
               </button>
@@ -201,7 +203,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                   onUpdateHeader({ logoHeight: Math.max(25, (header.logoHeight || 45) - 6) });
                 }}
                 className="px-1.5 py-0.5 rounded text-[11px] text-slate-300 hover:bg-slate-800 cursor-pointer font-bold"
-                title="Decrease logo size"
+                title={t('calligraphy.preview.decreaseLogo', 'Decrease logo size')}
               >
                 -
               </button>
@@ -215,7 +217,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                   onUpdateHeader({ logoHeight: Math.min(90, (header.logoHeight || 45) + 6) });
                 }}
                 className="px-1.5 py-0.5 rounded text-[11px] text-slate-300 hover:bg-slate-800 cursor-pointer font-bold"
-                title="Increase logo size"
+                title={t('calligraphy.preview.increaseLogo', 'Increase logo size')}
               >
                 +
               </button>
@@ -230,10 +232,10 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                   fileInputRef.current?.click();
                 }}
                 className="btn-logo-update"
-                title="Select a new logo image"
+                title={t('calligraphy.layout.updateLogoTooltip', 'Select a new logo image')}
               >
                 <Upload className="w-3 h-3" />
-                <span>Update</span>
+                <span>{t('calligraphy.preview.update', 'Update')}</span>
               </button>
 
               {/* Remove Logo Button */}
@@ -241,10 +243,10 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 type="button"
                 onClick={handleRemoveLogo}
                 className="btn-logo-remove"
-                title="Remove logo from header"
+                title={t('calligraphy.layout.removeLogoTooltip', 'Remove logo from header')}
               >
                 <Trash2 className="w-3 h-3" />
-                <span>Remove</span>
+                <span>{t('calligraphy.preview.remove', 'Remove')}</span>
               </button>
             </div>
           )}
@@ -257,10 +259,10 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
       return (
         <label
           className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-1.5 px-2.5 py-1 text-xs border border-dashed border-slate-300 hover:border-indigo-400 bg-slate-50/70 hover:bg-indigo-50/60 text-slate-600 hover:text-indigo-600 rounded-lg cursor-pointer print:hidden font-sans shadow-xs"
-          title="Upload school crest or branding logo"
+          title={t('calligraphy.preview.uploadLogoTitle', 'Upload school crest or branding logo')}
         >
           <ImageIcon className="w-3.5 h-3.5 text-indigo-500" />
-          <span>+ Upload Logo</span>
+          <span>{t('calligraphy.preview.uploadLogo', '+ Upload Logo')}</span>
           <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
         </label>
       );
@@ -307,7 +309,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                           value={header.nameLabel}
                           onChange={(e) => onUpdateHeader({ nameLabel: e.target.value })}
                           className="bg-transparent hover:bg-slate-50 focus:bg-white px-1 py-0.5 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 font-medium transition-all"
-                          title="Click to edit Name field label"
+                          title={t('calligraphy.preview.editNameTitle', 'Click to edit Name field label')}
                         />
                       ) : (
                         header.nameLabel
@@ -323,7 +325,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                           value={header.gradeLabel}
                           onChange={(e) => onUpdateHeader({ gradeLabel: e.target.value })}
                           className="bg-transparent hover:bg-slate-50 focus:bg-white px-1 py-0.5 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 transition-all"
-                          title="Click to edit Grade field label"
+                          title={t('calligraphy.preview.editGradeTitle', 'Click to edit Grade field label')}
                         />
                       ) : (
                         header.gradeLabel
@@ -342,7 +344,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                           value={header.dateLabel}
                           onChange={(e) => onUpdateHeader({ dateLabel: e.target.value })}
                           className="bg-transparent hover:bg-slate-50 focus:bg-white px-1 py-0.5 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 transition-all"
-                          title="Click to edit Date field label"
+                          title={t('calligraphy.preview.editDateTitle', 'Click to edit Date field label')}
                         />
                       ) : (
                         header.dateLabel
@@ -358,7 +360,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                           value={header.scoreLabel}
                           onChange={(e) => onUpdateHeader({ scoreLabel: e.target.value })}
                           className="bg-transparent hover:bg-slate-50 focus:bg-white px-1 py-0.5 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 transition-all"
-                          title="Click to edit Score field label"
+                          title={t('calligraphy.preview.editScoreTitle', 'Click to edit Score field label')}
                         />
                       ) : (
                         header.scoreLabel
@@ -371,13 +373,13 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                       {isEditingEnabled && onUpdateHeader ? (
                         <input
                           type="text"
-                          value={header.customFieldLabel || 'Class: ______'}
+                          value={header.customFieldLabel || t('calligraphy.layout.defaultCustomLabel', 'Class: ______')}
                           onChange={(e) => onUpdateHeader({ customFieldLabel: e.target.value })}
                           className="bg-transparent hover:bg-slate-50 focus:bg-white px-1 py-0.5 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 transition-all"
-                          title="Click to edit custom field label"
+                          title={t('calligraphy.preview.editCustomTitle', 'Click to edit custom field label')}
                         />
                       ) : (
-                        header.customFieldLabel || 'Class: ______'
+                        header.customFieldLabel || t('calligraphy.layout.defaultCustomLabel', 'Class: ______')
                       )}
                     </div>
                   )}
@@ -397,7 +399,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 value={title}
                 onChange={(e) => onUpdateTitle(e.target.value)}
                 className="text-center bg-transparent hover:bg-slate-50 focus:bg-white px-3 py-1 rounded outline-none border border-transparent hover:border-slate-300 focus:border-indigo-400 font-bold transition-all w-full max-w-xl mx-auto"
-                title="Click to edit title"
+                title={t('calligraphy.preview.clickToEditTitle', 'Click to edit title')}
               />
             ) : (
               <h1 className="text-2xl md:text-3xl font-bold text-slate-900 m-0">{title}</h1>
@@ -433,7 +435,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                       type="button"
                       onClick={() => onDeleteSection(section.id)}
                       className="opacity-0 group-hover/sec:opacity-100 p-1 text-slate-400 hover:text-red-500 rounded transition-opacity print:hidden text-xs flex items-center gap-1 cursor-pointer"
-                      title="Delete section"
+                      title={t('calligraphy.preview.deleteSectionTooltip', 'Delete section')}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -472,21 +474,21 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                     onClick={() => onAddRowToSection(section.id, 'trace')}
                     className="text-xs flex items-center gap-1 text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1 rounded transition-colors font-sans font-medium cursor-pointer"
                   >
-                    <Plus className="w-3 h-3" /> Add Trace Line
+                    <Plus className="w-3 h-3" /> {t('calligraphy.preview.addTraceLine', 'Add Trace Line')}
                   </button>
                   <button
                     type="button"
                     onClick={() => onAddRowToSection(section.id, 'model')}
                     className="text-xs flex items-center gap-1 text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded transition-colors font-sans font-medium cursor-pointer"
                   >
-                    <Plus className="w-3 h-3" /> Add Model Line
+                    <Plus className="w-3 h-3" /> {t('calligraphy.preview.addModelLine', 'Add Model Line')}
                   </button>
                   <button
                     type="button"
                     onClick={() => onAddRowToSection(section.id, 'blank')}
                     className="text-xs flex items-center gap-1 text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded transition-colors font-sans font-medium cursor-pointer"
                   >
-                    <Plus className="w-3 h-3" /> Add Blank Line
+                    <Plus className="w-3 h-3" /> {t('calligraphy.preview.addBlankLine', 'Add Blank Line')}
                   </button>
                 </div>
               )}
@@ -501,7 +503,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 onClick={onAddSection}
                 className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 hover:bg-white border border-dashed border-slate-300 hover:border-indigo-300 px-4 py-2 rounded-lg transition-all font-sans font-medium cursor-pointer"
               >
-                <Plus className="w-4 h-4" /> Add New Section
+                <Plus className="w-4 h-4" /> {t('calligraphy.preview.addNewSection', 'Add New Section')}
               </button>
             </div>
           )}
@@ -511,7 +513,10 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
       {/* Footer / Page Number */}
       {layout.showPageNumber && (
         <div className="mt-8 pt-4 border-t border-slate-100 text-center font-sans text-xs text-slate-400 print:text-slate-500">
-          Page {sheetNumber ?? page.pageNumber} of {totalSheets ?? totalPages}
+          {t('calligraphy.preview.pageIndicator', 'Page {{current}} of {{total}}', {
+            current: sheetNumber ?? page.pageNumber,
+            total: totalSheets ?? totalPages,
+          })}
         </div>
       )}
     </div>

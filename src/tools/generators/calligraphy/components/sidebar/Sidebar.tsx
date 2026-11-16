@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Worksheet } from '../../types';
 import { ContentTab } from './ContentTab';
 import { GuidelinesTab } from './GuidelinesTab';
@@ -25,23 +26,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed,
   onToggleCollapse,
 }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>('content');
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
-    { id: 'content', label: 'Content', icon: <BookOpen className="w-4 h-4" /> },
-    { id: 'guidelines', label: 'Guidelines', icon: <Compass className="w-4 h-4" /> },
-    { id: 'typography', label: 'Typography', icon: <Type className="w-4 h-4" /> },
-    { id: 'layout', label: 'Layout & Header', icon: <Layout className="w-4 h-4" /> },
+    { id: 'content', label: t('calligraphy.tabs.content', 'Content'), icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'guidelines', label: t('calligraphy.tabs.guidelines', 'Guidelines'), icon: <Compass className="w-4 h-4" /> },
+    { id: 'typography', label: t('calligraphy.tabs.typography', 'Typography'), icon: <Type className="w-4 h-4" /> },
+    { id: 'layout', label: t('calligraphy.tabs.layout', 'Layout & Header'), icon: <Layout className="w-4 h-4" /> },
   ];
 
   if (isCollapsed) {
     return (
-      <div className="bg-white dark:bg-[#131a29] border-r border-slate-200 dark:border-slate-800 w-12 flex flex-col items-center py-4 print:hidden transition-all shadow-sm">
+      <div className="bg-white dark:bg-[#131a29] border-r border-slate-200 dark:border-slate-800 w-12 flex flex-col items-center py-4 print:hidden transition-all shadow-sm font-sans">
         <button
           type="button"
           onClick={onToggleCollapse}
           className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-[#1a2336] rounded-lg transition-colors mb-4"
-          title="Expand settings sidebar"
+          title={t('calligraphy.tabs.expand', 'Expand settings sidebar')}
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -66,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }
 
   return (
-    <aside className="w-80 md:w-96 bg-slate-50/70 dark:bg-[#0d121f] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full min-h-0 print:hidden transition-all shrink-0">
+    <aside className="w-80 md:w-96 bg-slate-50/70 dark:bg-[#0d121f] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full min-h-0 print:hidden transition-all shrink-0 font-sans">
       {/* Tab Navigation */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131a29] px-3 py-2">
         <div className="flex items-center gap-1 overflow-x-auto">
@@ -90,7 +92,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           type="button"
           onClick={onToggleCollapse}
           className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2336] rounded-lg transition-colors ml-1"
-          title="Collapse sidebar"
+          title={t('calligraphy.tabs.collapse', 'Collapse sidebar')}
         >
           <ChevronLeft className="w-4 h-4" />
         </button>

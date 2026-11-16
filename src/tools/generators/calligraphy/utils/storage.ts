@@ -1,5 +1,5 @@
 import type { Worksheet, SavedWorksheetMeta } from '../types';
-import { ORIGINAL_WORKSHEET_TEMPLATE } from '../constants/defaultTemplates';
+import { getDefaultWorksheet } from '../constants/defaultTemplates';
 
 const CURRENT_WORKSHEET_KEY = 'calligraphy_current_worksheet_v1';
 const SAVED_WORKSHEETS_INDEX_KEY = 'calligraphy_saved_index_v1';
@@ -22,21 +22,44 @@ function isValidWorksheet(obj: unknown): obj is Worksheet {
 }
 
 /**
- * Load the active worksheet draft, or fall back to the original template
+ * Check if a worksheet is still the unmodified default template
  */
-export function loadCurrentWorksheet(): Worksheet {
+export function isDefaultWorksheet(w: Worksheet): boolean {
+  if (!w) return false;
+  if (w.id === 'original-template' || w.id.startsWith('sheet_default_')) return true;
+  const defaultTitles = [
+    'Handwriting Practice',
+    'Prática de Caligrafia',
+    'Práctica de Caligrafía',
+  ];
+  if (defaultTitles.includes(w.title) && w.pages?.length === 1) {
+    const firstRowText = w.pages[0]?.sections?.[0]?.rows?.[0]?.text;
+    if (firstRowText === 'Aa Bb Cc Dd Ee Ff Gg Hh') {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Load the active worksheet draft, or fall back to the localized original template
+ */
+export function loadCurrentWorksheet(lang?: string): Worksheet {
   try {
     const raw = localStorage.getItem(CURRENT_WORKSHEET_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (isValidWorksheet(parsed)) {
+        if (isDefaultWorksheet(parsed)) {
+          return getDefaultWorksheet(lang);
+        }
         return parsed;
       }
     }
   } catch (err) {
     console.warn('Failed to load active worksheet from localStorage, using template fallback.', err);
   }
-  return { ...ORIGINAL_WORKSHEET_TEMPLATE, id: 'sheet_' + Date.now() };
+  return getDefaultWorksheet(lang);
 }
 
 /**
@@ -59,7 +82,7 @@ export function getSavedWorksheetsList(): SavedWorksheetMeta[] {
     if (!raw) return [];
     const list = JSON.parse(raw);
     if (Array.isArray(list)) {
-      return list.filter(item => item && typeof item.id === 'string' && typeof item.title === 'string');
+      return list.filter((item) => item && typeof item.id === 'string' && typeof item.title === 'string');
     }
   } catch (err) {
     console.error('Failed to get saved worksheets index', err);
@@ -93,17 +116,19 @@ export function saveWorksheetToLibrary(worksheet: Worksheet): void {
       ...worksheet,
       updatedAt: Date.now(),
     };
-    
+
     // 1. Save full data
     localStorage.setItem(WORKSHEET_PREFIX + updatedSheet.id, JSON.stringify(updatedSheet));
 
     // 2. Update index
     const index = getSavedWorksheetsList();
-    const existingIndex = index.findIndex(i => i.id === updatedSheet.id);
-    
+    const existingIndex = index.findIndex((i) => i.id === updatedSheet.id);
+
     // Extract a brief preview snippet
     let preview = '';
-    const firstRowWithText = updatedSheet.pages[0]?.sections[0]?.rows.find(r => r.text && r.text.trim().length > 0);
+    const firstRowWithText = updatedSheet.pages[0]?.sections[0]?.rows.find(
+      (r) => r.text && r.text.trim().length > 0
+    );
     if (firstRowWithText) {
       preview = firstRowWithText.text.substring(0, 40);
     } else {
@@ -138,7 +163,7 @@ export function saveWorksheetToLibrary(worksheet: Worksheet): void {
 export function deleteSavedWorksheet(id: string): void {
   try {
     localStorage.removeItem(WORKSHEET_PREFIX + id);
-    const index = getSavedWorksheetsList().filter(item => item.id !== id);
+    const index = getSavedWorksheetsList().filter((item) => item.id !== id);
     localStorage.setItem(SAVED_WORKSHEETS_INDEX_KEY, JSON.stringify(index));
   } catch (err) {
     console.error(`Failed to delete saved worksheet ${id}`, err);
@@ -150,10 +175,11 @@ export function deleteSavedWorksheet(id: string): void {
  */
 export function exportWorksheetToJson(worksheet: Worksheet): void {
   try {
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(worksheet, null, 2));
+    const dataStr =
+      'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(worksheet, null, 2));
     const safeTitle = (worksheet.title || 'worksheet').replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
     const filename = `${safeTitle}_calligraphy_sheet.json`;
-    
+
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
     downloadAnchor.setAttribute('download', filename);

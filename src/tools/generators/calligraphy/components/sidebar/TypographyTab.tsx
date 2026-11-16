@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TypographyConfig, FontOption } from '../../types';
 import { FONT_OPTIONS } from '../../constants/fonts';
 import { Type, Sparkles, Search, Check } from 'lucide-react';
@@ -11,6 +12,7 @@ interface TypographyTabProps {
 type CategoryFilter = 'all' | FontOption['category'];
 
 export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChange }) => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -26,12 +28,12 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
   };
 
   const categories: { id: CategoryFilter; label: string }[] = [
-    { id: 'all', label: 'All' },
-    { id: 'calligraphy', label: 'Calligraphy' },
-    { id: 'cursive', label: 'Cursive' },
-    { id: 'casual', label: 'Casual' },
-    { id: 'print', label: 'Print' },
-    { id: 'gothic', label: 'Gothic' },
+    { id: 'all', label: t('calligraphy.typography.catAll', 'All') },
+    { id: 'calligraphy', label: t('calligraphy.typography.catCalligraphy', 'Calligraphy') },
+    { id: 'cursive', label: t('calligraphy.typography.catCursive', 'Cursive') },
+    { id: 'casual', label: t('calligraphy.typography.catCasual', 'Casual') },
+    { id: 'print', label: t('calligraphy.typography.catPrint', 'Print') },
+    { id: 'gothic', label: t('calligraphy.typography.catGothic', 'Gothic') },
   ];
 
   const filteredFonts = useMemo(() => {
@@ -45,6 +47,23 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
       return matchesCategory && matchesSearch;
     });
   }, [selectedCategory, searchQuery]);
+
+  const getCategoryLabel = (category: FontOption['category']) => {
+    switch (category) {
+      case 'calligraphy':
+        return t('calligraphy.typography.catCalligraphy', 'Calligraphy');
+      case 'cursive':
+        return t('calligraphy.typography.catCursive', 'Cursive');
+      case 'casual':
+        return t('calligraphy.typography.catCasual', 'Casual');
+      case 'print':
+        return t('calligraphy.typography.catPrint', 'Print');
+      case 'gothic':
+        return t('calligraphy.typography.catGothic', 'Gothic');
+      default:
+        return category;
+    }
+  };
 
   const getCategoryBadgeClass = (category: FontOption['category']) => {
     switch (category) {
@@ -69,15 +88,21 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-            <Type className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Calligraphy & Script Fonts
+            <Type className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+            {t('calligraphy.typography.title', 'Calligraphy & Script Fonts')}
           </label>
           <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500">
-            {FONT_OPTIONS.length} fonts available
+            {t('calligraphy.typography.fontsAvailable', '{{count}} fonts available', {
+              count: FONT_OPTIONS.length,
+            })}
           </span>
         </div>
 
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Choose from authentic cursive, flourish copperplate calligraphy, school print, and gothic broad-edge fonts.
+          {t(
+            'calligraphy.typography.subtitle',
+            'Choose from authentic cursive, flourish copperplate calligraphy, school print, and gothic broad-edge fonts.'
+          )}
         </p>
 
         {/* Search Bar */}
@@ -85,7 +110,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
-            placeholder="Search fonts by name, style..."
+            placeholder={t('calligraphy.typography.searchPlaceholder', 'Search fonts by name, style...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full text-xs pl-8 pr-3 py-1.5 bg-slate-50 dark:bg-[#1a2336] border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -130,7 +155,9 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
         <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
           {filteredFonts.length === 0 ? (
             <div className="text-center py-6 text-xs text-slate-400">
-              No fonts found matching "{searchQuery}"
+              {t('calligraphy.typography.noFontsFoundMatching', 'No fonts found matching "{{query}}"', {
+                query: searchQuery,
+              })}
             </div>
           ) : (
             filteredFonts.map((font) => {
@@ -159,7 +186,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
                         font.category
                       )}`}
                     >
-                      {font.category}
+                      {getCategoryLabel(font.category)}
                     </span>
                   </div>
 
@@ -168,7 +195,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
                     className="text-lg text-slate-800 dark:text-slate-100 tracking-wide truncate py-1"
                     style={{ fontFamily: font.fontFamily }}
                   >
-                    Calligraphy Practice Aa Bb Cc 123
+                    {t('calligraphy.typography.samplePreview', 'Calligraphy Practice Aa Bb Cc 123')}
                   </div>
 
                   <div className="text-[11px] text-slate-400 dark:text-slate-400 font-sans line-clamp-1">
@@ -184,13 +211,14 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
       {/* Sizing & Letter Spacing */}
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          <Type className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Font Size & Spacing
+          <Type className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+          {t('calligraphy.typography.sizeAndSpacing', 'Font Size & Spacing')}
         </label>
 
         {/* Font Size */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Font Size</span>
+            <span>{t('calligraphy.typography.fontSize', 'Font Size')}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.fontSize}px</span>
           </div>
           <input
@@ -207,7 +235,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
         {/* Letter Spacing */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Letter Spacing</span>
+            <span>{t('calligraphy.typography.letterSpacing', 'Letter Spacing')}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.letterSpacing}px</span>
           </div>
           <input
@@ -224,7 +252,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
         {/* Vertical Baseline Alignment Offset */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Baseline Rest Offset (Bottom Alignment)</span>
+            <span>{t('calligraphy.typography.verticalOffset', 'Baseline Rest Offset (Bottom Alignment)')}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.textOffsetBottom}px</span>
           </div>
           <input
@@ -237,7 +265,10 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
             className="w-full accent-indigo-600 cursor-pointer"
           />
           <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
-            Fine-tunes the exact vertical spot where the letter baselines rest upon the red baseline line.
+            {t(
+              'calligraphy.typography.verticalOffsetDesc',
+              'Fine-tunes the exact vertical spot where the letter baselines rest upon the red baseline line.'
+            )}
           </p>
         </div>
       </div>
@@ -245,17 +276,20 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
       {/* Trace Style & Colors */}
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Tracing Style & Colors
+          <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+          {t('calligraphy.typography.textColors', 'Tracing Style & Colors')}
         </label>
 
         {/* Trace Style */}
         <div>
-          <label className="text-xs text-slate-600 dark:text-slate-400 block mb-1.5 font-medium">Trace Line Style:</label>
+          <label className="text-xs text-slate-600 dark:text-slate-400 block mb-1.5 font-medium">
+            {t('calligraphy.typography.traceStyle', 'Trace Line Style:')}
+          </label>
           <div className="grid grid-cols-3 gap-2">
             {[
-              { id: 'solid', label: 'Solid Light' },
-              { id: 'outline', label: 'Outline Stroke' },
-              { id: 'dotted', label: 'Dotted Effect' },
+              { id: 'solid', label: t('calligraphy.typography.traceStyleSolid', 'Solid Light') },
+              { id: 'outline', label: t('calligraphy.typography.traceStyleOutline', 'Outline Stroke') },
+              { id: 'dotted', label: t('calligraphy.typography.traceStyleDotted', 'Dotted Effect') },
             ].map((style) => (
               <button
                 key={style.id}
@@ -275,7 +309,7 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
           {(typography.traceStyle === 'outline' || typography.traceStyle === 'dotted') && (
             <div className="pt-2">
               <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-                <span>Trace Letter Outline Stroke</span>
+                <span>{t('calligraphy.typography.traceStrokeWidth', 'Trace Letter Outline Stroke')}</span>
                 <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                   {typography.traceStrokeWidth ?? 1.5}px
                 </span>
@@ -303,7 +337,9 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
         {/* Trace Color & Model Color */}
         <div className="grid grid-cols-2 gap-3 text-xs pt-1 border-t border-slate-100 dark:border-slate-800">
           <div>
-            <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">Trace Guide Color</label>
+            <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">
+              {t('calligraphy.typography.traceColor', 'Trace Guide Color')}
+            </label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -315,7 +351,9 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
             </div>
           </div>
           <div>
-            <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">Model Text Color</label>
+            <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">
+              {t('calligraphy.typography.textColor', 'Model Text Color')}
+            </label>
             <div className="flex items-center gap-2">
               <input
                 type="color"

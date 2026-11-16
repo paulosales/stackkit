@@ -1,8 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Worksheet } from '../types';
 import {
   PenTool,
-  Printer,
   FileDown,
   FolderHeart,
   Sparkles,
@@ -40,8 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   zoomLevel,
   setZoomLevel,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <header className="h-16 bg-white dark:bg-[#131a29] border-b border-slate-200 dark:border-slate-800 px-4 md:px-6 flex items-center justify-between z-30 shrink-0 print:hidden shadow-xs">
+    <header className="h-16 bg-white dark:bg-[#131a29] border-b border-slate-200 dark:border-slate-800 px-4 md:px-6 flex items-center justify-between z-30 shrink-0 print:hidden shadow-xs font-sans">
       {/* Brand & Worksheet Title */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2.5">
@@ -50,9 +52,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="hidden sm:block">
             <h1 className="font-bold text-sm text-slate-900 dark:text-slate-100 leading-tight">
-              Calligraphy Studio
+              {t('calligraphy.navbar.studioTitle', 'Calligraphy Studio')}
             </h1>
-            <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium">Worksheet Generator</p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium">
+              {t('calligraphy.navbar.studioSubtitle', 'Worksheet Generator')}
+            </p>
           </div>
         </div>
 
@@ -65,8 +69,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             value={worksheet.title}
             onChange={(e) => onUpdateTitle(e.target.value)}
             className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-[#0f1523] hover:bg-slate-100 dark:hover:bg-[#1a2336] focus:bg-white dark:focus:bg-[#1a2336] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all w-44 md:w-64"
-            placeholder="Sheet Title"
-            title="Worksheet Title"
+            placeholder={t('calligraphy.navbar.sheetTitlePlaceholder', 'Sheet Title')}
+            title={t('calligraphy.navbar.sheetTitlePlaceholder', 'Sheet Title')}
           />
           {saveStatus && (
             <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium hidden lg:flex items-center gap-1 animate-fadeIn">
@@ -82,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           type="button"
           onClick={() => setZoomLevel((z) => Math.max(0.5, z - 0.1))}
           className="p-1 hover:text-indigo-600 dark:hover:text-indigo-400 rounded transition-colors"
-          title="Zoom Out"
+          title={t('calligraphy.navbar.zoomOut', 'Zoom Out')}
         >
           <ZoomOut className="w-3.5 h-3.5" />
         </button>
@@ -91,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           type="button"
           onClick={() => setZoomLevel((z) => Math.min(1.5, z + 0.1))}
           className="p-1 hover:text-indigo-600 dark:hover:text-indigo-400 rounded transition-colors"
-          title="Zoom In"
+          title={t('calligraphy.navbar.zoomIn', 'Zoom In')}
         >
           <ZoomIn className="w-3.5 h-3.5" />
         </button>
@@ -99,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           type="button"
           onClick={() => setZoomLevel(() => 1)}
           className="p-1 hover:text-indigo-600 dark:hover:text-indigo-400 rounded transition-colors ml-1"
-          title="Reset Zoom to 100%"
+          title={t('calligraphy.navbar.resetZoom', 'Reset Zoom to 100%')}
         >
           <Maximize2 className="w-3.5 h-3.5" />
         </button>
@@ -114,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-50 dark:bg-[#0f1523] hover:bg-slate-100 dark:hover:bg-[#1a2336] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span className="hidden md:inline">Templates</span>
+          <span className="hidden md:inline">{t('calligraphy.templates', 'Templates')}</span>
         </button>
 
         {/* My Saved Sheets */}
@@ -124,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-50 dark:bg-[#0f1523] hover:bg-slate-100 dark:hover:bg-[#1a2336] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
         >
           <FolderHeart className="w-3.5 h-3.5 text-rose-500" />
-          <span className="hidden md:inline">Saved Sheets</span>
+          <span className="hidden md:inline">{t('calligraphy.savedSheets', 'Saved Sheets')}</span>
         </button>
 
         {/* Quick Save to Local Storage */}
@@ -132,10 +136,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           type="button"
           onClick={onQuickSave}
           className="text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-50 dark:bg-[#0f1523] hover:bg-slate-100 dark:hover:bg-[#1a2336] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
-          title="Save into browser local storage"
+          title={t('calligraphy.save', 'Save')}
         >
           <Save className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-          <span className="hidden lg:inline">Save</span>
+          <span className="hidden lg:inline">{t('calligraphy.save', 'Save')}</span>
         </button>
 
         {/* Download PDF Button */}
@@ -144,15 +148,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={onDownloadPDF}
           disabled={isDownloadingPDF}
           className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-70 px-3.5 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1.5"
-          title="Download PDF file to print"
+          title={t('calligraphy.downloadPdf', 'Download PDF')}
         >
           <FileDown className="w-3.5 h-3.5" />
           <span>
             {isDownloadingPDF
               ? pdfProgress
-                ? `Exporting ${pdfProgress.current}/${pdfProgress.total}...`
-                : 'Generating...'
-              : 'Download PDF'}
+                ? t('calligraphy.navbar.exporting', {
+                    current: pdfProgress.current,
+                    total: pdfProgress.total,
+                    defaultValue: `Exporting ${pdfProgress.current}/${pdfProgress.total}...`,
+                  })
+                : t('calligraphy.navbar.generating', 'Generating...')
+              : t('calligraphy.downloadPdf', 'Download PDF')}
           </span>
         </button>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { GuideLineConfig } from '../../types';
 import { Compass, Sliders, Palette } from 'lucide-react';
 
@@ -8,6 +9,8 @@ interface GuidelinesTabProps {
 }
 
 export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChange }) => {
+  const { t } = useTranslation();
+
   // Proportional adjustment helper when row height changes
   const handleRowHeightChange = (newHeight: number) => {
     // If user configured midline to 0px (very top), keep it at 0px
@@ -33,17 +36,18 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       {/* 4-Line Guide Spacing */}
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Line Spacing & Height
+          <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+          {t('calligraphy.guidelines.spacingTitle', 'Line Spacing & Height')}
         </label>
 
         {/* Row Height */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Total Row Height</span>
+            <span>{t('calligraphy.guidelines.totalRowHeight', 'Total Row Height')}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.rowHeight}px</span>
           </div>
           <input
@@ -56,20 +60,20 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             className="w-full accent-indigo-600"
           />
           <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
-            <span>45px (Compact)</span>
-            <span>70px (Standard)</span>
-            <span>110px (Large)</span>
+            <span>{t('calligraphy.guidelines.heightCompact', '45px (Compact)')}</span>
+            <span>{t('calligraphy.guidelines.heightStandard', '70px (Standard)')}</span>
+            <span>{t('calligraphy.guidelines.heightLarge', '110px (Large)')}</span>
           </div>
         </div>
 
         {/* Midline Position (x-height) */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Midline (Dashed x-height)</span>
+            <span>{t('calligraphy.guidelines.midlinePosition', 'Midline (Dashed x-height)')}</span>
             <div className="flex items-center gap-1.5">
               {guidelines.midlinePosition === 0 && (
                 <span className="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded">
-                  Top (0px)
+                  {t('calligraphy.guidelines.midlineTop', 'Top (0px)')}
                 </span>
               )}
               <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.midlinePosition}px</span>
@@ -93,19 +97,19 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                   ? 'font-bold text-indigo-600 dark:text-indigo-400 underline'
                   : ''
               }`}
-              title="Snap midline directly to the very top (0px)"
+              title={t('calligraphy.guidelines.snapToTop', 'Snap midline directly to the very top (0px)')}
             >
-              0px (Top)
+              {t('calligraphy.guidelines.midlineTop', 'Top (0px)')}
             </button>
-            <span>{Math.round(guidelines.rowHeight * 0.43)}px (Mid)</span>
-            <span>{guidelines.baselinePosition - 5}px (Max)</span>
+            <span>{Math.round(guidelines.rowHeight * 0.43)}px</span>
+            <span>{guidelines.baselinePosition - 5}px</span>
           </div>
         </div>
 
         {/* Baseline Position */}
         <div>
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>Baseline Position</span>
+            <span>{t('calligraphy.guidelines.baselinePosition', 'Baseline Position')}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.baselinePosition}px</span>
           </div>
           <input
@@ -124,7 +128,8 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-            <Compass className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Calligraphy Slant Guidelines
+            <Compass className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+            {t('calligraphy.guidelines.slantTitle', 'Calligraphy Slant Guidelines')}
           </label>
           <input
             type="checkbox"
@@ -139,13 +144,13 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             {/* Angle Preset Buttons */}
             <div>
               <span className="text-xs text-slate-600 dark:text-slate-400 block mb-1.5 font-medium">
-                Common Calligraphy Angles:
+                {t('calligraphy.guidelines.commonAngles', 'Common Calligraphy Angles:')}
               </span>
               <div className="grid grid-cols-3 gap-1.5 text-xs">
                 {[
-                  { angle: 55, label: '55° (Copperplate)' },
-                  { angle: 68, label: '68° (Spencerian)' },
-                  { angle: 52, label: '52° (Engrosser)' },
+                  { angle: 55, label: t('calligraphy.guidelines.angleCopperplate', '55° (Copperplate)') },
+                  { angle: 68, label: t('calligraphy.guidelines.angleCursive', '68° (Cursive)') },
+                  { angle: 52, label: t('calligraphy.guidelines.angleSpencerian', '52° (Spencerian)') },
                 ].map((item) => (
                   <button
                     key={item.angle}
@@ -166,7 +171,7 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             {/* Custom Angle Slider */}
             <div>
               <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-                <span>Slant Angle</span>
+                <span>{t('calligraphy.guidelines.slantAngle', 'Slant Angle')}</span>
                 <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.slantAngle}°</span>
               </div>
               <input
@@ -182,7 +187,7 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             {/* Spacing Slider */}
             <div>
               <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-                <span>Guide Spacing</span>
+                <span>{t('calligraphy.guidelines.guideSpacing', 'Guide Spacing')}</span>
                 <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.slantSpacing}px</span>
               </div>
               <input
@@ -198,7 +203,7 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             {/* Slant Stroke Width */}
             <div>
               <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-                <span>Slant Stroke Width</span>
+                <span>{t('calligraphy.guidelines.strokeWidth', 'Stroke Width')}</span>
                 <span className="font-semibold text-indigo-600 dark:text-indigo-400">{guidelines.slantWidth ?? 1}px</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -222,7 +227,9 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             {/* Slant Color & Opacity */}
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div>
-                <label className="text-slate-600 dark:text-slate-400 block mb-1">Guide Color</label>
+                <label className="text-slate-600 dark:text-slate-400 block mb-1">
+                  {t('calligraphy.guidelines.guideColor', 'Guide Color')}
+                </label>
                 <div className="flex items-center gap-2">
                   <input
                     type="color"
@@ -237,7 +244,7 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
               </div>
               <div>
                 <label className="text-slate-600 dark:text-slate-400 block mb-1">
-                  Opacity ({Math.round(guidelines.slantOpacity * 100)}%)
+                  {t('calligraphy.guidelines.opacity', 'Opacity')} ({Math.round(guidelines.slantOpacity * 100)}%)
                 </label>
                 <input
                   type="range"
@@ -258,13 +265,16 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
       <div className="bg-white dark:bg-[#131a29] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-            <Palette className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Line Colors & Stroke Sizes
+            <Palette className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+            {t('calligraphy.guidelines.colorsTitle', 'Line Colors, Styles & Stroke Width')}
           </label>
         </div>
 
         {/* Global Stroke Presets */}
         <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-400 font-medium">Stroke Presets:</span>
+          <span className="text-slate-500 dark:text-slate-400 font-medium">
+            {t('calligraphy.guidelines.strokePresets', 'Stroke Presets:')}
+          </span>
           <div className="flex items-center gap-1.5">
             <button
               type="button"
@@ -278,9 +288,8 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 })
               }
               className="px-2 py-0.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
-              title="Delicate fine strokes (1px - 1.5px)"
             >
-              Fine
+              {t('calligraphy.guidelines.strokeFine', 'Fine')}
             </button>
             <button
               type="button"
@@ -294,9 +303,8 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 })
               }
               className="px-2 py-0.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
-              title="Standard worksheet weights (1px - 2px)"
             >
-              Standard
+              {t('calligraphy.guidelines.strokeStandard', 'Standard')}
             </button>
             <button
               type="button"
@@ -310,9 +318,8 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 })
               }
               className="px-2 py-0.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
-              title="Bold high-contrast strokes (2px - 3.5px)"
             >
-              Bold
+              {t('calligraphy.guidelines.strokeBold', 'Bold')}
             </button>
           </div>
         </div>
@@ -320,7 +327,9 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
         {/* Baseline (Primary Writing Line) */}
         <div className="border border-slate-100 dark:border-slate-800 rounded-lg p-2.5 bg-slate-50/50 dark:bg-[#0f1523]/60 space-y-2.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium text-slate-700 dark:text-slate-200">Baseline (Sitting Line)</span>
+            <span className="font-medium text-slate-700 dark:text-slate-200">
+              {t('calligraphy.guidelines.baseline', 'Baseline (Writing Floor)')}
+            </span>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -333,16 +342,16 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 onChange={(e) => onChange({ baselineStyle: e.target.value as any })}
                 className="text-xs p-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-200 outline-none"
               >
-                <option value="solid">Solid</option>
-                <option value="dashed">Dashed</option>
-                <option value="none">Hidden</option>
+                <option value="solid">{t('calligraphy.guidelines.solid', 'Solid')}</option>
+                <option value="dashed">{t('calligraphy.guidelines.dashed', 'Dashed')}</option>
+                <option value="none">{t('calligraphy.guidelines.hidden', 'Hidden')}</option>
               </select>
             </div>
           </div>
 
           {/* Baseline Stroke Size Selector */}
           <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/50 dark:border-slate-800">
-            <span className="text-slate-600 dark:text-slate-400">Stroke Size:</span>
+            <span className="text-slate-600 dark:text-slate-400">{t('calligraphy.guidelines.strokeWidth', 'Stroke Width')}:</span>
             <div className="flex items-center gap-1">
               {[1, 1.5, 2, 2.5, 3, 4].map((w) => (
                 <button
@@ -363,7 +372,9 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
 
           {/* Quick Color Presets */}
           <div className="flex items-center gap-1.5 pt-0.5">
-            <span className="text-[10px] text-slate-400">Color Presets:</span>
+            <span className="text-[10px] text-slate-400">
+              {t('calligraphy.guidelines.colorPresets', 'Color Presets:')}
+            </span>
             {['#e74c3c', '#dc2626', '#3b82f6', '#10b981', '#64748b', '#000000'].map((color) => (
               <button
                 key={color}
@@ -379,7 +390,9 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
         {/* Midline (Dashed Line) */}
         <div className="border border-slate-100 dark:border-slate-800 rounded-lg p-2.5 bg-slate-50/50 dark:bg-[#0f1523]/60 space-y-2.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium text-slate-700 dark:text-slate-200">Midline (x-height)</span>
+            <span className="font-medium text-slate-700 dark:text-slate-200">
+              {t('calligraphy.guidelines.midline', 'Midline (x-height)')}
+            </span>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -392,17 +405,17 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 onChange={(e) => onChange({ midLineStyle: e.target.value as any })}
                 className="text-xs p-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-200 outline-none"
               >
-                <option value="dashed">Dashed (Standard)</option>
-                <option value="dotted">Dotted</option>
-                <option value="solid">Solid</option>
-                <option value="none">Hidden</option>
+                <option value="dashed">{t('calligraphy.guidelines.dashed', 'Dashed')}</option>
+                <option value="dotted">{t('calligraphy.guidelines.dotted', 'Dotted')}</option>
+                <option value="solid">{t('calligraphy.guidelines.solid', 'Solid')}</option>
+                <option value="none">{t('calligraphy.guidelines.hidden', 'Hidden')}</option>
               </select>
             </div>
           </div>
 
           {/* Midline Stroke Size Selector */}
           <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/50 dark:border-slate-800">
-            <span className="text-slate-600 dark:text-slate-400">Stroke Size:</span>
+            <span className="text-slate-600 dark:text-slate-400">{t('calligraphy.guidelines.strokeWidth', 'Stroke Width')}:</span>
             <div className="flex items-center gap-1">
               {[1, 1.5, 2, 2.5, 3, 4].map((w) => (
                 <button
@@ -425,7 +438,9 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
         {/* Top & Bottom Ascender/Descender Boundaries */}
         <div className="border border-slate-100 dark:border-slate-800 rounded-lg p-2.5 bg-slate-50/50 dark:bg-[#0f1523]/60 space-y-2.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium text-slate-700 dark:text-slate-200">Top & Bottom Lines</span>
+            <span className="font-medium text-slate-700 dark:text-slate-200">
+              {t('calligraphy.guidelines.topAscenderLine', 'Top Ascender Line')}
+            </span>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -448,17 +463,17 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
                 }
                 className="text-xs p-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-200 outline-none"
               >
-                <option value="solid">Solid (Standard)</option>
-                <option value="dashed">Dashed</option>
-                <option value="dotted">Dotted</option>
-                <option value="none">Hidden</option>
+                <option value="solid">{t('calligraphy.guidelines.solid', 'Solid')}</option>
+                <option value="dashed">{t('calligraphy.guidelines.dashed', 'Dashed')}</option>
+                <option value="dotted">{t('calligraphy.guidelines.dotted', 'Dotted')}</option>
+                <option value="none">{t('calligraphy.guidelines.hidden', 'Hidden')}</option>
               </select>
             </div>
           </div>
 
           {/* Top & Bottom Stroke Size Selector */}
           <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/50 dark:border-slate-800">
-            <span className="text-slate-600 dark:text-slate-400">Stroke Size:</span>
+            <span className="text-slate-600 dark:text-slate-400">{t('calligraphy.guidelines.strokeWidth', 'Stroke Width')}:</span>
             <div className="flex items-center gap-1">
               {[1, 1.5, 2, 2.5, 3, 4].map((w) => (
                 <button

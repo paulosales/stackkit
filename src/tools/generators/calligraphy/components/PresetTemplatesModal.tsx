@@ -1,6 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Worksheet } from '../types';
-import { PRESET_TEMPLATES } from '../constants/defaultTemplates';
+import { getPresetTemplates } from '../constants/defaultTemplates';
 import { X, Sparkles, FileText } from 'lucide-react';
 
 interface PresetTemplatesModalProps {
@@ -18,7 +19,10 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
   currentTemplateId,
   theme = 'dark',
 }) => {
+  const { t, i18n } = useTranslation();
   if (!isOpen) return null;
+
+  const templates = getPresetTemplates(i18n.language);
 
   const handleSelect = (template: Worksheet) => {
     onSelectTemplate({
@@ -33,17 +37,17 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
   const handleNewBlank = () => {
     const blankSheet: Worksheet = {
       id: 'sheet_' + Date.now(),
-      title: 'Blank Calligraphy Sheet',
+      title: t('calligraphy.templatesModal.blankSheetTitle', 'Blank Calligraphy Sheet'),
       showTitle: true,
       header: {
         showName: true,
-        nameLabel: 'Name: ______________________',
+        nameLabel: t('calligraphy.layout.defaultNameLabel', 'Name: ______________________'),
         showGrade: false,
-        gradeLabel: 'Grade: ______',
+        gradeLabel: t('calligraphy.layout.defaultGradeLabel', 'Grade: ______'),
         showDate: true,
-        dateLabel: 'Date: ____________',
+        dateLabel: t('calligraphy.layout.defaultDateLabel', 'Date: ____________'),
         showScore: false,
-        scoreLabel: 'Score: ______',
+        scoreLabel: t('calligraphy.layout.defaultScoreLabel', 'Score: ______'),
       },
       guidelines: {
         rowHeight: 70,
@@ -92,7 +96,7 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
           sections: [
             {
               id: 'sec-1',
-              title: 'Practice Lines:',
+              title: t('calligraphy.templatesModal.blankPracticeLines', 'Practice Lines:'),
               showTitle: true,
               rows: [
                 { id: 'b1', type: 'blank', text: '' },
@@ -124,9 +128,11 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">Worksheet Templates</h3>
+              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">
+                {t('calligraphy.templatesModal.title', 'Worksheet Templates')}
+              </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Choose a ready-to-use practice sheet template or start from a blank sheet.
+                {t('calligraphy.templatesModal.desc', 'Choose a ready-to-use practice sheet template or start from a blank sheet.')}
               </p>
             </div>
           </div>
@@ -141,7 +147,7 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
 
         {/* Templates Grid */}
         <div className="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
-          {PRESET_TEMPLATES.map((tmpl) => {
+          {templates.map((tmpl) => {
             const isOriginal = tmpl.id === 'original-template';
             const isCurrent = currentTemplateId === tmpl.id;
 
@@ -160,26 +166,30 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
                     <span className="font-bold text-slate-800 dark:text-slate-100 text-sm">{tmpl.title}</span>
                     {isOriginal && (
                       <span className="text-[10px] uppercase font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded-full">
-                        Original HTML
+                        {t('calligraphy.templatesModal.originalHtml', 'Original HTML')}
                       </span>
                     )}
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
                     {tmpl.id === 'original-template' &&
-                      'Exact reproduction of handwriting_practice_worksheet.html with Aa-Zz pairs and pangrams.'}
+                      t('calligraphy.templatesModal.templateOriginalDesc', 'Exact reproduction of handwriting_practice_worksheet.html with Aa-Zz pairs and pangrams.')}
                     {tmpl.id === 'calligraphy-copperplate' &&
-                      'Features 55° copperplate slant guide lines and high flourish script font.'}
+                      t('calligraphy.templatesModal.templateCopperplateDesc', 'Features 55° copperplate slant guide lines and high flourish script font.')}
                     {tmpl.id === 'famous-pangrams' &&
-                      'Multi-page workbook featuring classic pangrams and quotes for cursive flow.'}
+                      t('calligraphy.templatesModal.templatePangramsDesc', 'Multi-page workbook featuring classic pangrams and quotes for cursive flow.')}
                     {tmpl.id === 'blank-drills' &&
-                      'Clean lined calligraphy practice sheet with 55° slant angle guides.'}
+                      t('calligraphy.templatesModal.templateDrillsDesc', 'Clean lined calligraphy practice sheet with 55° slant angle guides.')}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400 dark:text-slate-400">
-                  <span>{tmpl.pages.length} {tmpl.pages.length === 1 ? 'Page' : 'Pages'}</span>
+                  <span>
+                    {tmpl.pages.length === 1
+                      ? t('calligraphy.templatesModal.singlePage', '1 Page')
+                      : t('calligraphy.templatesModal.multiplePages', '{{count}} Pages', { count: tmpl.pages.length })}
+                  </span>
                   <span className="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
-                    Load Template &rarr;
+                    {t('calligraphy.templatesModal.loadTemplate', 'Load Template →')}
                   </span>
                 </div>
               </div>
@@ -193,14 +203,15 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
           >
             <div>
               <div className="flex items-center gap-2 mb-2 font-bold text-slate-800 dark:text-slate-100 text-sm">
-                <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400" /> Start Blank Sheet
+                <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400" />{' '}
+                {t('calligraphy.templatesModal.startBlank', 'Start Blank Sheet')}
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                Empty 4-line calligraphy guidelines with slant guides ready for your custom text.
+                {t('calligraphy.templatesModal.startBlankDesc', 'Empty 4-line calligraphy guidelines with slant guides ready for your custom text.')}
               </p>
             </div>
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end text-xs text-indigo-600 dark:text-indigo-400 font-medium">
-              Create Blank &rarr;
+              {t('calligraphy.templatesModal.createBlank', 'Create Blank →')}
             </div>
           </div>
         </div>
@@ -210,9 +221,9 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-[#1a2336] rounded-lg transition-colors"
+            className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-[#1a2336] rounded-lg transition-colors cursor-pointer"
           >
-            Cancel
+            {t('calligraphy.templatesModal.cancel', 'Cancel')}
           </button>
         </div>
       </div>

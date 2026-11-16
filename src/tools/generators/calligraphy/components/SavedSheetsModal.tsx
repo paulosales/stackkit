@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Worksheet, SavedWorksheetMeta } from '../types';
 import {
   getSavedWorksheetsList,
@@ -36,18 +37,20 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
   onLoadWorksheet,
   theme = 'dark',
 }) => {
+  const { t } = useTranslation();
+  const defaultSheetTitle = t('calligraphy.savedModal.defaultSheetTitle', 'My Practice Sheet');
   const [savedList, setSavedList] = useState<SavedWorksheetMeta[]>([]);
-  const [sheetTitleInput, setSheetTitleInput] = useState(currentWorksheet.title || 'My Practice Sheet');
+  const [sheetTitleInput, setSheetTitleInput] = useState(currentWorksheet.title || defaultSheetTitle);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       setSavedList(getSavedWorksheetsList());
-      setSheetTitleInput(currentWorksheet.title || 'My Practice Sheet');
+      setSheetTitleInput(currentWorksheet.title || defaultSheetTitle);
       setSaveSuccessMsg('');
     }
-  }, [isOpen, currentWorksheet]);
+  }, [isOpen, currentWorksheet, defaultSheetTitle]);
 
   if (!isOpen) return null;
 
@@ -55,12 +58,12 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
     e.preventDefault();
     const updatedSheet: Worksheet = {
       ...currentWorksheet,
-      title: sheetTitleInput.trim() || 'Untitled Sheet',
+      title: sheetTitleInput.trim() || t('calligraphy.savedModal.untitledSheet', 'Untitled Sheet'),
       updatedAt: Date.now(),
     };
     saveWorksheetToLibrary(updatedSheet);
     setSavedList(getSavedWorksheetsList());
-    setSaveSuccessMsg('Worksheet saved successfully into browser local storage!');
+    setSaveSuccessMsg(t('calligraphy.savedModal.savedSuccess', 'Worksheet saved successfully into browser local storage!'));
     setTimeout(() => setSaveSuccessMsg(''), 3000);
   };
 
@@ -73,7 +76,7 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+    if (window.confirm(t('calligraphy.savedModal.deleteConfirm', 'Are you sure you want to delete "{{title}}"?', { title }))) {
       deleteSavedWorksheet(id);
       setSavedList(getSavedWorksheetsList());
     }
@@ -99,13 +102,13 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
           saveWorksheetToLibrary(importedSheet);
           setSavedList(getSavedWorksheetsList());
           onLoadWorksheet(importedSheet);
-          setSaveSuccessMsg('Imported sheet successfully!');
+          setSaveSuccessMsg(t('calligraphy.savedModal.importedSuccess', 'Imported sheet successfully!'));
           setTimeout(() => setSaveSuccessMsg(''), 3000);
         } else {
-          alert('Could not import worksheet: invalid file structure.');
+          alert(t('calligraphy.savedModal.importInvalid', 'Could not import worksheet: invalid file structure.'));
         }
-      } catch (err) {
-        alert('Failed to parse the uploaded file.');
+      } catch {
+        alert(t('calligraphy.savedModal.importParseError', 'Failed to parse the uploaded file.'));
       }
     };
     reader.readAsText(file);
@@ -128,16 +131,18 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
               <FolderHeart className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">My Saved Worksheets</h3>
+              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">
+                {t('calligraphy.savedModal.title', 'My Saved Worksheets')}
+              </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Stored safely in your browser's Local Storage. No server required.
+                {t('calligraphy.savedModal.desc', "Stored safely in your browser's Local Storage. No server required.")}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2336] transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2336] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -151,21 +156,22 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
             className="bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/60 rounded-xl p-4 space-y-3"
           >
             <label className="text-xs font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
-              <Save className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Save Current Sheet to Local Storage
+              <Save className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />{' '}
+              {t('calligraphy.savedModal.saveCurrent', 'Save Current Sheet to Local Storage')}
             </label>
             <div className="flex gap-2">
               <input
                 type="text"
                 value={sheetTitleInput}
                 onChange={(e) => setSheetTitleInput(e.target.value)}
-                placeholder="Give your sheet a title..."
+                placeholder={t('calligraphy.savedModal.placeholder', 'Give your sheet a title...')}
                 className="flex-1 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none bg-white dark:bg-[#1a2336] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5 shrink-0"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
               >
-                <Save className="w-3.5 h-3.5" /> Save Sheet
+                <Save className="w-3.5 h-3.5" /> {t('calligraphy.savedModal.saveBtn', 'Save Sheet')}
               </button>
             </div>
             {saveSuccessMsg && (
@@ -179,16 +185,18 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
           <div>
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Your Saved Sheets ({savedList.length})
+                {t('calligraphy.savedModal.yourSavedSheets', 'Your Saved Sheets ({{count}})', {
+                  count: savedList.length,
+                })}
               </h4>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-xs flex items-center gap-1 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 bg-white dark:bg-[#1a2336] border border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500 px-2.5 py-1 rounded-lg transition-colors font-medium shadow-sm"
-                  title="Import previously exported JSON file"
+                  className="text-xs flex items-center gap-1 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 bg-white dark:bg-[#1a2336] border border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500 px-2.5 py-1 rounded-lg transition-colors font-medium shadow-sm cursor-pointer"
+                  title={t('calligraphy.savedModal.importJsonTitle', 'Import previously exported JSON file')}
                 >
-                  <Upload className="w-3 h-3" /> Import JSON
+                  <Upload className="w-3 h-3" /> {t('calligraphy.savedModal.importJson', 'Import JSON')}
                 </button>
                 <input
                   type="file"
@@ -203,9 +211,14 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
             {savedList.length === 0 ? (
               <div className="text-center py-10 px-4 bg-slate-50 dark:bg-[#0f1523]/60 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl">
                 <FolderHeart className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto mb-2" />
-                <p className="text-xs font-medium text-slate-600 dark:text-slate-300">No saved worksheets yet.</p>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                  {t('calligraphy.savedModal.noSaved', 'No saved worksheets yet.')}
+                </p>
                 <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
-                  Type a title above and click "Save Sheet" to keep your customized practice worksheets!
+                  {t(
+                    'calligraphy.savedModal.noSavedDesc',
+                    'Type a title above and click "Save Sheet" to keep your customized practice worksheets!'
+                  )}
                 </p>
               </div>
             ) : (
@@ -226,7 +239,11 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
                         </span>
                         <span className="flex items-center gap-1">
                           <Layers className="w-3 h-3" />
-                          {item.pageCount} {item.pageCount === 1 ? 'page' : 'pages'}
+                          {item.pageCount === 1
+                            ? t('calligraphy.savedModal.singlePage', '{{count}} page', { count: 1 })
+                            : t('calligraphy.savedModal.multiplePages', '{{count}} pages', {
+                                count: item.pageCount,
+                              })}
                         </span>
                       </div>
                       <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-1 italic">
@@ -238,24 +255,24 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
                       <button
                         type="button"
                         onClick={() => handleLoad(item.id)}
-                        className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-600 text-indigo-700 dark:text-indigo-300 hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
-                        title="Load worksheet into editor"
+                        className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-600 text-indigo-700 dark:text-indigo-300 hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                        title={t('calligraphy.savedModal.loadTitle', 'Load worksheet into editor')}
                       >
-                        <ExternalLink className="w-3 h-3" /> Open
+                        <ExternalLink className="w-3 h-3" /> {t('calligraphy.savedModal.open', 'Open')}
                       </button>
                       <button
                         type="button"
                         onClick={() => handleExport(item.id)}
-                        className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2336] rounded-lg transition-colors"
-                        title="Export JSON backup"
+                        className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2336] rounded-lg transition-colors cursor-pointer"
+                        title={t('calligraphy.savedModal.exportTitle', 'Export JSON backup')}
                       >
                         <Download className="w-3.5 h-3.5" />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDelete(item.id, item.title)}
-                        className="p-1.5 text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg transition-colors"
-                        title="Delete worksheet"
+                        className="p-1.5 text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg transition-colors cursor-pointer"
+                        title={t('calligraphy.savedModal.deleteTitle', 'Delete worksheet')}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -272,9 +289,9 @@ export const SavedSheetsModal: React.FC<SavedSheetsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-[#1a2336] rounded-lg transition-colors"
+            className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-[#1a2336] rounded-lg transition-colors cursor-pointer"
           >
-            Close
+            {t('calligraphy.savedModal.close', 'Close')}
           </button>
         </div>
       </div>

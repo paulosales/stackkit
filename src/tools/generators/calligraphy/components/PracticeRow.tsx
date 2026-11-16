@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WorksheetRow, GuideLineConfig, TypographyConfig } from '../types';
 import { SlantGuideOverlay } from './SlantGuideOverlay';
 import { Trash2, Type, Sparkles, CircleSlash } from 'lucide-react';
@@ -22,6 +23,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
   onUpdateType,
   onDelete,
 }) => {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [isInlineEditing, setIsInlineEditing] = useState(false);
 
@@ -196,7 +198,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
             ...getTraceClassesAndStyles(),
           }}
           onDoubleClick={() => isEditingEnabled && setIsInlineEditing(true)}
-          title={isEditingEnabled ? 'Double click to edit text' : undefined}
+          title={isEditingEnabled ? t('calligraphy.preview.doubleClickToEdit', 'Double click to edit text') : undefined}
         >
           {isInlineEditing ? (
             <input
@@ -234,7 +236,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
                   ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 font-bold'
                   : 'text-slate-500 hover:text-slate-800 dark:text-slate-400'
               }`}
-              title="Trace row (Light guide text for student to trace)"
+              title={t('calligraphy.preview.rowTraceTooltip', 'Trace row (Light guide text for student to trace)')}
             >
               <Sparkles className="w-3.5 h-3.5" />
             </button>
@@ -246,7 +248,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
                   ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 font-bold'
                   : 'text-slate-500 hover:text-slate-800 dark:text-slate-400'
               }`}
-              title="Model row (Bold exemplar for student to read and copy)"
+              title={t('calligraphy.preview.rowModelTooltip', 'Model row (Bold exemplar for student to read and copy)')}
             >
               <Type className="w-3.5 h-3.5" />
             </button>
@@ -258,7 +260,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
                   ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 font-bold'
                   : 'text-slate-500 hover:text-slate-800 dark:text-slate-400'
               }`}
-              title="Blank row (Guidelines only for freehand practice)"
+              title={t('calligraphy.preview.rowBlankTooltip', 'Blank row (Guidelines only for freehand practice)')}
             >
               <CircleSlash className="w-3.5 h-3.5" />
             </button>
@@ -270,7 +272,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
               type="button"
               onClick={onDelete}
               className="p-1 rounded text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/50 transition-colors"
-              title="Delete this row"
+              title={t('calligraphy.preview.rowDeleteTooltip', 'Delete this row')}
             >
               <Trash2 className="w-3.5 h-3.5" />
             </button>

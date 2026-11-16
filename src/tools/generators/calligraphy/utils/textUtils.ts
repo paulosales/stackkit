@@ -32,7 +32,7 @@ export function generateAlphabetPairs(chunkSize = 8): string[] {
     const chunk = letters.slice(i, i + chunkSize);
     const line = chunk
       .split('')
-      .map(char => `${char}${char.toLowerCase()}`)
+      .map((char) => `${char}${char.toLowerCase()}`)
       .join(' ');
     pairs.push(line);
   }
@@ -48,9 +48,9 @@ export function repeatWord(word: string, count = 6, separator = '   '): string {
 }
 
 /**
- * Common calligraphy sample sentences & pangrams
+ * Common English calligraphy sample sentences & pangrams
  */
-export const SAMPLE_PANGRAMS = [
+export const SAMPLE_PANGRAMS_EN = [
   'The quick brown fox jumps over the lazy dog.',
   'Pack my box with five dozen liquor jugs.',
   'Sphinx of black quartz, judge my vow.',
@@ -62,3 +62,47 @@ export const SAMPLE_PANGRAMS = [
   'Crazy Fredrick bought many very exquisite opal jewels.',
   'Practice makes progress, patience brings perfection.',
 ];
+
+/**
+ * Portuguese calligraphy sample sentences & pangrams
+ */
+export const SAMPLE_PANGRAMS_PT = [
+  'Um pequeno jabuti xereta viu dez cegonhas felizes.',
+  'Gazeta publica hoje no jornal breve nota de faxina na quermesse.',
+  'Juiz faz com que dois pivetes de boca fechem o livro.',
+  'À noite, vovô Kowalsky vê o ímã cair no pé do pinguim queixoso.',
+  'Zebras caolhas de Java querem passar pelo fax do meu avô.',
+  'Vitor viu que o táxi do bispo quase bateu na frágil charrete.',
+  'Grave juiz fixa no quarto de banho o polvilho de xampu.',
+  'Pangrama rápido com belas letras traz exímia perfeição.',
+  'A prática constante leva à caligrafia harmoniosa.',
+  'Escrever com calma e ritmo transforma o pensamento em arte.',
+];
+
+/**
+ * Spanish calligraphy sample sentences & pangrams
+ */
+export const SAMPLE_PANGRAMS_ES = [
+  'El veloz murciélago hindú comía feliz cardillo y kiwi.',
+  'El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío.',
+  'Jovencillo emponzoñado de whisky, ¡qué figurota exhibes!',
+  'Exhiban rápido la pequeña joya de cuarzo fino y brillante.',
+  'Cada vez que viajo en taxi veo un perro gris jugando feliz.',
+  'Benjamín pidió una copa de coñac fino con hielo extra.',
+  'Quiero ver la pequeña choza con jazmines de mi abuela.',
+  'Un gato rubio saltó con rapidez y atrapó un pez en el estanque.',
+  'La práctica paciente perfecciona el trazo de cada letra.',
+  'Escribir con ritmo y elegancia calma la mente.',
+];
+
+/**
+ * Get sample pangrams according to the active language
+ */
+export function getSamplePangrams(lang?: string): string[] {
+  const normalized = (lang || '').toLowerCase();
+  if (normalized.startsWith('pt')) return SAMPLE_PANGRAMS_PT;
+  if (normalized.startsWith('es')) return SAMPLE_PANGRAMS_ES;
+  return SAMPLE_PANGRAMS_EN;
+}
+
+export const SAMPLE_PANGRAMS = SAMPLE_PANGRAMS_EN;
