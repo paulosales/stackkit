@@ -173,10 +173,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                 key={preset.height}
                 type="button"
                 onClick={() => handleRowHeightChange(preset.height)}
-                className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.rowHeight === preset.height
+                className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                  guidelines.rowHeight === preset.height
                     ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                     : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                  }`}
+                }`}
               >
                 {preset.label}
               </button>
@@ -244,60 +245,66 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: 0 })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === 0
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === 0
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineTop', 'Top (0px)')}
             </button>
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: Math.round(guidelines.rowHeight * 0.33) })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.33)
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.33)
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineThird', '1/3 (33%)')}
             </button>
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: Math.round(guidelines.rowHeight * 0.43) })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.43)
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.43)
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineStandard', 'Standard (43%)')}
             </button>
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: Math.round(guidelines.rowHeight * 0.5) })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.5)
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.5)
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineCenter', 'Center (50%)')}
             </button>
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: Math.round(guidelines.rowHeight * 0.66) })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.66)
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === Math.round(guidelines.rowHeight * 0.66)
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineTwoThirds', '2/3 (66%)')}
             </button>
             <button
               type="button"
               onClick={() => onChange({ midlinePosition: guidelines.rowHeight })}
-              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${guidelines.midlinePosition === guidelines.rowHeight
+              className={`px-2 py-0.5 text-[11px] rounded-md border transition-colors cursor-pointer ${
+                guidelines.midlinePosition === guidelines.rowHeight
                   ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                   : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              }`}
             >
               {t('calligraphy.guidelines.midlineBottom', 'Bottom')}
             </button>
@@ -388,10 +395,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                       textOffsetLeft: currentAlign === 'left' ? (typography.textOffsetLeft ?? 12) : 12,
                     });
                   }}
-                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${(typography.textAlignment || 'left') === 'left'
+                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    (typography.textAlignment || 'left') === 'left'
                       ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`}
+                  }`}
                 >
                   <AlignLeft className="w-3.5 h-3.5" />
                   <span>{t('calligraphy.guidelines.alignLeft', 'Left')}</span>
@@ -405,10 +413,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                       textOffsetLeft: currentAlign === 'center' ? (typography.textOffsetLeft ?? 0) : 0,
                     });
                   }}
-                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${typography.textAlignment === 'center'
+                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    typography.textAlignment === 'center'
                       ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`}
+                  }`}
                 >
                   <AlignCenter className="w-3.5 h-3.5" />
                   <span>{t('calligraphy.guidelines.alignCenter', 'Center')}</span>
@@ -422,10 +431,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                       textOffsetLeft: currentAlign === 'right' ? (typography.textOffsetLeft ?? 12) : 12,
                     });
                   }}
-                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${typography.textAlignment === 'right'
+                  className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    typography.textAlignment === 'right'
                       ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`}
+                  }`}
                 >
                   <AlignRight className="w-3.5 h-3.5" />
                   <span>{t('calligraphy.guidelines.alignRight', 'Right')}</span>
@@ -622,10 +632,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                     key={item.angle}
                     type="button"
                     onClick={() => onChange({ slantAngle: item.angle })}
-                    className={`py-1.5 px-2 rounded-lg text-[11px] font-medium border transition-colors ${guidelines.slantAngle === item.angle
+                    className={`py-1.5 px-2 rounded-lg text-[11px] font-medium border transition-colors ${
+                      guidelines.slantAngle === item.angle
                         ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                         : 'bg-slate-50 dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
-                      }`}
+                    }`}
                   >
                     {item.label}
                   </button>
@@ -677,10 +688,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                     key={w}
                     type="button"
                     onClick={() => onChange({ slantWidth: w })}
-                    className={`flex-1 py-1 text-xs rounded-lg border font-medium transition-colors cursor-pointer ${(guidelines.slantWidth ?? 1) === w
+                    className={`flex-1 py-1 text-xs rounded-lg border font-medium transition-colors cursor-pointer ${
+                      (guidelines.slantWidth ?? 1) === w
                         ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold'
                         : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
-                      }`}
+                    }`}
                   >
                     {w}px
                   </button>
@@ -822,10 +834,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                   key={w}
                   type="button"
                   onClick={() => onChange({ baselineWidth: w })}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${(guidelines.baselineWidth ?? 2) === w
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${
+                    (guidelines.baselineWidth ?? 2) === w
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
+                  }`}
                 >
                   {w}px
                 </button>
@@ -885,10 +898,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                   key={w}
                   type="button"
                   onClick={() => onChange({ midLineWidth: w })}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${(guidelines.midLineWidth ?? 2) === w
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${
+                    (guidelines.midLineWidth ?? 2) === w
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
+                  }`}
                 >
                   {w}px
                 </button>
@@ -942,10 +956,11 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
                   key={w}
                   type="button"
                   onClick={() => onChange({ topLineWidth: w, bottomLineWidth: w })}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${(guidelines.topLineWidth ?? 1) === w
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold border transition-all cursor-pointer ${
+                    (guidelines.topLineWidth ?? 1) === w
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
                       : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
+                  }`}
                 >
                   {w}px
                 </button>
