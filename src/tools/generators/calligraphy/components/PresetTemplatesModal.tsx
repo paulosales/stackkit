@@ -78,6 +78,8 @@ export const PresetTemplatesModal: React.FC<PresetTemplatesModalProps> = ({
         fontSize: 42,
         letterSpacing: 4,
         textOffsetBottom: 14,
+        textOffsetLeft: 12,
+        textAlignment: 'left',
         textColor: '#000000',
         traceColor: '#e0e0e0',
         traceStyle: 'solid',

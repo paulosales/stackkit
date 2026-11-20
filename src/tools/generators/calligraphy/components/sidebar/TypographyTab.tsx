@@ -2,7 +2,19 @@ import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TypographyConfig, FontOption, GuideLineConfig } from '../../types';
 import { FONT_OPTIONS } from '../../constants/fonts';
-import { Type, Sparkles, Search, Check, MoveVertical, ArrowDownToLine } from 'lucide-react';
+import {
+  Type,
+  Sparkles,
+  Search,
+  Check,
+  MoveVertical,
+  MoveHorizontal,
+  Move,
+  ArrowDownToLine,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+} from 'lucide-react';
 
 interface TypographyTabProps {
   typography: TypographyConfig;
@@ -256,95 +268,250 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, guidel
           />
         </div>
 
-        {/* Text Vertical Alignment (Baseline Rest) */}
-        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
-          <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-              <MoveVertical className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              {t('calligraphy.guidelines.textVerticalAlignment', 'Text Vertical Alignment')}
+        {/* Text Alignment & Free Position */}
+        <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <Move className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              {t('calligraphy.guidelines.textAlignmentTitle', 'Text Alignment & Position')}
             </span>
-            <div className="flex items-center gap-1">
-              <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.textOffsetBottom}px</span>
+            <button
+              type="button"
+              onClick={() => {
+                onChange({
+                  textAlignment: 'left',
+                  textOffsetLeft: 12,
+                  textOffsetBottom: 12,
+                });
+              }}
+              className="text-[11px] text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+              title={t('calligraphy.guidelines.resetPosition', 'Reset to default position')}
+            >
+              {t('calligraphy.guidelines.resetPosition', 'Reset')}
+            </button>
+          </div>
+
+          {/* Horizontal Alignment Presets: Left, Center, Right */}
+          <div>
+            <label className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1.5 font-medium">
+              {t('calligraphy.guidelines.horizontalAlignment', 'Horizontal Alignment')}
+            </label>
+            <div className="grid grid-cols-3 gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  const currentAlign = typography.textAlignment || 'left';
+                  onChange({
+                    textAlignment: 'left',
+                    textOffsetLeft: currentAlign === 'left' ? (typography.textOffsetLeft ?? 12) : 12,
+                  });
+                }}
+                className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  (typography.textAlignment || 'left') === 'left'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
+                    : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <AlignLeft className="w-3.5 h-3.5" />
+                <span>{t('calligraphy.guidelines.alignLeft', 'Left')}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const currentAlign = typography.textAlignment || 'left';
+                  onChange({
+                    textAlignment: 'center',
+                    textOffsetLeft: currentAlign === 'center' ? (typography.textOffsetLeft ?? 0) : 0,
+                  });
+                }}
+                className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  typography.textAlignment === 'center'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
+                    : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <AlignCenter className="w-3.5 h-3.5" />
+                <span>{t('calligraphy.guidelines.alignCenter', 'Center')}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const currentAlign = typography.textAlignment || 'left';
+                  onChange({
+                    textAlignment: 'right',
+                    textOffsetLeft: currentAlign === 'right' ? (typography.textOffsetLeft ?? 12) : 12,
+                  });
+                }}
+                className={`py-1.5 px-2 text-xs rounded-lg border font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  typography.textAlignment === 'right'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold shadow-xs'
+                    : 'bg-white dark:bg-[#1a2336] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <AlignRight className="w-3.5 h-3.5" />
+                <span>{t('calligraphy.guidelines.alignRight', 'Right')}</span>
+              </button>
             </div>
           </div>
 
-          {/* Slider with fine-tune +/- 1px buttons */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onChange({ textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) - 1) })}
-              className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
-              title={t('calligraphy.preview.nudgeDown', 'Nudge text down (1px)')}
-            >
-              -1
-            </button>
-            <input
-              type="range"
-              min={0}
-              max={Math.max(60, (guidelines?.rowHeight || 70) - 5)}
-              step={1}
-              value={typography.textOffsetBottom}
-              onChange={(e) => onChange({ textOffsetBottom: Number(e.target.value) })}
-              className="w-full accent-indigo-600 cursor-pointer"
-            />
-            <button
-              type="button"
-              onClick={() => onChange({ textOffsetBottom: (typography.textOffsetBottom ?? 12) + 1 })}
-              className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
-              title={t('calligraphy.preview.nudgeUp', 'Nudge text up (1px)')}
-            >
-              +1
-            </button>
+          {/* Horizontal Offset (X) */}
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-400">
+              <span className="font-medium flex items-center gap-1">
+                <MoveHorizontal className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                {t('calligraphy.guidelines.horizontalOffset', 'Horizontal Offset (X)')}
+              </span>
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  value={typography.textOffsetLeft ?? (typography.textAlignment === 'center' ? 0 : 12)}
+                  onChange={(e) => onChange({ textOffsetLeft: Number(e.target.value) })}
+                  className="w-14 text-right px-1.5 py-0.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-slate-50 dark:bg-[#1a2336] border border-slate-200 dark:border-slate-700 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+                <span className="text-[11px] text-slate-400">px</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const currentX =
+                    typography.textOffsetLeft ?? (typography.textAlignment === 'center' ? 0 : 12);
+                  onChange({ textOffsetLeft: currentX - 1 });
+                }}
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeLeft', 'Nudge text left (1px)')}
+              >
+                -1
+              </button>
+              <input
+                type="range"
+                min={-100}
+                max={400}
+                step={1}
+                value={typography.textOffsetLeft ?? (typography.textAlignment === 'center' ? 0 : 12)}
+                onChange={(e) => onChange({ textOffsetLeft: Number(e.target.value) })}
+                className="w-full accent-indigo-600 cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const currentX =
+                    typography.textOffsetLeft ?? (typography.textAlignment === 'center' ? 0 : 12);
+                  onChange({ textOffsetLeft: currentX + 1 });
+                }}
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeRight', 'Nudge text right (1px)')}
+              >
+                +1
+              </button>
+            </div>
           </div>
 
-          {/* Quick Alignment Presets */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <button
-              type="button"
-              onClick={() => {
-                const rowH = guidelines?.rowHeight || 70;
-                const baseP = guidelines?.baselinePosition || 55;
-                const baselineFromBottom = rowH - baseP;
-                const activeFont = FONT_OPTIONS.find((f) => f.fontFamily === typography.fontFamily);
-                const descenderAdj = 15 - (activeFont?.recommendedOffsetBottom ?? 14);
-                onChange({ textOffsetBottom: Math.max(0, baselineFromBottom - descenderAdj) });
-              }}
-              className="px-2.5 py-1 text-[11px] rounded-lg border font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer flex items-center gap-1 font-sans"
-            >
-              <ArrowDownToLine className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
-              {t('calligraphy.guidelines.snapToBaseline', 'Snap to Baseline')}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                const rowH = guidelines?.rowHeight || 70;
-                const centerOffset = Math.max(0, Math.round((rowH - typography.fontSize) / 2));
-                onChange({ textOffsetBottom: centerOffset });
-              }}
-              className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-            >
-              {t('calligraphy.guidelines.centerInRow', 'Center in Row')}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                const rowH = guidelines?.rowHeight || 70;
-                const midP = guidelines?.midlinePosition || 30;
-                const midlineFromBottom = rowH - midP;
-                const midlineOffset = Math.max(0, Math.round(midlineFromBottom - typography.fontSize * 0.45));
-                onChange({ textOffsetBottom: midlineOffset });
-              }}
-              className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-            >
-              {t('calligraphy.guidelines.alignMidline', 'Midline')}
-            </button>
+          {/* Vertical Offset (Y) */}
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-400">
+              <span className="font-medium flex items-center gap-1">
+                <MoveVertical className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                {t('calligraphy.guidelines.verticalOffset', 'Vertical Offset (Y)')}
+              </span>
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  value={typography.textOffsetBottom ?? 12}
+                  onChange={(e) => onChange({ textOffsetBottom: Number(e.target.value) })}
+                  className="w-14 text-right px-1.5 py-0.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-slate-50 dark:bg-[#1a2336] border border-slate-200 dark:border-slate-700 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+                <span className="text-[11px] text-slate-400">px</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() =>
+                  onChange({
+                    textOffsetBottom: (typography.textOffsetBottom ?? 12) - 1,
+                  })
+                }
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeDown', 'Nudge text down (1px)')}
+              >
+                -1
+              </button>
+              <input
+                type="range"
+                min={-40}
+                max={Math.max(80, (guidelines?.rowHeight || 70) + 30)}
+                step={1}
+                value={typography.textOffsetBottom ?? 12}
+                onChange={(e) => onChange({ textOffsetBottom: Number(e.target.value) })}
+                className="w-full accent-indigo-600 cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  onChange({
+                    textOffsetBottom: (typography.textOffsetBottom ?? 12) + 1,
+                  })
+                }
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeUp', 'Nudge text up (1px)')}
+              >
+                +1
+              </button>
+            </div>
+
+            {/* Quick Alignment Presets */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  const rowH = guidelines?.rowHeight || 70;
+                  const baseP = guidelines?.baselinePosition || 55;
+                  const baselineFromBottom = rowH - baseP;
+                  const activeFont = FONT_OPTIONS.find((f) => f.fontFamily === typography.fontFamily);
+                  const descenderAdj = 15 - (activeFont?.recommendedOffsetBottom ?? 14);
+                  onChange({ textOffsetBottom: baselineFromBottom - descenderAdj });
+                }}
+                className="px-2.5 py-1 text-[11px] rounded-lg border font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer flex items-center gap-1 font-sans"
+              >
+                <ArrowDownToLine className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                {t('calligraphy.guidelines.snapToBaseline', 'Snap to Baseline')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const rowH = guidelines?.rowHeight || 70;
+                  const centerOffset = Math.round((rowH - typography.fontSize) / 2);
+                  onChange({ textOffsetBottom: centerOffset });
+                }}
+                className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                {t('calligraphy.guidelines.centerInRow', 'Center in Row')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const rowH = guidelines?.rowHeight || 70;
+                  const midP = guidelines?.midlinePosition || 30;
+                  const midlineFromBottom = rowH - midP;
+                  const midlineOffset = Math.round(midlineFromBottom - typography.fontSize * 0.45);
+                  onChange({ textOffsetBottom: midlineOffset });
+                }}
+                className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                {t('calligraphy.guidelines.alignMidline', 'Midline')}
+              </button>
+            </div>
           </div>
-          <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+
+          {/* Drag Hint Banner */}
+          <div className="p-2.5 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 text-[11px] text-indigo-700 dark:text-indigo-300 leading-relaxed">
             {t(
-              'calligraphy.guidelines.textOffsetDesc',
-              'Adjusts the vertical resting position of the practice text relative to the guideline lines.'
+              'calligraphy.guidelines.dragHint',
+              '💡 You can also click and drag the practice text directly on the canvas to move it freely in any direction.'
             )}
-          </p>
+          </div>
         </div>
       </div>
 

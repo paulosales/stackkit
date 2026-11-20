@@ -6,6 +6,9 @@ export interface WorksheetRow {
   text: string;
   repeatCount?: number;
   pairedBlank?: boolean; // If true, adds a blank line right after this row for freehand practice
+  textOffsetLeft?: number;
+  textOffsetBottom?: number;
+  textAlignment?: 'left' | 'center' | 'right';
 }
 
 export interface WorksheetSection {
@@ -72,7 +75,9 @@ export interface TypographyConfig {
   fontFamilyName: string;
   fontSize: number;          // e.g. 42px
   letterSpacing: number;     // e.g. 6px
-  textOffsetBottom: number;  // e.g. 12px (tuned so baseline rests on baseline line)
+  textOffsetBottom: number;  // e.g. 12px (vertical position from row bottom)
+  textOffsetLeft?: number;   // e.g. 12px (horizontal position / fine-tune offset)
+  textAlignment?: 'left' | 'center' | 'right'; // horizontal alignment (default 'left')
   textColor: string;         // #000000
   traceColor: string;        // #d1d5db or #e0e0e0
   traceStyle: 'solid' | 'dotted' | 'dashed' | 'outline';

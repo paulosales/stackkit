@@ -398,6 +398,12 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({
                       typography: { ...prev.typography, ...updated },
                     }))
                   }
+                  onUpdateGuidelines={(updated) =>
+                    onUpdateWorksheet((prev) => ({
+                      ...prev,
+                      guidelines: { ...prev.guidelines, ...updated },
+                    }))
+                  }
                   onUpdateTitle={handleUpdateTitle}
                   onUpdateHeader={handleUpdateHeader}
                   onUpdateSectionTitle={(secId, newTitle) =>
