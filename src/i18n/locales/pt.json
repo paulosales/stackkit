@@ -594,7 +594,12 @@
         "strokeStandard": "Padrão",
         "strokeBold": "Grosso",
         "hidden": "Oculto",
-        "colorPresets": "Cores Rápidas:"
+        "colorPresets": "Cores Rápidas:",
+        "textVerticalAlignment": "Alinhamento Vertical do Texto",
+        "snapToBaseline": "Ajustar à Linha de Base",
+        "centerInRow": "Centralizar na Linha",
+        "alignMidline": "Meia-Pauta",
+        "textOffsetDesc": "Ajusta a posição vertical de apoio do texto de prática em relação às pautas."
       },
       "typography": {
         "title": "Fontes de Caligrafia e Cursiva",
@@ -740,7 +745,10 @@
         "paperA5": "Livreto A5 (148×210mm)",
         "sectionPractice": "Seção {{number}}: Prática",
         "newSentenceToTrace": "Nova frase para cobrir",
-        "newPracticeText": "Novo Texto de Prática"
+        "newPracticeText": "Novo Texto de Prática",
+        "nudgeUp": "Mover texto para cima (1px)",
+        "nudgeDown": "Mover texto para baixo (1px)",
+        "textVerticalOffset": "Vertical do Texto: {{offset}}px"
       },
       "savedModal": {
         "title": "Minhas Folhas Salvas",
@@ -986,7 +994,12 @@
       "strokeStandard": "Padrão",
       "strokeBold": "Grosso",
       "hidden": "Oculto",
-      "colorPresets": "Cores Rápidas:"
+      "colorPresets": "Cores Rápidas:",
+      "textVerticalAlignment": "Alinhamento Vertical do Texto",
+      "snapToBaseline": "Ajustar à Linha de Base",
+      "centerInRow": "Centralizar na Linha",
+      "alignMidline": "Meia-Pauta",
+      "textOffsetDesc": "Ajusta a posição vertical de apoio do texto de prática em relação às pautas."
     },
     "typography": {
       "title": "Fontes de Caligrafia e Cursiva",
@@ -1132,7 +1145,10 @@
       "paperA5": "Livreto A5 (148×210mm)",
       "sectionPractice": "Seção {{number}}: Prática",
       "newSentenceToTrace": "Nova frase para cobrir",
-      "newPracticeText": "Novo Texto de Prática"
+      "newPracticeText": "Novo Texto de Prática",
+      "nudgeUp": "Mover texto para cima (1px)",
+      "nudgeDown": "Mover texto para baixo (1px)",
+      "textVerticalOffset": "Vertical do Texto: {{offset}}px"
     },
     "savedModal": {
       "title": "Minhas Folhas Salvas",

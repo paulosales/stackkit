@@ -594,7 +594,12 @@
         "strokeStandard": "Standard",
         "strokeBold": "Bold",
         "hidden": "Hidden",
-        "colorPresets": "Color Presets:"
+        "colorPresets": "Color Presets:",
+        "textVerticalAlignment": "Text Vertical Alignment",
+        "snapToBaseline": "Snap to Baseline",
+        "centerInRow": "Center in Row",
+        "alignMidline": "Midline",
+        "textOffsetDesc": "Adjusts the vertical resting position of the practice text relative to the guideline lines."
       },
       "typography": {
         "title": "Calligraphy & Script Fonts",
@@ -740,7 +745,10 @@
         "paperA5": "A5 Booklet (148×210mm)",
         "sectionPractice": "Section {{number}}: Practice",
         "newSentenceToTrace": "New sentence to trace",
-        "newPracticeText": "New Practice Text"
+        "newPracticeText": "New Practice Text",
+        "nudgeUp": "Nudge text up (1px)",
+        "nudgeDown": "Nudge text down (1px)",
+        "textVerticalOffset": "Text Vertical: {{offset}}px"
       },
       "savedModal": {
         "title": "My Saved Worksheets",
@@ -986,7 +994,12 @@
       "strokeStandard": "Standard",
       "strokeBold": "Bold",
       "hidden": "Hidden",
-      "colorPresets": "Color Presets:"
+      "colorPresets": "Color Presets:",
+      "textVerticalAlignment": "Text Vertical Alignment",
+      "snapToBaseline": "Snap to Baseline",
+      "centerInRow": "Center in Row",
+      "alignMidline": "Midline",
+      "textOffsetDesc": "Adjusts the vertical resting position of the practice text relative to the guideline lines."
     },
     "typography": {
       "title": "Calligraphy & Script Fonts",
@@ -1132,7 +1145,10 @@
       "paperA5": "A5 Booklet (148×210mm)",
       "sectionPractice": "Section {{number}}: Practice",
       "newSentenceToTrace": "New sentence to trace",
-      "newPracticeText": "New Practice Text"
+      "newPracticeText": "New Practice Text",
+      "nudgeUp": "Nudge text up (1px)",
+      "nudgeDown": "Nudge text down (1px)",
+      "textVerticalOffset": "Text Vertical: {{offset}}px"
     },
     "savedModal": {
       "title": "My Saved Worksheets",

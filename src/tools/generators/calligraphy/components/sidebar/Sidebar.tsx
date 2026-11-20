@@ -112,10 +112,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {activeTab === 'guidelines' && (
           <GuidelinesTab
             guidelines={worksheet.guidelines}
+            typography={worksheet.typography}
             onChange={(updated) =>
               onUpdateWorksheet((prev) => ({
                 ...prev,
                 guidelines: { ...prev.guidelines, ...updated },
+              }))
+            }
+            onChangeTypography={(updated) =>
+              onUpdateWorksheet((prev) => ({
+                ...prev,
+                typography: { ...prev.typography, ...updated },
               }))
             }
           />
@@ -124,6 +131,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {activeTab === 'typography' && (
           <TypographyTab
             typography={worksheet.typography}
+            guidelines={worksheet.guidelines}
             onChange={(updated) =>
               onUpdateWorksheet((prev) => ({
                 ...prev,

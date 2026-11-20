@@ -1,17 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TypographyConfig, FontOption } from '../../types';
+import { TypographyConfig, FontOption, GuideLineConfig } from '../../types';
 import { FONT_OPTIONS } from '../../constants/fonts';
-import { Type, Sparkles, Search, Check } from 'lucide-react';
+import { Type, Sparkles, Search, Check, MoveVertical, ArrowDownToLine } from 'lucide-react';
 
 interface TypographyTabProps {
   typography: TypographyConfig;
+  guidelines?: GuideLineConfig;
   onChange: (updated: Partial<TypographyConfig>) => void;
 }
 
 type CategoryFilter = 'all' | FontOption['category'];
 
-export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChange }) => {
+export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, guidelines, onChange }) => {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,10 +20,16 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
   const handleSelectFont = (fontId: string) => {
     const font = FONT_OPTIONS.find(f => f.id === fontId);
     if (font) {
+      let offset = font.recommendedOffsetBottom;
+      if (guidelines) {
+        const baselineFromBottom = guidelines.rowHeight - guidelines.baselinePosition;
+        const descenderAdj = 15 - font.recommendedOffsetBottom;
+        offset = Math.max(0, baselineFromBottom - descenderAdj);
+      }
       onChange({
         fontFamily: font.fontFamily,
         fontFamilyName: font.name,
-        textOffsetBottom: font.recommendedOffsetBottom,
+        textOffsetBottom: offset,
       });
     }
   };
@@ -249,25 +256,93 @@ export const TypographyTab: React.FC<TypographyTabProps> = ({ typography, onChan
           />
         </div>
 
-        {/* Vertical Baseline Alignment Offset */}
-        <div>
+        {/* Text Vertical Alignment (Baseline Rest) */}
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
           <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
-            <span>{t('calligraphy.typography.verticalOffset', 'Baseline Rest Offset (Bottom Alignment)')}</span>
-            <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.textOffsetBottom}px</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <MoveVertical className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              {t('calligraphy.guidelines.textVerticalAlignment', 'Text Vertical Alignment')}
+            </span>
+            <div className="flex items-center gap-1">
+              <span className="font-semibold text-indigo-600 dark:text-indigo-400">{typography.textOffsetBottom}px</span>
+            </div>
           </div>
-          <input
-            type="range"
-            min={0}
-            max={30}
-            step={1}
-            value={typography.textOffsetBottom}
-            onChange={(e) => onChange({ textOffsetBottom: Number(e.target.value) })}
-            className="w-full accent-indigo-600 cursor-pointer"
-          />
-          <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+
+          {/* Slider with fine-tune +/- 1px buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onChange({ textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) - 1) })}
+              className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+              title={t('calligraphy.preview.nudgeDown', 'Nudge text down (1px)')}
+            >
+              -1
+            </button>
+            <input
+              type="range"
+              min={0}
+              max={Math.max(60, (guidelines?.rowHeight || 70) - 5)}
+              step={1}
+              value={typography.textOffsetBottom}
+              onChange={(e) => onChange({ textOffsetBottom: Number(e.target.value) })}
+              className="w-full accent-indigo-600 cursor-pointer"
+            />
+            <button
+              type="button"
+              onClick={() => onChange({ textOffsetBottom: (typography.textOffsetBottom ?? 12) + 1 })}
+              className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+              title={t('calligraphy.preview.nudgeUp', 'Nudge text up (1px)')}
+            >
+              +1
+            </button>
+          </div>
+
+          {/* Quick Alignment Presets */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1">
+            <button
+              type="button"
+              onClick={() => {
+                const rowH = guidelines?.rowHeight || 70;
+                const baseP = guidelines?.baselinePosition || 55;
+                const baselineFromBottom = rowH - baseP;
+                const activeFont = FONT_OPTIONS.find((f) => f.fontFamily === typography.fontFamily);
+                const descenderAdj = 15 - (activeFont?.recommendedOffsetBottom ?? 14);
+                onChange({ textOffsetBottom: Math.max(0, baselineFromBottom - descenderAdj) });
+              }}
+              className="px-2.5 py-1 text-[11px] rounded-lg border font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer flex items-center gap-1 font-sans"
+            >
+              <ArrowDownToLine className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+              {t('calligraphy.guidelines.snapToBaseline', 'Snap to Baseline')}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const rowH = guidelines?.rowHeight || 70;
+                const centerOffset = Math.max(0, Math.round((rowH - typography.fontSize) / 2));
+                onChange({ textOffsetBottom: centerOffset });
+              }}
+              className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              {t('calligraphy.guidelines.centerInRow', 'Center in Row')}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const rowH = guidelines?.rowHeight || 70;
+                const midP = guidelines?.midlinePosition || 30;
+                const midlineFromBottom = rowH - midP;
+                const midlineOffset = Math.max(0, Math.round(midlineFromBottom - typography.fontSize * 0.45));
+                onChange({ textOffsetBottom: midlineOffset });
+              }}
+              className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              {t('calligraphy.guidelines.alignMidline', 'Midline')}
+            </button>
+          </div>
+          <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
             {t(
-              'calligraphy.typography.verticalOffsetDesc',
-              'Fine-tunes the exact vertical spot where the letter baselines rest upon the red baseline line.'
+              'calligraphy.guidelines.textOffsetDesc',
+              'Adjusts the vertical resting position of the practice text relative to the guideline lines.'
             )}
           </p>
         </div>

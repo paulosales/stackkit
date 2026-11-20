@@ -46,6 +46,7 @@ interface WorksheetPageProps {
   typography: TypographyConfig;
   layout: PageLayoutConfig;
   isEditingEnabled?: boolean;
+  onUpdateTypography?: (updated: Partial<TypographyConfig>) => void;
   onUpdateTitle?: (title: string) => void;
   onUpdateHeader?: (updated: Partial<HeaderConfig>) => void;
   onUpdateSectionTitle?: (sectionId: string, title: string) => void;
@@ -70,6 +71,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
   typography,
   layout,
   isEditingEnabled = true,
+  onUpdateTypography,
   onUpdateTitle,
   onUpdateHeader,
   onUpdateSectionTitle,
@@ -455,6 +457,12 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                     guidelines={guidelines}
                     typography={typography}
                     isEditingEnabled={isEditingEnabled}
+                    onNudgeVerticalText={(delta) =>
+                      onUpdateTypography &&
+                      onUpdateTypography({
+                        textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) + delta),
+                      })
+                    }
                     onUpdateText={(newText) =>
                       onUpdateRowText && onUpdateRowText(section.id, row.id, newText)
                     }

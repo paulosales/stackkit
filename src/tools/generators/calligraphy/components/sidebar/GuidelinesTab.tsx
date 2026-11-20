@@ -1,14 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { GuideLineConfig } from '../../types';
-import { Compass, Sliders, Palette } from 'lucide-react';
+import { GuideLineConfig, TypographyConfig } from '../../types';
+import { FONT_OPTIONS } from '../../constants/fonts';
+import { Compass, Sliders, Palette, MoveVertical, ArrowDownToLine } from 'lucide-react';
 
 interface GuidelinesTabProps {
   guidelines: GuideLineConfig;
+  typography?: TypographyConfig;
   onChange: (updated: Partial<GuideLineConfig>) => void;
+  onChangeTypography?: (updated: Partial<TypographyConfig>) => void;
 }
 
-export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChange }) => {
+export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({
+  guidelines,
+  typography,
+  onChange,
+  onChangeTypography,
+}) => {
   const { t } = useTranslation();
 
   // Proportional adjustment helper when row height changes
@@ -28,11 +36,30 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
       Math.max(midline + 5, Math.round(newHeight * (baselineRatio || 0.785)))
     );
 
+    // Keep text vertically aligned with baseline when row height scales
+    if (typography && onChangeTypography) {
+      const oldBaselineFromBottom = guidelines.rowHeight - guidelines.baselinePosition;
+      const newBaselineFromBottom = newHeight - baseline;
+      const delta = newBaselineFromBottom - oldBaselineFromBottom;
+      onChangeTypography({ textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) + delta) });
+    }
+
     onChange({
       rowHeight: newHeight,
       midlinePosition: midline,
       baselinePosition: baseline,
     });
+  };
+
+  // Keep text aligned with baseline when moving the baseline line
+  const handleBaselineChange = (newBaseline: number) => {
+    if (typography && onChangeTypography) {
+      const oldBaselineFromBottom = guidelines.rowHeight - guidelines.baselinePosition;
+      const newBaselineFromBottom = guidelines.rowHeight - newBaseline;
+      const delta = newBaselineFromBottom - oldBaselineFromBottom;
+      onChangeTypography({ textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) + delta) });
+    }
+    onChange({ baselinePosition: newBaseline });
   };
 
   return (
@@ -118,10 +145,108 @@ export const GuidelinesTab: React.FC<GuidelinesTabProps> = ({ guidelines, onChan
             max={guidelines.rowHeight - 5}
             step={1}
             value={guidelines.baselinePosition}
-            onChange={(e) => onChange({ baselinePosition: Number(e.target.value) })}
+            onChange={(e) => handleBaselineChange(Number(e.target.value))}
             className="w-full accent-indigo-600"
           />
         </div>
+
+        {/* Text Vertical Alignment (Baseline Rest) */}
+        {typography && onChangeTypography && (
+          <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
+              <span className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                <MoveVertical className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                {t('calligraphy.guidelines.textVerticalAlignment', 'Text Vertical Alignment')}
+              </span>
+              <div className="flex items-center gap-1">
+                <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+                  {typography.textOffsetBottom}px
+                </span>
+              </div>
+            </div>
+
+            {/* Slider with fine-tune +/- 1px buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() =>
+                  onChangeTypography({
+                    textOffsetBottom: Math.max(0, (typography.textOffsetBottom ?? 12) - 1),
+                  })
+                }
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeDown', 'Nudge text down (1px)')}
+              >
+                -1
+              </button>
+              <input
+                type="range"
+                min={0}
+                max={Math.max(60, guidelines.rowHeight - 5)}
+                step={1}
+                value={typography.textOffsetBottom}
+                onChange={(e) => onChangeTypography({ textOffsetBottom: Number(e.target.value) })}
+                className="w-full accent-indigo-600 cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  onChangeTypography({
+                    textOffsetBottom: (typography.textOffsetBottom ?? 12) + 1,
+                  })
+                }
+                className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-[#1a2336] text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                title={t('calligraphy.preview.nudgeUp', 'Nudge text up (1px)')}
+              >
+                +1
+              </button>
+            </div>
+
+            {/* Quick Alignment Presets */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  const baselineFromBottom = guidelines.rowHeight - guidelines.baselinePosition;
+                  const activeFont = FONT_OPTIONS.find((f) => f.fontFamily === typography.fontFamily);
+                  const descenderAdj = 15 - (activeFont?.recommendedOffsetBottom ?? 14);
+                  onChangeTypography({ textOffsetBottom: Math.max(0, baselineFromBottom - descenderAdj) });
+                }}
+                className="px-2.5 py-1 text-[11px] rounded-lg border font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer flex items-center gap-1 font-sans"
+              >
+                <ArrowDownToLine className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                {t('calligraphy.guidelines.snapToBaseline', 'Snap to Baseline')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const centerOffset = Math.max(0, Math.round((guidelines.rowHeight - typography.fontSize) / 2));
+                  onChangeTypography({ textOffsetBottom: centerOffset });
+                }}
+                className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                {t('calligraphy.guidelines.centerInRow', 'Center in Row')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const midlineFromBottom = guidelines.rowHeight - guidelines.midlinePosition;
+                  const midlineOffset = Math.max(0, Math.round(midlineFromBottom - typography.fontSize * 0.45));
+                  onChangeTypography({ textOffsetBottom: midlineOffset });
+                }}
+                className="px-2 py-1 text-[11px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1a2336] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                {t('calligraphy.guidelines.alignMidline', 'Midline')}
+              </button>
+            </div>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+              {t(
+                'calligraphy.guidelines.textOffsetDesc',
+                'Adjusts the vertical resting position of the practice text relative to the guideline lines.'
+              )}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Slant Guides (Essential for Calligraphy) */}

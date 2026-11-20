@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { WorksheetRow, GuideLineConfig, TypographyConfig } from '../types';
 import { SlantGuideOverlay } from './SlantGuideOverlay';
-import { Trash2, Type, Sparkles, CircleSlash } from 'lucide-react';
+import { Trash2, Type, Sparkles, CircleSlash, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface PracticeRowProps {
   row: WorksheetRow;
@@ -12,6 +12,7 @@ interface PracticeRowProps {
   onUpdateText?: (newText: string) => void;
   onUpdateType?: (newType: WorksheetRow['type']) => void;
   onDelete?: () => void;
+  onNudgeVerticalText?: (delta: number) => void;
 }
 
 export const PracticeRow: React.FC<PracticeRowProps> = ({
@@ -22,6 +23,7 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
   onUpdateText,
   onUpdateType,
   onDelete,
+  onNudgeVerticalText,
 }) => {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
@@ -265,6 +267,37 @@ export const PracticeRow: React.FC<PracticeRowProps> = ({
               <CircleSlash className="w-3.5 h-3.5" />
             </button>
           </div>
+
+          {/* Vertical Text Alignment Nudge */}
+          {row.type !== 'blank' && onNudgeVerticalText && (
+            <div className="flex items-center gap-0.5 border-r border-slate-200 dark:border-slate-700 pr-1.5 mr-0.5">
+              <span
+                className="text-[10px] text-slate-500 dark:text-slate-400 font-mono px-1 select-none"
+                title={t('calligraphy.preview.textVerticalOffset', {
+                  offset: textOffsetBottom,
+                  defaultValue: `Vertical: ${textOffsetBottom}px`,
+                })}
+              >
+                {textOffsetBottom}px
+              </span>
+              <button
+                type="button"
+                onClick={() => onNudgeVerticalText(1)}
+                className="p-1 rounded text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-[#0f1523] transition-colors cursor-pointer"
+                title={t('calligraphy.preview.nudgeUp', 'Nudge text up (1px)')}
+              >
+                <ChevronUp className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => onNudgeVerticalText(-1)}
+                className="p-1 rounded text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-[#0f1523] transition-colors cursor-pointer"
+                title={t('calligraphy.preview.nudgeDown', 'Nudge text down (1px)')}
+              >
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
 
           {/* Delete Row */}
           {onDelete && (

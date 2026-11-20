@@ -594,7 +594,12 @@
         "strokeStandard": "Estándar",
         "strokeBold": "Grueso",
         "hidden": "Oculto",
-        "colorPresets": "Colores Rápidos:"
+        "colorPresets": "Colores Rápidos:",
+        "textVerticalAlignment": "Alineación Vertical del Texto",
+        "snapToBaseline": "Ajustar a Línea Base",
+        "centerInRow": "Centrar en Renglón",
+        "alignMidline": "Línea Media",
+        "textOffsetDesc": "Ajusta la posición vertical del texto de práctica con respecto a las pautas."
       },
       "typography": {
         "title": "Fuentes de Caligrafía y Cursiva",
@@ -740,7 +745,10 @@
         "paperA5": "Folleto A5 (148×210mm)",
         "sectionPractice": "Sección {{number}}: Práctica",
         "newSentenceToTrace": "Nueva frase para trazar",
-        "newPracticeText": "Nuevo Texto de Práctica"
+        "newPracticeText": "Nuevo Texto de Práctica",
+        "nudgeUp": "Mover texto hacia arriba (1px)",
+        "nudgeDown": "Mover texto hacia abajo (1px)",
+        "textVerticalOffset": "Vertical del Texto: {{offset}}px"
       },
       "savedModal": {
         "title": "Mis Hojas Guardadas",
@@ -986,7 +994,12 @@
       "strokeStandard": "Estándar",
       "strokeBold": "Grueso",
       "hidden": "Oculto",
-      "colorPresets": "Colores Rápidos:"
+      "colorPresets": "Colores Rápidos:",
+      "textVerticalAlignment": "Alineación Vertical del Texto",
+      "snapToBaseline": "Ajustar a Línea Base",
+      "centerInRow": "Centrar en Renglón",
+      "alignMidline": "Línea Media",
+      "textOffsetDesc": "Ajusta la posición vertical del texto de práctica con respecto a las pautas."
     },
     "typography": {
       "title": "Fuentes de Caligrafía y Cursiva",
@@ -1132,7 +1145,10 @@
       "paperA5": "Folleto A5 (148×210mm)",
       "sectionPractice": "Sección {{number}}: Práctica",
       "newSentenceToTrace": "Nueva frase para trazar",
-      "newPracticeText": "Nuevo Texto de Práctica"
+      "newPracticeText": "Nuevo Texto de Práctica",
+      "nudgeUp": "Mover texto hacia arriba (1px)",
+      "nudgeDown": "Mover texto hacia abajo (1px)",
+      "textVerticalOffset": "Vertical del Texto: {{offset}}px"
     },
     "savedModal": {
       "title": "Mis Hojas Guardadas",
